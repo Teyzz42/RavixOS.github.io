@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>🌍 SkyForge — Покупка VIP</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,11 +12,13 @@
       theme: {
         extend: {
           colors: {
-            primary: '#181F7A',
-            secondary: '#4652d4',
-            accent: '#8396ff',
+            primary: '#4f46e5',
+            secondary: '#7c3aed',
+            accent: '#a78bfa',
             dark: '#0f172a',
             light: '#f8fafc',
+            premium: '#f59e0b',
+            elite: '#10b981'
           },
           fontFamily: {
             sans: ['Montserrat', 'sans-serif'],
@@ -24,11 +26,18 @@
           animation: {
             'float': 'float 3s ease-in-out infinite',
             'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'bounce-slow': 'bounce 2s infinite',
+            'spin-slow': 'spin 3s linear infinite',
+            'wiggle': 'wiggle 1s ease-in-out infinite',
           },
           keyframes: {
             float: {
               '0%, 100%': { transform: 'translateY(0)' },
               '50%': { transform: 'translateY(-10px)' },
+            },
+            wiggle: {
+              '0%, 100%': { transform: 'rotate(-3deg)' },
+              '50%': { transform: 'rotate(3deg)' },
             }
           }
         }
@@ -37,7 +46,11 @@
   </script>
   <style>
     .gradient-text {
-      color: #4652d4;
+      background: linear-gradient(45deg, #a78bfa, #7c3aed, #4f46e5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
     .tooltip {
       position: relative;
@@ -62,62 +75,143 @@
       visibility: visible;
       opacity: 1;
     }
+    .glow {
+      box-shadow: 0 0 15px rgba(165, 180, 252, 0.7);
+    }
+    .glow:hover {
+      box-shadow: 0 0 25px rgba(165, 180, 252, 0.9);
+    }
+    .vip-card {
+      transition: all 0.3s ease;
+      transform-style: preserve-3d;
+    }
+    .vip-card:hover {
+      transform: translateY(-5px) scale(1.03);
+    }
+    .premium-card {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: white;
+    }
+    .elite-card {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+    }
+    .shine {
+      position: relative;
+      overflow: hidden;
+    }
+    .shine:after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 20%;
+      height: 200%;
+      opacity: 0;
+      transform: rotate(30deg);
+      background: rgba(255, 255, 255, 0.13);
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.13) 0%,
+        rgba(255, 255, 255, 0.13) 77%,
+        rgba(255, 255, 255, 0.5) 92%,
+        rgba(255, 255, 255, 0.0) 100%
+      );
+    }
+    .shine:hover:after {
+      opacity: 1;
+      left: 130%;
+      transition-property: left, top, opacity;
+      transition-duration: 0.7s, 0.7s, 0.15s;
+      transition-timing-function: ease;
+    }
+    @keyframes confetti {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
   </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800 min-h-screen flex flex-col">
+<body class="bg-gradient-to-b from-gray-900 to-gray-800 font-sans text-gray-100 min-h-screen flex flex-col">
   <!-- Навигация -->
-  <nav class="bg-gradient-to-r from-primary to-secondary text-white shadow-lg">
+  <nav class="bg-gradient-to-r from-primary to-secondary text-white shadow-lg sticky top-0 z-50">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <div class="flex items-center space-x-8">
         <a href="#" class="text-xl font-bold flex items-center">
-          <i class="fas fa-globe mr-2"></i>
-          SkyForge
+          <i class="fas fa-globe mr-2 animate-spin-slow"></i>
+          <span class="text-white">SkyForge</span>
         </a>
         <div class="hidden md:flex space-x-6">
-          <a href="#" class="hover:text-accent transition">
+          <a href="#" class="hover:text-accent transition flex items-center">
             <i class="fas fa-home mr-1"></i> Главное
           </a>
-          <a href="#" class="font-bold text-accent flex items-center">
-            <i class="fas fa-crown mr-1"></i> Покупка
-            <span class="ml-1 text-xs bg-white text-primary px-2 py-0.5 rounded-full">БЕТА</span>
+          <a href="#" class="hover:text-accent transition flex items-center" onclick="showCommunityModal()">
+            <i class="fab fa-discord mr-1"></i> Сообщество
           </a>
-          <a href="https://discord.gg/dExyQxeP" target="_blank" class="hover:text-accent transition">
-            <i class="fas fa-users mr-1"></i> Сообщество
+          <a href="javascript:void(0)" class="hover:text-accent transition flex items-center" onclick="showTopPlayers()">
+            <i class="fas fa-trophy mr-1"></i> Топы
           </a>
-=======
+          <a href="https://discord.gg/dExyQxeP" target="_blank" class="hover:text-accent transition flex items-center">
+            <i class="fas fa-question-circle mr-1"></i> Помощь
+          </a>
         </div>
       </div>
       <div class="flex items-center space-x-4">
-        <button id="login-button" onclick="showLoginModal()" class="bg-accent hover:bg-secondary px-4 py-2 rounded-lg font-medium transition">
+        <button id="login-button" onclick="showLoginModal()" class="bg-gradient-to-r from-accent to-secondary hover:from-secondary hover:to-accent px-4 py-2 rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg glow">
           <i class="fas fa-sign-in-alt mr-1"></i> <span id="login-text">Войти</span>
         </button>
-        <button class="md:hidden text-xl">
+        <button class="md:hidden text-xl" onclick="toggleMobileMenu()">
           <i class="fas fa-bars"></i>
         </button>
+      </div>
+    </div>
+    <!-- Мобильное меню -->
+    <div id="mobile-menu" class="hidden md:hidden bg-primary/90 w-full absolute left-0 top-full z-50">
+      <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+        <a href="#" class="hover:text-accent transition py-2 flex items-center">
+          <i class="fas fa-home mr-2"></i> Главное
+        </a>
+        <a href="#" class="hover:text-accent transition py-2 flex items-center" onclick="showCommunityModal()">
+          <i class="fab fa-discord mr-2"></i> Сообщество
+        </a>
+        <a href="javascript:void(0)" class="hover:text-accent transition py-2 flex items-center" onclick="showTopPlayers()">
+          <i class="fas fa-trophy mr-2"></i> Топы
+        </a>
+        <a href="#" class="hover:text-accent transition py-2 flex items-center">
+          <i class="fas fa-question-circle mr-2"></i> Помощь
+        </a>
       </div>
     </div>
   </nav>
 
   <!-- Хедер -->
-  <header class="bg-gradient-to-r from-primary to-secondary text-white py-12">
-    <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-8">
-      <div class="w-40 h-40 bg-white rounded-xl shadow-xl flex items-center justify-center p-4 animate-float">
+  <header class="bg-gradient-to-br from-primary/90 to-secondary/90 text-white py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+      <div class="absolute top-0 left-0 w-full h-full bg-repeat" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2IiBoZWlnaHQ9IjYiPgo8cmVjdCB3aWR0aD0iNiIgaGVpZ2h0PSI2IiBmaWxsPSIjZmZmZmZmIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDZMNiAwWk02IDZMMCAwWiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2U9IiMwMDAwMDAiPjwvcGF0aD4KPC9zdmc+');"></div>
+    </div>
+    <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-8 relative z-10">
+      <div class="w-48 h-48 bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl flex items-center justify-center p-4 animate-float border-2 border-accent/50 glow">
         <img id="server-logo" src="logo.png" alt="SkyForge Logo" class="max-w-full max-h-full hidden">
-        <i id="logo-fallback" class="fas fa-globe text-6xl text-primary"></i>
+        <i id="logo-fallback" class="fas fa-globe text-8xl text-white"></i>
       </div>
       <div class="text-center md:text-left">
-        <h1 class="text-4xl md:text-5xl font-bold mb-2 flex items-center justify-center md:justify-start">
-          <i class="fas fa-globe mr-3"></i> SkyForge
+        <h1 class="text-5xl md:text-6xl font-bold mb-2 flex items-center justify-center md:justify-start">
+          <span class="text-white">SkyForge</span>
         </h1>
-        <p class="text-xl md:text-2xl text-accent font-semibold mb-4">Версия 1.20.1</p>
-        <div class="flex items-center justify-center md:justify-start space-x-2">
-          <div class="bg-white/20 px-3 py-1.5 rounded-lg flex items-center">
-            <i class="fas fa-server mr-2"></i>
+        <p class="text-xl md:text-2xl text-accent font-semibold mb-4 flex items-center justify-center md:justify-start">
+          <i class="fas fa-fire mr-2 animate-pulse"></i> Версия 1.20.1
+        </p>
+        <div class="flex items-center justify-center md:justify-start space-x-3">
+          <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg flex items-center border border-accent/30 glow">
+            <i class="fas fa-server mr-2 text-accent"></i>
             <span class="font-mono font-bold" id="ip-text">SkyForgeOFFICALL.aternos.me:46890</span>
           </div>
-          <button onclick="copyIP()" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition tooltip">
-            <i class="fas fa-copy"></i>
+          <button onclick="copyIP()" class="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-all tooltip border border-accent/30 glow">
+            <i class="fas fa-copy text-accent"></i>
             <span class="tooltip-text">Копировать IP</span>
+          </button>
+          <button onclick="showServerInfo()" class="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-all tooltip border border-accent/30 glow">
+            <i class="fas fa-info-circle text-accent"></i>
+            <span class="tooltip-text">Информация</span>
           </button>
         </div>
       </div>
@@ -127,17 +221,31 @@
   <!-- Основной контент -->
   <main class="flex-grow container mx-auto px-4 py-8">
     <section class="mb-12">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-6 gradient-text">Добро пожаловать на SkyForge!</h2>
-        <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-6 gradient-text animate-bounce-slow">Добро пожаловать на SkyForge!</h2>
+        <div class="bg-white/5 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-6 border border-accent/20 glow">
           <p class="text-lg italic mb-4">
             <i class="fas fa-quote-left text-accent mr-2"></i>
-            SkyForge — свободный сервер с элементами анархии. Здесь нет приватoв и ограничений на строительство, ценится честная игра и творчество.
+            SkyForge — уникальный сервер с элементами анархии и экономики. Здесь нет приватов и ограничений на строительство, ценится честная игра и творчество.
             <i class="fas fa-quote-right text-accent ml-2"></i>
           </p>
           <p class="text-lg">
             Обмана нет, уважение к другим важно, а кланы и квесты создаются самими игроками. Полная свобода в рамках базовых правил.
           </p>
+          <div class="mt-6 flex flex-wrap justify-center gap-4">
+            <div class="bg-primary/20 px-4 py-2 rounded-full flex items-center">
+              <i class="fas fa-unlock-alt mr-2 text-accent"></i>
+              <span>Полная свобода</span>
+            </div>
+            <div class="bg-primary/20 px-4 py-2 rounded-full flex items-center">
+              <i class="fas fa-coins mr-2 text-yellow-400"></i>
+              <span>Экономика</span>
+            </div>
+            <div class="bg-primary/20 px-4 py-2 rounded-full flex items-center">
+              <i class="fas fa-users mr-2 text-green-400"></i>
+              <span>Активное сообщество</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -146,91 +254,273 @@
     <section class="py-8">
       <div class="text-center mb-12">
         <h2 class="text-4xl font-bold mb-4 gradient-text">Покупка VIP за аров</h2>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto">
           Получите эксклюзивные привилегии и поддержите развитие сервера!
         </p>
+        <div class="mt-4 flex justify-center">
+          <div class="bg-gradient-to-r from-primary to-secondary text-white px-6 py-2 rounded-full inline-flex items-center animate-pulse">
+            <i class="fas fa-gem mr-2"></i>
+            <span>VIP статус сохраняется навсегда!</span>
+          </div>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="vip-cards">
         <!-- Карточки генерируются скриптом -->
       </div>
+
+    </section>
+
+    <!-- FAQ секция -->
+    <section class="py-8 mt-12">
+      <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Частые вопросы</h2>
+      <div class="max-w-3xl mx-auto space-y-4">
+        <div class="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-accent/20 glow">
+          <button onclick="toggleFAQ(this)" class="w-full flex justify-between items-center text-left">
+            <h3 class="font-bold text-lg">Как купить VIP?</h3>
+            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+          </button>
+          <div class="hidden mt-3 text-gray-300">
+            <p>Нажмите на кнопку "Купить" под нужным уровнем VIP, затем напишите команду в чат на сервере. После подтверждения заявки администратором, передайте указанное количество аров.</p>
+          </div>
+        </div>
+        <div class="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-accent/20 glow">
+          <button onclick="toggleFAQ(this)" class="w-full flex justify-between items-center text-left">
+            <h3 class="font-bold text-lg">Что такое ары?</h3>
+            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+          </button>
+          <div class="hidden mt-3 text-gray-300">
+            <p>Ары - это алмазная руда, которую можно добыть с помощью кирки с Шелковым касанием. Используется как внутриигровая валюта сервера.</p>
+          </div>
+        </div>
+        <div class="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-accent/20 glow">
+          <button onclick="toggleFAQ(this)" class="w-full flex justify-between items-center text-left">
+            <h3 class="font-bold text-lg">VIP сбрасывается после рестарта?</h3>
+            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+          </button>
+          <div class="hidden mt-3 text-gray-300">
+            <p>Нет, VIP статус сохраняется навсегда после покупки и не сбрасывается после рестартов или обновлений сервера.</p>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
   <!-- Футер -->
-  <footer class="bg-dark text-white py-8">
+  <footer class="bg-dark text-white py-8 border-t border-gray-800">
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="mb-6 md:mb-0">
           <h3 class="text-2xl font-bold mb-2 flex items-center">
-            <i class="fas fa-globe mr-2"></i> SkyForge
+            <i class="fas fa-globe mr-2 text-accent"></i>
+            <span class="text-white">SkyForge</span>
           </h3>
           <p class="text-gray-400">Сервер Minecraft с элементами анархии</p>
         </div>
         <div class="flex space-x-6">
-          <a href="https://discord.gg/dExyQxeP" target="_blank" class="text-gray-400 hover:text-accent transition">
-            <i class="fab fa-discord text-2xl"></i>
+          <a href="#" class="text-gray-400 hover:text-accent transition text-2xl tooltip" onclick="showCommunityModal()">
+            <i class="fab fa-discord"></i>
+            <span class="tooltip-text">Discord</span>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-accent transition text-2xl tooltip">
+            <i class="fab fa-vk"></i>
+            <span class="tooltip-text">VK</span>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-accent transition text-2xl tooltip">
+            <i class="fab fa-telegram"></i>
+            <span class="tooltip-text">Telegram</span>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-accent transition text-2xl tooltip">
+            <i class="fab fa-youtube"></i>
+            <span class="tooltip-text">YouTube</span>
           </a>
         </div>
       </div>
       <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400">
-        <p>© 2023 SkyForge. Все права защищены.</p>
+        <p>© 2025 SkyForge. Все права защищены.</p>
+        <p class="text-sm mt-2">Не аффилирован с Mojang или Microsoft</p>
       </div>
     </div>
   </footer>
 
-  <div id="modal" class="fixed inset-0 bg-black/50 z-50 hidden">
-    <div class="bg-white p-4 m-4 max-w-md mx-auto mt-20">
-      <h3 class="text-xl font-bold mb-2">Покупка VIP</h3>
-      <div class="mb-4" id="modal-text"></div>
-      <button onclick="copyCommand()" class="bg-blue-500 text-white p-2 mr-2">
-        Копировать
-      </button>
-      <button onclick="window.location.href='https://teyzz42.github.io/SkyForge.github.io/'" class="bg-gray-300 hover:bg-gray-400 p-2 rounded transition">
-        <i class="fas fa-home mr-1"></i> На главную
-      </button>
+  <!-- Модалка покупки VIP -->
+  <div id="modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-2xl p-6 max-w-md w-full border border-accent/30 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2IiBoZWlnaHQ9IjYiPgo8cmVjdCB3aWR0aD0iNiIgaGVpZ2h0PSI2IiBmaWxsPSIjNDY1MmQ0Ij48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDZMNiAwWk02IDZMMCAwWiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2U9IiMxODFmN2EiPjwvcGF0aD4KPC9zdmc+');"></div>
+      <div class="relative z-10">
+        <div class="flex justify-between items-start mb-4">
+          <h3 class="text-2xl font-bold gradient-text">Покупка VIP</h3>
+          <button onclick="closeModal()" class="text-gray-400 hover:text-white p-1 rounded-full">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="mb-6 text-gray-300" id="modal-text"></div>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button onclick="copyCommand()" class="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105 flex-1 flex items-center justify-center glow">
+            <i class="fas fa-copy mr-2"></i> Копировать команду
+          </button>
+          <button onclick="closeModal()" class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg font-medium transition flex-1 flex items-center justify-center">
+            <i class="fas fa-home mr-2"></i> На главную
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Login Modal -->
-  <div id="login-modal" class="fixed inset-0 bg-black/50 z-50 hidden">
-    <div class="bg-white p-6 rounded-lg max-w-md mx-auto mt-20">
-      <h3 class="text-xl font-bold mb-4">Вход на сервер</h3>
-      <input type="text" id="username" placeholder="Ваш ник в Minecraft" class="w-full p-2 border rounded mb-4">
-      <button onclick="login()" class="bg-blue-500 text-white p-2 w-full rounded">
-        <i class="fas fa-sign-in-alt mr-1"></i> Войти
-      </button>
+  <div id="login-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-2xl p-6 max-w-md w-full border border-accent/30 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2IiBoZWlnaHQ9IjYiPgo8cmVjdCB3aWR0aD0iNiIgaGVpZ2h0PSI2IiBmaWxsPSIjNDY1MmQ0Ij48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDZMNiAwWk02IDZMMCAwWiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2U9IiMxODFmN2EiPjwvcGF0aD4KPC9zdmc+');"></div>
+      <div class="relative z-10">
+        <div class="flex justify-between items-start mb-4">
+          <h3 class="text-2xl font-bold gradient-text">Вход на сервер</h3>
+          <button onclick="closeLoginModal()" class="text-gray-400 hover:text-white p-1 rounded-full">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="mb-6">
+          <label for="username" class="block text-gray-300 mb-2">Ваш ник в Minecraft</label>
+          <input type="text" id="username" placeholder="Введите ваш ник..." class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition">
+        </div>
+        <button onclick="login()" class="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105 flex items-center justify-center glow">
+          <i class="fas fa-sign-in-alt mr-2"></i> Войти
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Server Info Modal -->
+  <div id="server-info-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-2xl p-6 max-w-md w-full border border-accent/30 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2IiBoZWlnaHQ9IjYiPgo8cmVjdCB3aWR0aD0iNiIgaGVpZ2h0PSI2IiBmaWxsPSIjNDY1MmQ0Ij48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDZMNiAwWk02IDZMMCAwWiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2U9IiMxODFmN2EiPjwvcGF0aD4KPC9zdmc+');"></div>
+      <div class="relative z-10">
+        <div class="flex justify-between items-start mb-4">
+          <h3 class="text-2xl font-bold gradient-text">Информация о сервере</h3>
+          <button onclick="closeServerInfoModal()" class="text-gray-400 hover:text-white p-1 rounded-full">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="text-gray-300 space-y-4">
+          <div class="flex items-start">
+            <i class="fas fa-server text-accent mr-3 mt-1"></i>
+            <div>
+              <h4 class="font-bold">IP сервера:</h4>
+              <p class="font-mono bg-gray-700 px-3 py-1 rounded inline-block">SkyForgeOFFICALL.aternos.me:46890</p>
+            </div>
+          </div>
+          <div class="flex items-start">
+            <i class="fas fa-code-branch text-accent mr-3 mt-1"></i>
+            <div>
+              <h4 class="font-bold">Версия:</h4>
+              <p>1.20.1</p>
+            </div>
+          </div>
+          <div class="flex items-start">
+            <i class="fas fa-users text-accent mr-3 mt-1"></i>
+            <div>
+              <h4 class="font-bold">Онлайн:</h4>
+              <p>Скоро появится</p>
+            </div>
+          </div>
+          <div class="flex items-start">
+            <i class="fas fa-calendar-alt text-accent mr-3 mt-1"></i>
+            <div>
+              <h4 class="font-bold">Дата запуска:</h4>
+              <p>27 июля 2025</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6">
+          <button onclick="copyIP()" class="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105 flex items-center justify-center glow">
+            <i class="fas fa-copy mr-2"></i> Копировать IP
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Players Modal -->
+  <div id="top-players-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-2xl p-4 sm:p-6 w-full max-w-[95vw] sm:max-w-md mx-2 border border-accent/30">
+      <div class="flex justify-between items-start mb-4">
+        <h3 class="text-2xl font-bold gradient-text">Топ игроков</h3>
+        <button onclick="closeTopPlayersModal()" class="text-gray-400 hover:text-white p-1 rounded-full">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="space-y-3">
+        <div class="flex items-center bg-white/5 p-3 rounded-lg">
+          <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold mr-3">1</div>
+          <div class="font-bold">totallini</div>
+        </div>
+        <div class="flex items-center bg-white/5 p-3 rounded-lg">
+          <div class="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-white font-bold mr-3">2</div>
+          <div class="font-bold">Eronox</div>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Скрипты -->
   <script>
+    function showTopPlayers() {
+      document.getElementById('top-players-modal').classList.remove('hidden');
+    }
+    
+    function closeTopPlayersModal() {
+      document.getElementById('top-players-modal').classList.add('hidden');
+    }
     const vipLevels = [
-      { level: 1, price: 50 },
-      { level: 2, price: 100 },
-      { level: 3, price: 200 },
-      { level: 4, price: 350 },
-      { level: 5, price: 500 },
-      { level: 6, price: 700 },
-      { level: 7, price: 1000 },
-      { level: 8, price: 1500 },
-      { level: 9, price: 2000 }
+      { level: 1, price: 50, features: ["Префикс в чате", "1 тотем бессмертия", "Железная броня (Защита 1)"] },
+      { level: 2, price: 100, features: ["VIP 1 +", "Алмазная броня", "2 тотема бессмертия"] },
+      { level: 3, price: 200, features: ["VIP 2 +", "Возможность изменить ник (3 раза)"] },
+      { level: 4, price: 350, features: ["VIP 3 +", "Незеритовая броня", "4 тотема бессмертия"] },
+      { level: 5, price: 500, features: ["VIP 4 +", "Алмазная броня (Защита 5)", "Незеритовые предметы (Острота 3)"] },
+      { level: 6, price: 700, features: ["VIP 5 +", "Эликсиры силы", "Дополнительные слоты в инвентаре"] },
+      { level: 7, price: 1000, features: ["VIP 6 +", "Эффекты регенерации", "Доступ к редким ресурсам"] },
+      { level: 8, price: 1500, features: ["VIP 7 +", "Стак незерита", "Элитные киты"] },
+      { level: 9, price: 2000, features: ["VIP 8 +", "Легендарные предметы", "Особый статус на сервере"] }
     ];
 
     const container = document.getElementById('vip-cards');
-    vipLevels.forEach(v => {
+    vipLevels.forEach((v, index) => {
       const card = document.createElement('div');
-      card.className = 'bg-white rounded-xl shadow-lg p-6 mb-4';
+      let cardClass = 'bg-white/5 backdrop-blur-sm rounded-xl shadow-lg p-6 mb-4 border border-accent/20 vip-card shine';
+      
+      // Добавляем специальные классы для премиум и элитных карточек
+      if (v.level >= 7 && v.level <= 8) {
+        cardClass += ' premium-card';
+      } else if (v.level === 9) {
+        cardClass += ' elite-card';
+      }
+      
+      card.className = cardClass;
+      
+      let badge = '';
+      if (v.level === 9) {
+        badge = '<div class="absolute top-0 right-0 -mt-3 -mr-3 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-wiggle">ЭЛИТА</div>';
+      } else if (v.level >= 7) {
+        badge = '<div class="absolute top-0 right-0 -mt-3 -mr-3 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">ПРЕМИУМ</div>';
+      }
+      
       card.innerHTML = `
-        <div class="text-center">
-          <div class="bg-gradient-to-r from-primary to-secondary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-            <span class="text-xl font-bold">${v.level}</span>
+        <div class="relative">
+          ${badge}
+          <div class="text-center">
+            <div class="bg-gradient-to-r from-primary to-secondary text-white rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 border-2 border-white/20 shadow-lg">
+              <span class="text-2xl font-bold">${v.level}</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2">VIP ${v.level}</h3>
+            <div class="text-3xl font-bold mb-4 ${v.level >= 7 ? 'text-white' : 'text-primary'}">${v.price} аров</div>
+            
+            <ul class="text-sm mb-6 text-left ${v.level >= 7 ? 'text-white/90' : 'text-gray-300'}">
+              ${v.features.map(f => `<li class="mb-1 flex items-start"><i class="fas fa-check-circle text-green-400 mr-2 mt-1"></i> ${f}</li>`).join('')}
+            </ul>
+            
+            <button onclick="buyVip(${v.level}, ${v.price})" class="w-full ${v.level >= 7 ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white'} px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105 glow">
+              <i class="fas fa-crown mr-2"></i> Купить
+            </button>
           </div>
-          <h3 class="text-xl font-bold mb-2">VIP ${v.level}</h3>
-          <div class="text-2xl font-bold text-primary mb-4">${v.price} аров</div>
-          <button onclick="buyVip(${v.level}, ${v.price})" class="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white px-6 py-2 rounded-lg font-medium transition-all transform hover:scale-105">
-            <i class="fas fa-crown mr-2"></i> Купить
-          </button>
         </div>
       `;
       container.appendChild(card);
@@ -238,6 +528,7 @@
 
     // Текущая команда для копирования
     let currentCommand = '';
+    let currentPrice = 0;
 
     // Копировать IP
     function copyIP() {
@@ -254,12 +545,35 @@
     // Покупка VIP
     function buyVip(level, price) {
       currentCommand = `BuyVip ${level}`;
-      const text = `Напишите в чат:\n\n<b>${currentCommand}</b>\n\nКогда админ подтвердит заявку — оплатите <span class="text-accent font-bold">${price} аров</span>.`;
-      document.getElementById('modal-text').innerText = text.trim();
+      currentPrice = price;
+      
+      const text = `
+        <div class="text-center mb-6">
+          <div class="bg-gradient-to-r from-primary to-secondary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+            <span class="text-xl font-bold">${level}</span>
+          </div>
+          <h4 class="text-xl font-bold mb-2">VIP ${level}</h4>
+          <div class="text-2xl font-bold text-accent mb-4">${price} аров</div>
+        </div>
+        
+        <p class="mb-4">Для покупки VIP ${level} выполните следующие действия:</p>
+        
+        <ol class="list-decimal list-inside space-y-2 mb-6">
+          <li>Зайдите на сервер</li>
+          <li>Напишите в чат команду:</li>
+        </ol>
+        
+        <div class="bg-gray-700 rounded-lg p-3 mb-6">
+          <code class="font-mono text-lg">/${currentCommand}</code>
+        </div>
+        
+        <p class="text-sm text-gray-400">После подтверждения заявки администратором, передайте <span class="font-bold text-accent">${price} аров</span>.</p>
+      `;
+      
+      document.getElementById('modal-text').innerHTML = text.trim();
       
       const modal = document.getElementById('modal');
       modal.classList.remove('hidden');
-      modal.querySelector('.modal-content').classList.add('modal-enter');
     }
 
     // Копировать команду
@@ -269,6 +583,7 @@
       navigator.clipboard.writeText(currentCommand)
         .then(() => {
           showToast('Команда скопирована!', 'success');
+          createConfetti();
         })
         .catch(() => {
           showToast('Ошибка при копировании', 'error');
@@ -277,21 +592,22 @@
 
     // Закрыть модалку
     function closeModal() {
-      const modal = document.getElementById('modal');
-      const content = modal.querySelector('.modal-content');
-      
-      content.classList.remove('modal-enter');
-      content.classList.add('modal-exit');
-      
-      setTimeout(() => {
-        modal.classList.add('hidden');
-        content.classList.remove('modal-exit');
-      }, 300);
+      document.getElementById('modal').classList.add('hidden');
+    }
+    
+    function closeLoginModal() {
+      document.getElementById('login-modal').classList.add('hidden');
+    }
+    
+    function closeServerInfoModal() {
+      document.getElementById('server-info-modal').classList.add('hidden');
     }
 
     // Обработчик клика вне модалки
     window.onclick = e => {
       if (e.target.id === 'modal') closeModal();
+      if (e.target.id === 'login-modal') closeLoginModal();
+      if (e.target.id === 'server-info-modal') closeServerInfoModal();
     };
 
     // Показать уведомление
@@ -303,10 +619,10 @@
         info: 'bg-blue-500'
       };
       
-      toast.className = `fixed bottom-4 right-4 ${colors[type] || 'bg-blue-500'} text-white px-6 py-3 rounded-lg shadow-lg flex items-center animate-fade-in`;
+      toast.className = `fixed bottom-4 right-4 ${colors[type] || 'bg-blue-500'} text-white px-6 py-3 rounded-lg shadow-lg flex items-center animate-fade-in z-50`;
       toast.innerHTML = `
-        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'} mr-2"></i>
-        ${message}
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'} mr-2 text-xl"></i>
+        <span>${message}</span>
       `;
       
       document.body.appendChild(toast);
@@ -343,6 +659,13 @@
           logo.classList.add('hidden');
           fallback.classList.remove('hidden');
         });
+        
+      // Check saved username on load
+      const savedUsername = localStorage.getItem('mc_username');
+      if (savedUsername) {
+        document.getElementById('login-text').textContent = savedUsername;
+        document.getElementById('login-button').classList.add('bg-secondary');
+      }
     });
 
     // Login functions
@@ -360,17 +683,60 @@
       document.getElementById('login-text').textContent = username;
       document.getElementById('login-button').classList.add('bg-secondary');
       showToast(`Добро пожаловать, ${username}!`, 'success');
-      document.getElementById('login-modal').classList.add('hidden');
+      closeLoginModal();
+      
+      // Добавляем аватарку (если бы был API Mojang)
+      // document.getElementById('login-button').innerHTML = `
+      //   <img src="https://mc-heads.net/avatar/${username}/32" class="rounded-full h-8 w-8 mr-2">
+      //   ${username}
+      // `;
+    }
+    
+    // Server info
+    function showServerInfo() {
+      document.getElementById('server-info-modal').classList.remove('hidden');
+    }
+    
+    // Mobile menu
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+    
+    // FAQ toggle
+    function toggleFAQ(button) {
+      const content = button.nextElementSibling;
+      const icon = button.querySelector('i');
+      
+      content.classList.toggle('hidden');
+      icon.classList.toggle('rotate-180');
+    }
+    
+    // Confetti effect
+    function createConfetti() {
+      const colors = ['#4f46e5', '#7c3aed', '#a78bfa', '#f59e0b', '#10b981'];
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'fixed z-50 w-2 h-2 rounded-full';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.top = '-10px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animation = `confetti ${Math.random() * 3 + 2}s linear forwards`;
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
     }
 
-    // Check saved username on load
-    document.addEventListener('DOMContentLoaded', () => {
-      const savedUsername = localStorage.getItem('mc_username');
-      if (savedUsername) {
-        document.getElementById('login-text').textContent = savedUsername;
-        document.getElementById('login-button').classList.add('bg-secondary');
-      }
-    });
+    // Community redirect
+    function showCommunityModal() {
+      window.open('https://discord.gg/dExyQxeP', '_blank');
+    }
 
     // Анимация для уведомлений
     const style = document.createElement('style');
@@ -388,6 +754,9 @@
       }
       .animate-fade-out {
         animation: fade-out 0.3s ease-out forwards;
+      }
+      .rotate-180 {
+        transform: rotate(180deg);
       }
     `;
     document.head.appendChild(style);
