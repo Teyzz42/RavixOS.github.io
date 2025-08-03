@@ -26,6 +26,9 @@
       display: flex;
       gap: 32px;
     }
+    .navbar .menu .active {
+      text-decoration: underline;
+    }
     .navbar .menu .beta {
       font-weight: 400;
       font-style: italic;
@@ -121,6 +124,73 @@
       margin-top: 0;
       line-height: 1.25;
     }
+    .shop-section {
+      max-width: 1200px;
+      margin: 32px auto 0 auto;
+      padding: 0 40px 40px 40px;
+    }
+    .shop-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #181F7A;
+      margin-bottom: 1.2em;
+    }
+    .vip-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+    .vip-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 18px 0 rgba(70,82,212,.09);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.2s;
+      position: relative;
+    }
+    .vip-card:hover {
+      box-shadow: 0 8px 32px 0 rgba(70,82,212,.17);
+    }
+    .vip-tier {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #4652d4;
+      margin-bottom: 0.6em;
+      letter-spacing: 1px;
+    }
+    .vip-price {
+      font-size: 1.6rem;
+      color: #181F7A;
+      margin-bottom: 1em;
+      font-weight: 700;
+    }
+    .buy-btn {
+      background: linear-gradient(90deg, #4652d4 0%, #8396ff 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      padding: 12px 30px;
+      cursor: pointer;
+      margin-bottom: 0.5em;
+      margin-top: 8px;
+      box-shadow: 0 2px 8px rgba(70,82,212,.09);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .buy-btn:hover {
+      background: linear-gradient(90deg, #8396ff 0%, #4652d4 100%);
+      box-shadow: 0 4px 16px rgba(70,82,212,.17);
+    }
+    .vip-card .buy-tip {
+      font-size: 1rem;
+      color: #7b7b7b;
+      margin-top: 4px;
+      font-style: italic;
+    }
     @media (max-width: 900px) {
       .header {
         flex-direction: column;
@@ -131,7 +201,7 @@
         margin-right: 0;
         margin-bottom: 18px;
       }
-      .main {
+      .main, .shop-section {
         padding: 0 10px 40px 10px;
       }
     }
@@ -141,7 +211,7 @@
   <nav class="navbar">
     <div class="menu">
       <span>Главное</span>
-      <span>Покупка <span class="beta">(БЕТА)</span></span>
+      <span class="active">Покупка <span class="beta">(БЕТА)</span></span>
     </div>
     <div class="brand">SkyForge</div>
   </nav>
@@ -170,10 +240,68 @@
       Ты можешь строить, исследовать, сражаться, создавать кланы и развивать свои идеи. Мы не ограничиваем твой стиль игры, но следим за тем, чтобы каждый игрок чувствовал себя комфортно. SkyForge — это баланс между свободой и порядком. Здесь ценится честная игра, творчество и взаимодействие.
     </div>
   </div>
+  <div class="shop-section">
+    <div class="shop-title">Покупка VIP</div>
+    <div class="vip-cards">
+      <div class="vip-card">
+        <div class="vip-tier">VIP I</div>
+        <div class="vip-price">64 аров</div>
+        <button class="buy-btn" onclick="buyVIP('VIP I', 64)">Купить</button>
+        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
+      </div>
+      <div class="vip-card">
+        <div class="vip-tier">VIP II</div>
+        <div class="vip-price">80 аров</div>
+        <button class="buy-btn" onclick="buyVIP('VIP II', 80)">Купить</button>
+        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
+      </div>
+      <div class="vip-card">
+        <div class="vip-tier">VIP III</div>
+        <div class="vip-price">100 аров</div>
+        <button class="buy-btn" onclick="buyVIP('VIP III', 100)">Купить</button>
+        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
+      </div>
+      <div class="vip-card">
+        <div class="vip-tier">VIP IV</div>
+        <div class="vip-price">130 аров</div>
+        <button class="buy-btn" onclick="buyVIP('VIP IV', 130)">Купить</button>
+        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
+      </div>
+      <div class="vip-card">
+        <div class="vip-tier">VIP V</div>
+        <div class="vip-price">160 аров</div>
+        <button class="buy-btn" onclick="buyVIP('VIP V', 160)">Купить</button>
+        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
+      </div>
+      <div class="vip-card">
+        <div class="vip-tier">VIP VI</div>
+        <div class="vip-price">200 аров</div>
+        <button class="buy-btn" onclick="buyVIP('VIP VI', 200)">Купить</button>
+        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
+      </div>
+      <div class="vip-card">
+        <div class="vip-tier">VIP VII</div>
+        <div class="vip-price">250 аров</div>
+        <button class="buy-btn" onclick="buyVIP('VIP VII', 250)">Купить</button>
+        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
+      </div>
+      <div class="vip-card">
+        <div class="vip-tier">VIP VIII</div>
+        <div class="vip-price">300 аров</div>
+        <button class="buy-btn" onclick="buyVIP('VIP VIII', 300)">Купить</button>
+        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
+      </div>
+    </div>
+  </div>
   <script>
     function copyIP() {
       navigator.clipboard.writeText("SkyForgeOFFICALL.aternos.me:46890");
       alert("IP скопирован!");
+    }
+    function buyVIP(tier, price) {
+      navigator.clipboard.writeText(tier + " — " + price + " аров");
+      alert("Данные для покупки скопированы: " + tier + " — " + price + " аров");
+      // Здесь можно добавить интеграцию с магазином
     }
   </script>
 </body>
