@@ -6,154 +6,209 @@
   <title>🏕️ SkyForge Survival — Покупка VIP</title>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet"/>
   <style>
-    /* Variables & Themes */
+    /* 1. Основные переменные */
     :root {
-      --bg-light: #f0f4f8;
-      --text-light: #222;
-      --bg-dark:  #121417;
-      --text-dark:#e0e0e0;
-      --accent:   #2468A0; /* тёмный голубой */
-      --accent-d: #1f567b;
-      --glass:    rgba(255,255,255,0.1);
-      --glass-d:  rgba(0,0,0,0.3);
-      --radius:   12px;
-      --transition: .3s ease;
+      --bg-light:    #f0f4f8;
+      --text-light:  #222;
+      --bg-dark:     #121417;
+      --text-dark:   #e0e0e0;
+      --accent:      #2468A0; /* чуть потемнее голубого */
+      --accent-d:    #1f567b;
+      --glass:       rgba(255,255,255,0.12);
+      --glass-d:     rgba(0,0,0,0.4);
+      --radius:      12px;
+      --transition:  .3s ease;
     }
     body {
-      margin:0; padding:0;
-      font-family:'Montserrat',sans-serif;
-      background:var(--bg-light);
-      color:var(--text-light);
-      transition:background var(--transition), color var(--transition);
+      margin: 0; padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: background var(--transition), color var(--transition);
     }
     body.dark {
-      background:var(--bg-dark);
-      color:var(--text-dark);
+      background: var(--bg-dark);
+      color: var(--text-dark);
     }
+
+    /* 2. Стеклянные панели */
     .glass {
       background: var(--glass);
       backdrop-filter: blur(12px);
       border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.25);
       transition: background var(--transition), border var(--transition);
     }
     body.dark .glass {
-      background:var(--glass-d);
-      border:1px solid rgba(0,0,0,0.5);
+      background: var(--glass-d);
+      border: 1px solid rgba(0,0,0,0.6);
     }
 
-    /* Layout */
+    /* 3. Навигация */
     nav.navbar {
-      display:flex; align-items:center; justify-content:space-between;
-      padding:0 24px; height:60px; position:sticky; top:0; z-index:10;
-      background:var(--glass);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 60px;
+      position: sticky; top: 0; z-index: 10;
+      background: var(--glass);
     }
-    .brand { font-size:1.5rem; font-weight:700; }
-    .menu { display:flex; gap:16px; font-weight:700; }
-    .menu .active { text-decoration:underline; }
-    .controls { display:flex; gap:12px; align-items:center; }
-    button { cursor:pointer; outline:none; border:none; }
+    .brand { font-size: 1.5rem; font-weight: 700; }
+    .menu { display: flex; gap: 16px; font-weight: 700; }
+    .menu .active { text-decoration: underline; }
+    .controls { display: flex; gap: 12px; align-items: center; }
 
+    /* 4. Заголовок */
     header.header {
-      display:flex; flex-wrap:wrap; align-items:center; gap:24px;
-      padding:100px 24px; margin:16px;
-      background:linear-gradient(135deg, var(--accent-d), var(--accent));
-      border-radius:var(--radius);
-      min-height:260px;
-      transition:background var(--transition);
+      display: flex; flex-wrap: wrap; align-items: center; gap: 24px;
+      padding: 100px 24px; margin: 16px;
+      background: linear-gradient(135deg, var(--accent-d), var(--accent));
+      border-radius: var(--radius);
+      min-height: 260px;
+      transition: background var(--transition);
     }
     .logo {
-      width:140px; height:140px;
-      background:var(--glass); display:flex;
-      align-items:center; justify-content:center;
-      border-radius:var(--radius);
-      border:1px solid rgba(255,255,255,0.2);
+      width: 140px; height: 140px;
+      background: var(--glass);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.25);
     }
-    .logo img { max-width:120px; max-height:120px; }
+    .logo img {
+      max-width: 120px; max-height: 120px;
+    }
 
+    /* 5. Содержимое */
     main {
-      max-width:1100px; margin:24px auto; padding:0 16px;
+      max-width: 1100px; margin: 24px auto; padding: 0 16px;
     }
-    .desc { margin-bottom:1.2em; font-style:italic; }
+    .desc {
+      margin-bottom: 1.2em; font-style: italic;
+    }
 
-    /* Shop & Filter */
+    /* 6. Секция магазина */
     section.shop {
-      margin:32px 0;
+      margin: 32px 0;
     }
     .shop-title {
-      text-align:center; font-size:2.2rem;
-      color:var(--accent); margin-bottom:16px; font-weight:700;
+      text-align: center;
+      font-size: 2.2rem;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 700;
     }
     .filter {
-      margin-bottom:24px; text-align:right;
+      margin-bottom: 24px;
+      text-align: right;
     }
     .filter input {
-      padding:6px 10px; border-radius:6px; border:1px solid #ccc;
-      width:80px; font-size:1rem;
+      width: 80px; padding: 6px 10px;
+      border: 1px solid #ccc; border-radius: 6px;
+      font-size: 1rem;
     }
     .vip-cards {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
     }
     .vip-card {
-      position:relative;
-      background:var(--glass); padding:20px;
-      border-radius:var(--radius); text-align:center;
-      border:1px solid rgba(255,255,255,0.2);
-      transition:transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      background: var(--glass);
+      padding: 20px;
+      border-radius: var(--radius);
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.25);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    body.dark .vip-card {
+      background: var(--glass-d);
     }
     .vip-card:hover {
-      transform:translateY(-8px);
-      box-shadow:0 12px 24px rgba(0,0,0,0.2);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
     }
-    .vip-tier { font-size:1.8rem; color:var(--accent); margin-bottom:.5em; }
-    .vip-price{ font-size:1.2rem; margin-bottom:1em; }
+    .vip-tier {
+      font-size: 1.8rem;
+      color: var(--accent);
+      margin-bottom: 0.5em;
+    }
+    .vip-price {
+      font-size: 1.2rem;
+      margin-bottom: 1em;
+    }
     .buy-btn {
-      background:var(--accent); color:#fff;
-      padding:8px 16px; border-radius:6px;
-      font-weight:700; transition:background var(--transition);
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 700;
+      transition: background var(--transition), transform var(--transition);
     }
-    .buy-btn:hover { background:var(--accent-d); }
+    .buy-btn:hover {
+      background: var(--accent-d);
+      transform: translateY(-2px);
+    }
+    .buy-tip {
+      font-size: 0.85rem;
+      font-style: italic;
+      margin-top: 6px;
+      color: inherit;
+    }
 
-    /* Modal */
+    /* 7. Модальное окно */
     #modal {
-      display:none; position:fixed; inset:0;
-      background:rgba(0,0,0,0.6);
-      align-items:center; justify-content:center; z-index:20;
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      align-items: center; justify-content: center;
+      z-index: 20;
     }
     .modal-content {
-      background:var(--glass); backdrop-filter:blur(16px);
-      padding:24px; border-radius:var(--radius);
-      max-width:360px; position:relative;
-      border:1px solid rgba(255,255,255,0.2);
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      padding: 24px;
+      border-radius: var(--radius);
+      max-width: 360px;
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.25);
     }
     body.dark .modal-content {
-      background:var(--glass-d); border:1px solid rgba(0,0,0,0.5);
+      background: var(--glass-d);
+      border: 1px solid rgba(0,0,0,0.6);
     }
-    .modal-content p { white-space:pre-wrap; margin-bottom:16px; }
+    .modal-content p {
+      white-space: pre-wrap;
+      margin-bottom: 16px;
+    }
     .modal-close {
-      position:absolute; top:8px; right:12px;
-      background:none; font-size:1.2rem; cursor:pointer;
+      position: absolute; top: 8px; right: 12px;
+      background: none; font-size: 1.2rem; cursor: pointer;
     }
 
-    /* Toast */
+    /* 8. Toast */
     #toast {
-      position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
-      background:var(--accent); color:#fff; padding:12px 24px;
-      border-radius:24px; opacity:0; pointer-events:none;
-      transition:opacity .3s ease;
-      font-weight:700;
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      font-weight: 700;
     }
 
-    @media(max-width:600px){
-      header.header { flex-direction:column; text-align:center; }
-      .logo { margin-bottom:16px; }
+    /* Responsive */
+    @media (max-width: 600px) {
+      header.header { flex-direction: column; text-align: center; }
+      .logo { margin-bottom: 16px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- NAVIGATION -->
   <nav class="navbar glass">
     <div class="brand">SkyForge</div>
     <div class="menu">
@@ -162,11 +217,12 @@
     </div>
     <div class="controls">
       <button id="accent-btn" title="Сменить цвет акцента">🎨</button>
-      <input type="color" id="accent-picker" style="display:none"/>
+      <input type="color" id="accent-picker" style="display:none;"/>
       <button id="theme-toggle" title="Тёмный/светлый режим">🌙</button>
     </div>
   </nav>
 
+  <!-- HEADER -->
   <header class="header">
     <div class="logo glass">
       <img src="logo.png" alt="Logo"/>
@@ -174,13 +230,14 @@
     <div>
       <h1 style="margin:0;color:#fff;font-style:italic;">🏕️ SkyForge Survival</h1>
       <div style="color:#eee;font-size:1rem;margin:.4em 0;">версия 1.20.1</div>
-      <div class="glass ip-box" style="display:inline-flex;align-items:center;gap:8px;">
+      <div class="glass" style="display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:6px;">
         <span id="ip-text">SkyForgeOFFICALL.aternos.me:46890</span>
         <button onclick="copyIP()">📋</button>
       </div>
     </div>
   </header>
 
+  <!-- MAIN CONTENT -->
   <main>
     <p class="desc">
       Добро пожаловать на SkyForge Survival! Сражайтесь с монстрами, стройте базы и объединяйтесь с друзьями.
@@ -189,15 +246,17 @@
       Исследуйте мир, добывайте ресурсы и создавайте процветающие поселения в этом суровом мире.
     </p>
 
+    <!-- SHOP SECTION -->
     <section class="shop">
       <h2 class="shop-title">Покупка VIP за аров</h2>
       <div class="filter">
-        <label>Поиск VIP: <input type="number" id="filter-input" min="1" max="10" placeholder="уровень"/></label>
+        <label>Уровень VIP: <input type="number" id="filter-input" min="1" max="10" placeholder="люб."/></label>
       </div>
       <div class="vip-cards" id="vip-cards"></div>
     </section>
   </main>
 
+  <!-- MODAL -->
   <div id="modal">
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal()">×</button>
@@ -206,6 +265,7 @@
     </div>
   </div>
 
+  <!-- TOAST -->
   <div id="toast"></div>
 
   <script>
@@ -218,82 +278,83 @@
       themeToggle.textContent = '☀️';
     }
     if (localStorage.accent) {
-      document.documentElement.style.setProperty('--accent', localStorage.accent);
-      const d = Math.max(parseInt(localStorage.accent.slice(1),16)-0x202020,0);
-      document.documentElement.style.setProperty('--accent-d', '#'+d.toString(16).padStart(6,'0'));
+      const a = localStorage.accent;
+      document.documentElement.style.setProperty('--accent', a);
+      // вычисляем тёмную версию
+      const v = Math.max(parseInt(a.slice(1),16) - 0x202020, 0);
+      document.documentElement.style.setProperty('--accent-d', '#'+v.toString(16).padStart(6,'0'));
     }
-    themeToggle.onclick = ()=>{
+    themeToggle.onclick = () => {
       document.body.classList.toggle('dark');
-      const dark = document.body.classList.contains('dark');
-      themeToggle.textContent = dark ? '☀️' : '🌙';
-      localStorage.theme = dark ? 'dark' : 'light';
+      const isDark = document.body.classList.contains('dark');
+      themeToggle.textContent = isDark ? '☀️' : '🌙';
+      localStorage.theme = isDark ? 'dark' : 'light';
     };
-    accentBtn.onclick = ()=>picker.click();
-    picker.oninput = e=>{
+    accentBtn.onclick = () => picker.click();
+    picker.oninput = e => {
       const c = e.target.value;
       document.documentElement.style.setProperty('--accent', c);
-      const d = Math.max(parseInt(c.slice(1),16)-0x202020,0);
-      document.documentElement.style.setProperty('--accent-d','#'+d.toString(16).padStart(6,'0'));
+      const v = Math.max(parseInt(c.slice(1),16) - 0x202020, 0);
+      document.documentElement.style.setProperty('--accent-d', '#'+v.toString(16).padStart(6,'0'));
       localStorage.accent = c;
     };
 
-    // Copy IP with feedback
-    function copyIP(){
+    // Copy IP + toast
+    function copyIP() {
       const ip = document.getElementById('ip-text').innerText;
-      navigator.clipboard.writeText(ip).then(()=>{
-        showToast('IP скопирован');
-      });
+      navigator.clipboard.writeText(ip).then(() => showToast('IP скопирован'));
     }
-
-    // Toast
-    function showToast(msg){
+    function showToast(text) {
       const t = document.getElementById('toast');
-      t.textContent = msg;
+      t.textContent = text;
       t.style.opacity = '1';
-      setTimeout(()=> t.style.opacity = '0', 2000);
+      setTimeout(() => t.style.opacity = '0', 2000);
     }
 
-    // VIP cards generation & filtering
-    const vipLevels = Array.from({length:10},(_,i)=>({l:i+1,p:[
-      64,80,100,130,160,200,250,300,360,430
-    ][i]}));
-    const container = document.getElementById('vip-cards');
-    function renderCards(filter){
-      container.innerHTML = '';
+    // VIP cards + filter
+    const vipLevels = Array.from({length:10}, (_,i) => ({
+      lvl: i+1,
+      price: [64,80,100,130,160,200,250,300,360,430][i]
+    }));
+    const cont = document.getElementById('vip-cards');
+    const filterInput = document.getElementById('filter-input');
+    function render(filter) {
+      cont.innerHTML = '';
       vipLevels
-        .filter(v=>!filter || v.l === +filter)
-        .forEach(v=>{
+        .filter(v => !filter || v.lvl === +filter)
+        .forEach(v => {
           const card = document.createElement('div');
           card.className = 'vip-card';
           card.innerHTML = `
-            <div class="vip-tier">VIP ${v.l}</div>
-            <div class="vip-price">${v.p} аров</div>
-            <button class="buy-btn" onclick="buyVip(${v.l},${v.p})">
+            <div class="vip-tier">VIP ${v.lvl}</div>
+            <div class="vip-price">${v.price} аров</div>
+            <button class="buy-btn" onclick="buyVip(${v.lvl},${v.price})">
               Купить
             </button>
             <div class="buy-tip">Нажмите — команда скопирована</div>
           `;
-          container.appendChild(card);
+          cont.appendChild(card);
         });
     }
-    document.getElementById('filter-input')
-      .addEventListener('input', e=> renderCards(e.target.value));
-    renderCards();
+    filterInput.addEventListener('input', e => render(e.target.value));
+    render();
 
-    // Buy VIP
-    function buyVip(level, price){
+    // Покупка VIP
+    function buyVip(level, price) {
       const cmd = `BuyVip ${level}`;
       navigator.clipboard.writeText(cmd);
-      document.getElementById('modal-text').innerText =
-        `Напишите в чат:\n  ${cmd}\n\n`+
-        `После подтверждения оплатите ${price} аров.`;
-      document.getElementById('modal').style.display = 'flex';
       showToast(`Команда скопирована: ${cmd}`);
+      document.getElementById('modal-text').innerText =
+        `Напишите в чат:\n  ${cmd}\n\n` +
+        `После подтверждения — оплатите ${price} аров.`;
+      document.getElementById('modal').style.display = 'flex';
     }
-    function closeModal(){
+    function closeModal() {
       document.getElementById('modal').style.display = 'none';
     }
-    window.onclick = e=>{ if(e.target.id==='modal') closeModal(); };
+    window.addEventListener('click', e => {
+      if (e.target.id === 'modal') closeModal();
+    });
   </script>
 </body>
 </html>
