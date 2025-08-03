@@ -81,17 +81,15 @@
             <i class="fas fa-crown mr-1"></i> Покупка
             <span class="ml-1 text-xs bg-white text-primary px-2 py-0.5 rounded-full">БЕТА</span>
           </a>
-          <a href="#" class="hover:text-accent transition">
+          <a href="https://discord.gg/dExyQxeP" target="_blank" class="hover:text-accent transition">
             <i class="fas fa-users mr-1"></i> Сообщество
           </a>
-          <a href="#" class="hover:text-accent transition">
-            <i class="fas fa-question-circle mr-1"></i> Помощь
-          </a>
+=======
         </div>
       </div>
       <div class="flex items-center space-x-4">
-        <button class="bg-accent hover:bg-secondary px-4 py-2 rounded-lg font-medium transition">
-          <i class="fas fa-sign-in-alt mr-1"></i> Войти
+        <button id="login-button" onclick="showLoginModal()" class="bg-accent hover:bg-secondary px-4 py-2 rounded-lg font-medium transition">
+          <i class="fas fa-sign-in-alt mr-1"></i> <span id="login-text">Войти</span>
         </button>
         <button class="md:hidden text-xl">
           <i class="fas fa-bars"></i>
@@ -104,7 +102,8 @@
   <header class="bg-gradient-to-r from-primary to-secondary text-white py-12">
     <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-8">
       <div class="w-40 h-40 bg-white rounded-xl shadow-xl flex items-center justify-center p-4 animate-float">
-        <img src="https://via.placeholder.com/160" alt="SkyForge Logo" class="max-w-full max-h-full">
+        <img id="server-logo" src="logo.png" alt="SkyForge Logo" class="max-w-full max-h-full hidden">
+        <i id="logo-fallback" class="fas fa-globe text-6xl text-primary"></i>
       </div>
       <div class="text-center md:text-left">
         <h1 class="text-4xl md:text-5xl font-bold mb-2 flex items-center justify-center md:justify-start">
@@ -169,17 +168,8 @@
           <p class="text-gray-400">Сервер Minecraft с элементами анархии</p>
         </div>
         <div class="flex space-x-6">
-          <a href="#" class="text-gray-400 hover:text-accent transition">
+          <a href="https://discord.gg/dExyQxeP" target="_blank" class="text-gray-400 hover:text-accent transition">
             <i class="fab fa-discord text-2xl"></i>
-          </a>
-          <a href="#" class="text-gray-400 hover:text-accent transition">
-            <i class="fab fa-vk text-2xl"></i>
-          </a>
-          <a href="#" class="text-gray-400 hover:text-accent transition">
-            <i class="fab fa-telegram text-2xl"></i>
-          </a>
-          <a href="#" class="text-gray-400 hover:text-accent transition">
-            <i class="fab fa-youtube text-2xl"></i>
           </a>
         </div>
       </div>
@@ -196,8 +186,19 @@
       <button onclick="copyCommand()" class="bg-blue-500 text-white p-2 mr-2">
         Копировать
       </button>
-      <button onclick="closeModal()" class="bg-gray-300 p-2">
-        Закрыть
+      <button onclick="window.location.href='https://teyzz42.github.io/SkyForge.github.io/'" class="bg-gray-300 hover:bg-gray-400 p-2 rounded transition">
+        <i class="fas fa-home mr-1"></i> На главную
+      </button>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="fixed inset-0 bg-black/50 z-50 hidden">
+    <div class="bg-white p-6 rounded-lg max-w-md mx-auto mt-20">
+      <h3 class="text-xl font-bold mb-4">Вход на сервер</h3>
+      <input type="text" id="username" placeholder="Ваш ник в Minecraft" class="w-full p-2 border rounded mb-4">
+      <button onclick="login()" class="bg-blue-500 text-white p-2 w-full rounded">
+        <i class="fas fa-sign-in-alt mr-1"></i> Войти
       </button>
     </div>
   </div>
@@ -205,9 +206,15 @@
   <!-- Скрипты -->
   <script>
     const vipLevels = [
-      { level: 1, price: 64 },
-      { level: 2, price: 80 },
-      { level: 3, price: 100 }
+      { level: 1, price: 50 },
+      { level: 2, price: 100 },
+      { level: 3, price: 200 },
+      { level: 4, price: 350 },
+      { level: 5, price: 500 },
+      { level: 6, price: 700 },
+      { level: 7, price: 1000 },
+      { level: 8, price: 1500 },
+      { level: 9, price: 2000 }
     ];
 
     const container = document.getElementById('vip-cards');
@@ -215,11 +222,16 @@
       const card = document.createElement('div');
       card.className = 'bg-white rounded-xl shadow-lg p-6 mb-4';
       card.innerHTML = `
-        <h3 class="text-xl font-bold">VIP ${v.level}</h3>
-        <div class="text-2xl my-2">${v.price} аров</div>
-        <button onclick="buyVip(${v.level}, ${v.price})" class="bg-blue-500 text-white p-2 rounded">
-          Купить
-        </button>
+        <div class="text-center">
+          <div class="bg-gradient-to-r from-primary to-secondary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+            <span class="text-xl font-bold">${v.level}</span>
+          </div>
+          <h3 class="text-xl font-bold mb-2">VIP ${v.level}</h3>
+          <div class="text-2xl font-bold text-primary mb-4">${v.price} аров</div>
+          <button onclick="buyVip(${v.level}, ${v.price})" class="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white px-6 py-2 rounded-lg font-medium transition-all transform hover:scale-105">
+            <i class="fas fa-crown mr-2"></i> Купить
+          </button>
+        </div>
       `;
       container.appendChild(card);
     });
@@ -241,8 +253,8 @@
 
     // Покупка VIP
     function buyVip(level, price) {
-      currentCommand = `/BuyVip ${level}`;
-      const text = `Напишите в чат:\n\n${currentCommand}\n\nКогда админ подтвердит заявку — оплатите ${price} аров.`;
+      currentCommand = `BuyVip ${level}`;
+      const text = `Напишите в чат:\n\n<b>${currentCommand}</b>\n\nКогда админ подтвердит заявку — оплатите <span class="text-accent font-bold">${price} аров</span>.`;
       document.getElementById('modal-text').innerText = text.trim();
       
       const modal = document.getElementById('modal');
@@ -304,6 +316,61 @@
         setTimeout(() => toast.remove(), 300);
       }, 3000);
     }
+
+    // Check logo exists
+    document.addEventListener('DOMContentLoaded', () => {
+      const logo = document.getElementById('server-logo');
+      const fallback = document.getElementById('logo-fallback');
+      
+      fetch('logo.png')
+        .then(res => {
+          if (res.ok) {
+            logo.onload = () => {
+              logo.classList.remove('hidden');
+              fallback.classList.add('hidden');
+            };
+            logo.onerror = () => {
+              logo.classList.add('hidden');
+              fallback.classList.remove('hidden');
+            };
+            // Force refresh in case of cached 404
+            logo.src = 'logo.png?' + new Date().getTime();
+          } else {
+            throw new Error('No logo');
+          }
+        })
+        .catch(() => {
+          logo.classList.add('hidden');
+          fallback.classList.remove('hidden');
+        });
+    });
+
+    // Login functions
+    function showLoginModal() {
+      document.getElementById('login-modal').classList.remove('hidden');
+    }
+
+    function login() {
+      const username = document.getElementById('username').value.trim();
+      if (username.length < 3) {
+        showToast('Введите корректный ник', 'error');
+        return;
+      }
+      localStorage.setItem('mc_username', username);
+      document.getElementById('login-text').textContent = username;
+      document.getElementById('login-button').classList.add('bg-secondary');
+      showToast(`Добро пожаловать, ${username}!`, 'success');
+      document.getElementById('login-modal').classList.add('hidden');
+    }
+
+    // Check saved username on load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedUsername = localStorage.getItem('mc_username');
+      if (savedUsername) {
+        document.getElementById('login-text').textContent = savedUsername;
+        document.getElementById('login-button').classList.add('bg-secondary');
+      }
+    });
 
     // Анимация для уведомлений
     const style = document.createElement('style');
