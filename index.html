@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>SVINLAND</title>
   <link
     href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap"
@@ -14,20 +14,24 @@
       --bg: #121212;
       --fg: #e0e0e0;
       --accent: #4ea8de;
-      --glass: rgba(255,255,255,0.1);
+      --glass: rgba(255, 255, 255, 0.1);
       --radius: 12px;
       --gap: 20px;
       --transition: 0.3s ease;
     }
     * {
       box-sizing: border-box;
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
     }
     body {
       font-family: 'Montserrat', sans-serif;
       background: var(--bg);
       color: var(--fg);
       line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     a {
       color: var(--accent);
@@ -38,7 +42,7 @@
       color: #7ec3ff;
     }
 
-    /* === Навбар === */
+    /* === Навигация === */
     nav {
       display: flex;
       align-items: center;
@@ -47,7 +51,8 @@
       background: var(--glass);
       backdrop-filter: blur(8px);
       position: sticky;
-      top: 0; z-index: 100;
+      top: 0;
+      z-index: 100;
     }
     .nav-left {
       display: flex;
@@ -55,7 +60,8 @@
       gap: 12px;
     }
     .nav-left img {
-      width: 36px; height: 36px;
+      width: 36px;
+      height: 36px;
     }
     .nav-left .brand {
       font-size: 1.4rem;
@@ -69,15 +75,25 @@
     .nav-right li {
       font-size: 0.95rem;
     }
-    .nav-right .login {
+    .nav-right .login,
+    .nav-right .vip-buy {
       padding: 6px 14px;
-      background: var(--accent);
       border-radius: 6px;
       font-weight: 700;
       transition: background var(--transition);
     }
+    .nav-right .login {
+      background: var(--accent);
+    }
     .nav-right .login:hover {
       background: #7ec3ff;
+    }
+    .nav-right .vip-buy {
+      background: #deaa4e;
+      margin-left: 8px;
+    }
+    .nav-right .vip-buy:hover {
+      background: #f0c878;
     }
 
     /* === Hero === */
@@ -85,6 +101,12 @@
       text-align: center;
       padding: 80px 20px;
       background: linear-gradient(135deg, #243b55, #141e30);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--gap);
     }
     header.hero h1 {
       font-size: 2.8rem;
@@ -95,34 +117,48 @@
     }
     header.hero p {
       font-size: 1.1rem;
-      margin-bottom: var(--gap);
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
       opacity: 0.9;
     }
-    header.hero .btn {
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    header.hero .btn,
+    header.hero .btn-vip {
       display: inline-block;
       padding: 12px 28px;
-      background: var(--accent);
-      color: #fff;
       border-radius: 8px;
       font-weight: 700;
       transition: background var(--transition), transform var(--transition);
+    }
+    header.hero .btn {
+      background: var(--accent);
+      color: #fff;
     }
     header.hero .btn:hover {
       background: #7ec3ff;
       transform: translateY(-2px);
     }
+    header.hero .btn-vip {
+      background: #deaa4e;
+      color: #121212;
+    }
+    header.hero .btn-vip:hover {
+      background: #f0c878;
+      transform: translateY(-2px);
+    }
 
-    /* === Блок преимуществ === */
-    .features {
+    /* === Преимущества === */
+    section.features {
       display: grid;
       gap: var(--gap);
       padding: 60px 20px;
       max-width: 1200px;
-      margin: auto;
-      grid-template-columns: repeat(3, 1fr);
+      margin: 0 auto;
+      grid-template-columns: repeat(4, 1fr);
     }
     .feature {
       background: var(--glass);
@@ -137,7 +173,8 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     }
     .feature img {
-      width: 64px; height: 64px;
+      width: 64px;
+      height: 64px;
       margin-bottom: 16px;
     }
     .feature h3 {
@@ -149,29 +186,40 @@
       font-size: 0.95rem;
     }
 
-    /* === Итоги === */
-    .footer-section {
+    /* === Итоговый блок === */
+    section.footer-section {
       padding: 60px 20px;
       text-align: center;
       background: #1a1a1a;
     }
-    .footer-section h2 {
+    section.footer-section h2 {
       font-size: 1.6rem;
       margin-bottom: 12px;
     }
-    .footer-section p {
+    section.footer-section p {
       max-width: 600px;
-      margin: auto;
+      margin: 0 auto;
       opacity: 0.8;
     }
 
     /* === Отзывчивость === */
-    @media (max-width: 1024px) {
-      .features {
-        grid-template-columns: repeat(2, 1fr);
+    @media (max-width: 1200px) {
+      section.features {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      header.hero h1 {
+        font-size: 2.4rem;
       }
     }
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
+      section.features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      header.hero p {
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 600px) {
       nav {
         flex-direction: column;
         gap: 12px;
@@ -180,14 +228,11 @@
         flex-wrap: wrap;
         justify-content: center;
       }
-      .features {
+      section.features {
         grid-template-columns: 1fr;
       }
       header.hero h1 {
-        font-size: 2.2rem;
-      }
-      header.hero p {
-        font-size: 1rem;
+        font-size: 2rem;
       }
     }
   </style>
@@ -197,50 +242,59 @@
   <!-- Навигация -->
   <nav>
     <div class="nav-left">
-      <img src="pig.png" alt="pig icon"/>
+      <img src="pig.png" alt="иконка"/>
       <div class="brand">SVINLAND</div>
     </div>
     <div class="nav-right">
       <ul>
         <li><a href="#">Главная</a></li>
         <li><a href="#">Магазин</a></li>
-        <li><a href="#">Профиль</a></li>
         <li><a href="#" class="login">Войти</a></li>
+        <li><a href="#" class="vip-buy">Купить VIP</a></li>
       </ul>
     </div>
   </nav>
 
   <!-- Hero -->
   <header class="hero">
-    <h1>Вы ждали и вот он — <span class="highlight">SVINLAND</span></h1>
-    <p>Присоединяйся бесплатно и начинай играть прямо сейчас!</p>
-    <a href="#" class="btn">Играть бесплатно</a>
+    <h1>Добро пожаловать в <span class="highlight">SVINLAND</span></h1>
+    <p>Бесплатный вход и простая регистрация. Получи максимум от игры с VIP-профилем!</p>
+    <div class="hero-buttons">
+      <a href="#" class="btn">Играть бесплатно</a>
+      <a href="#" class="btn-vip">Купить VIP</a>
+    </div>
   </header>
 
   <!-- Преимущества -->
   <section class="features">
     <div class="feature">
-      <img src="interaction.png" alt="interaction"/>
+      <img src="interaction.png" alt="Механики"/>
       <h3>Интерактив</h3>
       <p>Уникальные системы взаимодействия и кастомные механики.</p>
     </div>
     <div class="feature">
-      <img src="community.png" alt="community"/>
-      <h3>Сообщество</h3>
-      <p>Более 200 онлайн-игроков ежедневно, заводи друзей и гильдии.</p>
+      <img src="launcher.png" alt="Лаунчер"/>
+      <h3>Стабильный лаунчер</h3>
+      <p>Авто-апдейты, поддержка модов и сборок — просто запускай и играй.</p>
     </div>
     <div class="feature">
-      <img src="economy.png" alt="economy"/>
+      <img src="economy.png" alt="Экономика"/>
       <h3>Экономика</h3>
-      <p>Рабочий рынок, фермы и внутренняя валюта для торговли.</p>
+      <p>Внутренняя валюта, фермы и торговля на вашем рынке.</p>
+    </div>
+    <div class="feature">
+      <img src="vip.png" alt="VIP"/>
+      <h3>VIP-преимущества</h3>
+      <p>Эксклюзивные наборы, привилегии и ускоренный прогресс.</p>
     </div>
   </section>
 
   <!-- Итоговый блок -->
   <section class="footer-section">
-    <h2>Интересные впечатления</h2>
-    <p>Каждый найдет здесь что-то своё — от спокойной игры в выживание до масштабных турниров.</p>
+    <h2>Начни прямо сейчас</h2>
+    <p>Присоединяйся к нам с любого устройства — ПК, планшета или телефона.</p>
   </section>
 
 </body>
 </html>
+```
