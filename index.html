@@ -22,7 +22,8 @@
     }
     body {
       min-height: 100vh;
-      display: flex; flex-direction: column;
+      display: flex;
+      flex-direction: column;
       font-family: "Segoe UI", Arial, sans-serif;
       color: var(--text);
       background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
@@ -38,55 +39,62 @@
       backdrop-filter: blur(10px);
       background: var(--surface);
     }
-    header .logo {
+    .logo {
       height: 50px;
     }
-    header .buyvip {
-      padding: 8px 20px;
-      background: var(--accent);
-      color: var(--bg-start);
-      border-radius: 4px;
-      font-weight: 600;
-      transition: background 0.2s;
-    }
-    header .buyvip:hover {
-      background: #a0d8ff;
-    }
 
-    /* ——— Hero (центральная секция) ——— */
+    /* ——— Hero ——— */
     .hero {
       flex: 1;
-      display: grid;
-      place-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       padding: 40px 20px;
+      gap: 40px;
     }
-    .glass-card {
-      max-width: 380px;
+    .site-title {
+      font-size: 2.8rem;
+      color: var(--accent);
+    }
+
+    /* ——— Карточки регистрации и VIP ——— */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
       width: 100%;
+      max-width: 960px;
+    }
+    .card {
       background: var(--surface);
       backdrop-filter: blur(12px);
       border-radius: 16px;
       padding: 32px 24px;
-      text-align: center;
       box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .glass-card h1 {
-      font-size: 2.4rem;
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.7);
+    }
+    .card h2 {
+      font-size: 1.6rem;
       margin-bottom: 12px;
     }
-    .glass-card p {
+    .card p {
       color: var(--text-alt);
-      margin-bottom: 24px;
-      font-size: 1rem;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
     }
 
     /* ——— Форма регистрации по нику ——— */
-    .glass-card form {
+    .register form {
       display: flex;
       gap: 8px;
-      margin-bottom: 24px;
+      justify-content: center;
     }
-    .glass-card input {
+    .register input {
       flex: 1;
       padding: 10px 14px;
       border: none;
@@ -95,10 +103,10 @@
       color: var(--text);
       font-size: 1rem;
     }
-    .glass-card input::placeholder {
+    .register input::placeholder {
       color: var(--text-alt);
     }
-    .glass-card button {
+    .register button {
       padding: 10px 16px;
       border: none;
       border-radius: 6px;
@@ -108,21 +116,22 @@
       cursor: pointer;
       transition: background 0.2s;
     }
-    .glass-card button:hover {
+    .register button:hover {
       background: #a0d8ff;
     }
 
-    /* ——— Секция VIP ——— */
-    .glass-card .vip {
+    /* ——— Кнопка BuyVip ——— */
+    .vip .vip-btn {
       display: inline-block;
-      margin-top: 8px;
-      color: var(--accent);
+      padding: 12px 28px;
+      background: var(--accent);
+      color: var(--bg-start);
+      border-radius: 8px;
       font-weight: 600;
-      cursor: pointer;
-      transition: color 0.2s;
+      transition: background 0.2s;
     }
-    .glass-card .vip:hover {
-      color: #a0d8ff;
+    .vip .vip-btn:hover {
+      background: #a0d8ff;
     }
 
     /* ——— Footer ——— */
@@ -138,26 +147,32 @@
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Header с логотипом -->
   <header>
     <img src="logo.png" alt="SkyForge Logo" class="logo">
-    <a href="/BuyVip" class="buyvip">BuyVip</a>
   </header>
 
-  <!-- Hero + Glassmorphism-карта -->
+  <!-- Основной блок -->
   <main class="hero">
-    <div class="glass-card">
-      <h1>SkyForge</h1>
-      <p>Присоединяйся к нашему серверу. Регистрируйся по нику и получай доступ к уникальным возможностям.</p>
-      
-      <!-- Форма регистрации по нику -->
-      <form action="#" method="post">
-        <input type="text" name="nickname" placeholder="Твой никнейм" required>
-        <button type="submit">Register</button>
-      </form>
+    <div class="site-title">SkyForge</div>
 
-      <!-- Ссылка на покупку VIP -->
-      <div class="vip">Хотите больше? <a href="/BuyVip">Купить VIP</a></div>
+    <div class="cards">
+      <!-- Карточка регистрации -->
+      <div class="card register">
+        <h2>Регистрация</h2>
+        <p>Введите свой никнейм, чтобы присоединиться к серверу.</p>
+        <form action="#" method="post">
+          <input type="text" name="nickname" placeholder="Твой никнейм" required>
+          <button type="submit">Register</button>
+        </form>
+      </div>
+
+      <!-- Карточка VIP-покупки -->
+      <div class="card vip">
+        <h2>VIP-доступ</h2>
+        <p>Распахни новые возможности с нашим VIP-пакетом.</p>
+        <a href="/BuyVip" class="vip-btn">BuyVip</a>
+      </div>
     </div>
   </main>
 
