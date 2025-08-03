@@ -2,159 +2,385 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SkyForge — Главная</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌍 SkyForge — Покупка VIP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#181F7A',
+            secondary: '#4652d4',
+            accent: '#8396ff',
+            dark: '#0f172a',
+            light: '#f8fafc',
+          },
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+          },
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    :root {
-      --bg-start: #0d1117;
-      --bg-end:   #171c24;
-      --surface:  rgba(255,255,255,0.05);
-      --accent:   #79c0ff;
-      --text:     #c9d1d9;
-      --text-alt: #8b949e;
+    .gradient-text {
+      background: linear-gradient(90deg, #4652d4 0%, #8396ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    .glow {
+      box-shadow: 0 0 15px rgba(70, 82, 212, 0.5);
     }
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      line-height: 1.5;
-      min-height: 100vh;
-      padding: 20px;
+    .card-hover {
+      transition: all 0.3s ease;
     }
-    header {
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(70, 82, 212, 0.3);
+    }
+    .modal-enter {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+    .modal-exit {
+      animation: fadeOut 0.3s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.95); }
+    }
+    .tooltip {
+      position: relative;
+    }
+    .tooltip-text {
+      visibility: hidden;
+      width: 120px;
+      background-color: #0f172a;
+      color: #fff;
       text-align: center;
-      margin-bottom: 40px;
-    }
-    header h1 {
-      font-size: 3rem;
-      color: var(--accent);
-    }
-    header p {
-      font-size: 1.1rem;
-      color: var(--text-alt);
-      margin-top: 8px;
-    }
-    .ip-box {
-      margin-top: 20px;
-      display: inline-block;
-      padding: 10px 20px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background .2s;
-    }
-    .ip-box:hover {
-      background: rgba(255,255,255,0.2);
-    }
-    .vip-section {
-      width: 100%;
-      max-width: 900px;
-      margin: 40px auto 20px;
-    }
-    .vip-section h2 {
-      text-align: center;
-      color: var(--accent);
-      margin-bottom: 20px;
-      font-size: 2rem;
-    }
-    .vip-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 16px;
-    }
-    .vip-package {
-      background: var(--surface);
-      backdrop-filter: blur(8px);
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-      transition: transform .2s, box-shadow .2s;
-    }
-    .vip-package:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 24px rgba(0,0,0,0.6);
-    }
-    .vip-level {
-      font-size: 1.1rem;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-    .vip-price {
-      font-size: 1rem;
-      color: var(--text-alt);
-      margin-bottom: 12px;
-    }
-    .buy-btn {
-      padding: 8px 16px;
-      background: var(--accent);
-      color: var(--bg-start);
-      border: none;
       border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background .2s;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
-    .buy-btn:hover {
-      background: #a0d8ff;
-    }
-    footer {
-      margin-top: auto;
-      font-size: .85rem;
-      color: var(--text-alt);
-      text-align: center;
-      padding: 20px 0;
-    }
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 2.2rem;
-      }
-      .vip-section h2 {
-        font-size: 1.6rem;
-      }
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
     }
   </style>
 </head>
-<body>
+<body class="bg-gray-50 font-sans text-gray-800 min-h-screen flex flex-col">
+  <!-- Навигация -->
+  <nav class="bg-gradient-to-r from-primary to-secondary text-white shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-8">
+        <a href="#" class="text-xl font-bold flex items-center">
+          <i class="fas fa-globe mr-2"></i>
+          SkyForge
+        </a>
+        <div class="hidden md:flex space-x-6">
+          <a href="#" class="hover:text-accent transition">
+            <i class="fas fa-home mr-1"></i> Главное
+          </a>
+          <a href="#" class="font-bold text-accent flex items-center">
+            <i class="fas fa-crown mr-1"></i> Покупка
+            <span class="ml-1 text-xs bg-white text-primary px-2 py-0.5 rounded-full">БЕТА</span>
+          </a>
+          <a href="#" class="hover:text-accent transition">
+            <i class="fas fa-users mr-1"></i> Сообщество
+          </a>
+          <a href="#" class="hover:text-accent transition">
+            <i class="fas fa-question-circle mr-1"></i> Помощь
+          </a>
+        </div>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button class="bg-accent hover:bg-secondary px-4 py-2 rounded-lg font-medium transition">
+          <i class="fas fa-sign-in-alt mr-1"></i> Войти
+        </button>
+        <button class="md:hidden text-xl">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
 
-  <header>
-    <h1>SkyForge</h1>
-    <p>Классический сервер выживания — версия 1.20.1</p>
-    <div class="ip-box" onclick="navigator.clipboard.writeText('SkyForgeOFFICIAL')">
-      IP сервера: <strong>SkyForgeOFFICIAL</strong>
+  <!-- Хедер -->
+  <header class="bg-gradient-to-r from-primary to-secondary text-white py-12">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-8">
+      <div class="w-40 h-40 bg-white rounded-xl shadow-xl flex items-center justify-center p-4 animate-float">
+        <img src="https://via.placeholder.com/160" alt="SkyForge Logo" class="max-w-full max-h-full">
+      </div>
+      <div class="text-center md:text-left">
+        <h1 class="text-4xl md:text-5xl font-bold mb-2 flex items-center justify-center md:justify-start">
+          <i class="fas fa-globe mr-3"></i> SkyForge
+        </h1>
+        <p class="text-xl md:text-2xl text-accent font-semibold mb-4">Версия 1.20.1</p>
+        <div class="flex items-center justify-center md:justify-start space-x-2">
+          <div class="bg-white/20 px-3 py-1.5 rounded-lg flex items-center">
+            <i class="fas fa-server mr-2"></i>
+            <span class="font-mono font-bold" id="ip-text">SkyForgeOFFICALL.aternos.me:46890</span>
+          </div>
+          <button onclick="copyIP()" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition tooltip">
+            <i class="fas fa-copy"></i>
+            <span class="tooltip-text">Копировать IP</span>
+          </button>
+        </div>
+      </div>
     </div>
   </header>
 
-  <section class="vip-section">
-    <h2>VIP-пакеты</h2>
-    <div class="vip-grid" id="vipGrid"></div>
-  </section>
+  <!-- Основной контент -->
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <section class="mb-12">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6 gradient-text">Добро пожаловать на SkyForge!</h2>
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+          <p class="text-lg italic mb-4">
+            <i class="fas fa-quote-left text-accent mr-2"></i>
+            SkyForge — свободный сервер с элементами анархии. Здесь нет приватoв и ограничений на строительство, ценится честная игра и творчество.
+            <i class="fas fa-quote-right text-accent ml-2"></i>
+          </p>
+          <p class="text-lg">
+            Обмана нет, уважение к другим важно, а кланы и квесты создаются самими игроками. Полная свобода в рамках базовых правил.
+          </p>
+        </div>
+      </div>
+    </section>
 
-  <footer>© 2025 SkyForge. Все права защищены.</footer>
+    <!-- VIP секция -->
+    <section class="py-8">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4 gradient-text">Покупка VIP за аров</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Получите эксклюзивные привилегии и поддержите развитие сервера!
+        </p>
+      </div>
 
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="vip-cards">
+        <!-- Карточки генерируются скриптом -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Футер -->
+  <footer class="bg-dark text-white py-8">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <h3 class="text-2xl font-bold mb-2 flex items-center">
+            <i class="fas fa-globe mr-2"></i> SkyForge
+          </h3>
+          <p class="text-gray-400">Сервер Minecraft с элементами анархии</p>
+        </div>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-accent transition">
+            <i class="fab fa-discord text-2xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-accent transition">
+            <i class="fab fa-vk text-2xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-accent transition">
+            <i class="fab fa-telegram text-2xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-accent transition">
+            <i class="fab fa-youtube text-2xl"></i>
+          </a>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400">
+        <p>© 2023 SkyForge. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Модальное окно -->
+  <div id="modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 modal-enter">
+      <div class="flex justify-between items-start mb-4">
+        <h3 class="text-2xl font-bold gradient-text">
+          <i class="fas fa-crown mr-2"></i> Покупка VIP
+        </h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">
+          &times;
+        </button>
+      </div>
+      <div class="bg-gray-100 rounded-lg p-4 mb-4">
+        <pre class="font-mono text-sm" id="modal-text"></pre>
+      </div>
+      <div class="flex justify-between items-center">
+        <button onclick="copyCommand()" class="bg-accent hover:bg-secondary text-white px-4 py-2 rounded-lg font-medium transition">
+          <i class="fas fa-copy mr-2"></i> Копировать команду
+        </button>
+        <button onclick="closeModal()" class="text-gray-600 hover:text-gray-800 px-4 py-2 rounded-lg font-medium transition">
+          Закрыть
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Скрипты -->
   <script>
-    const vipGrid = document.getElementById('vipGrid');
-    for (let i = 1; i <= 20; i++) {
-      const pkg = document.createElement('div');
-      const price = i * 100;
-      pkg.className = 'vip-package';
-      pkg.innerHTML = `
-        <div class="vip-level">VIP ${i}</div>
-        <div class="vip-price">${price} ₽</div>
-        <button class="buy-btn" onclick="alert('Вы выбрали VIP ${i} за ${price} ₽')">
-          Купить
-        </button>`;
-      vipGrid.appendChild(pkg);
-    }
-  </script>
+    // VIP-уровни и цены
+    const vipLevels = [
+      { level: 1, price: 64, color: 'bg-blue-100', icon: 'fas fa-medal' },
+      { level: 2, price: 80, color: 'bg-green-100', icon: 'fas fa-award' },
+      { level: 3, price: 100, color: 'bg-purple-100', icon: 'fas fa-gem' },
+      { level: 4, price: 130, color: 'bg-yellow-100', icon: 'fas fa-trophy' },
+      { level: 5, price: 160, color: 'bg-pink-100', icon: 'fas fa-crown' },
+      { level: 6, price: 200, color: 'bg-indigo-100', icon: 'fas fa-star' },
+      { level: 7, price: 250, color: 'bg-red-100', icon: 'fas fa-fire' },
+      { level: 8, price: 300, color: 'bg-teal-100', icon: 'fas fa-bolt' },
+      { level: 9, price: 360, color: 'bg-orange-100', icon: 'fas fa-sun' },
+      { level:10, price: 430, color: 'bg-amber-100', icon: 'fas fa-meteor' }
+    ];
 
+    // Генерация карточек
+    const container = document.getElementById('vip-cards');
+    vipLevels.forEach(v => {
+      const card = document.createElement('div');
+      card.className = 'bg-white rounded-xl shadow-lg overflow-hidden card-hover';
+      card.innerHTML = `
+        <div class="${v.color} p-4 text-center">
+          <i class="${v.icon} text-4xl text-secondary mb-2"></i>
+          <h3 class="text-2xl font-bold text-dark">VIP ${v.level}</h3>
+        </div>
+        <div class="p-6 text-center">
+          <div class="text-3xl font-bold text-primary mb-4">${v.price} <span class="text-lg">аров</span></div>
+          <button onclick="buyVip(${v.level}, ${v.price})" 
+            class="w-full bg-gradient-to-r from-secondary to-accent hover:from-accent hover:to-secondary text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105">
+            Купить сейчас
+          </button>
+          <div class="text-xs text-gray-500 mt-2 flex items-center justify-center">
+            <i class="fas fa-info-circle mr-1"></i> Нажмите для инструкции
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    // Текущая команда для копирования
+    let currentCommand = '';
+
+    // Копировать IP
+    function copyIP() {
+      const txt = document.getElementById('ip-text').innerText;
+      navigator.clipboard.writeText(txt)
+        .then(() => {
+          showToast('IP сервера скопирован!', 'success');
+        })
+        .catch(() => {
+          showToast('Ошибка при копировании', 'error');
+        });
+    }
+
+    // Покупка VIP
+    function buyVip(level, price) {
+      currentCommand = `/BuyVip ${level}`;
+      const text = `Напишите в чат:\n\n${currentCommand}\n\nКогда админ подтвердит заявку — оплатите ${price} аров.`;
+      document.getElementById('modal-text').innerText = text.trim();
+      
+      const modal = document.getElementById('modal');
+      modal.classList.remove('hidden');
+      modal.querySelector('.modal-content').classList.add('modal-enter');
+    }
+
+    // Копировать команду
+    function copyCommand() {
+      if (!currentCommand) return;
+      
+      navigator.clipboard.writeText(currentCommand)
+        .then(() => {
+          showToast('Команда скопирована!', 'success');
+        })
+        .catch(() => {
+          showToast('Ошибка при копировании', 'error');
+        });
+    }
+
+    // Закрыть модалку
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      const content = modal.querySelector('.modal-content');
+      
+      content.classList.remove('modal-enter');
+      content.classList.add('modal-exit');
+      
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        content.classList.remove('modal-exit');
+      }, 300);
+    }
+
+    // Обработчик клика вне модалки
+    window.onclick = e => {
+      if (e.target.id === 'modal') closeModal();
+    };
+
+    // Показать уведомление
+    function showToast(message, type) {
+      const toast = document.createElement('div');
+      const colors = {
+        success: 'bg-green-500',
+        error: 'bg-red-500',
+        info: 'bg-blue-500'
+      };
+      
+      toast.className = `fixed bottom-4 right-4 ${colors[type] || 'bg-blue-500'} text-white px-6 py-3 rounded-lg shadow-lg flex items-center animate-fade-in`;
+      toast.innerHTML = `
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'} mr-2"></i>
+        ${message}
+      `;
+      
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.classList.add('animate-fade-out');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Анимация для уведомлений
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes fade-in {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fade-out {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(20px); }
+      }
+      .animate-fade-in {
+        animation: fade-in 0.3s ease-out forwards;
+      }
+      .animate-fade-out {
+        animation: fade-out 0.3s ease-out forwards;
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
 </body>
 </html>
