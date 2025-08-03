@@ -2,166 +2,168 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Тёмный дизайн с BuyVip</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SkyForge</title>
   <style>
-    /* ========== Цветовые переменные ========== */
+    /* ——— Цветовые переменные ——— */
     :root {
-      --bg: #121212;
-      --surface: #1f1f1f;
-      --accent: #bb86fc;
-      --text: #e0e0e0;
-      --text-secondary: #a0a0a0;
+      --bg-start: #0d1117;
+      --bg-end:   #171c24;
+      --surface:  rgba(255,255,255,0.05);
+      --accent:   #79c0ff;
+      --text:     #c9d1d9;
+      --text-alt: #8b949e;
     }
 
-    /* ========== Базовый сброс ========== */
+    /* ——— Сброс стилей ——— */
     * {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       box-sizing: border-box;
     }
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Segoe UI", Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
       min-height: 100vh;
+      display: flex; flex-direction: column;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
     }
+    a { text-decoration: none; color: inherit; }
 
-    /* ========== Header & Nav ========== */
+    /* ——— Header ——— */
     header {
-      background: var(--surface);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       padding: 16px 32px;
+      backdrop-filter: blur(10px);
+      background: var(--surface);
     }
-    .logo {
-      width: 140px;
+    header .logo {
+      height: 50px;
     }
-    nav .btn-buy {
+    header .buyvip {
       padding: 8px 20px;
       background: var(--accent);
-      color: var(--bg);
-      text-decoration: none;
-      font-weight: 600;
+      color: var(--bg-start);
       border-radius: 4px;
+      font-weight: 600;
       transition: background 0.2s;
     }
-    nav .btn-buy:hover {
-      background: #9a6bfd;
+    header .buyvip:hover {
+      background: #a0d8ff;
     }
 
-    /* ========== Hero ========== */
+    /* ——— Hero (центральная секция) ——— */
     .hero {
-      text-align: center;
-      padding: 80px 20px;
-    }
-    .hero h1 {
-      font-size: 2.8rem;
-      margin-bottom: 16px;
-    }
-    .hero p {
-      font-size: 1.1rem;
-      margin-bottom: 24px;
-      color: var(--text-secondary);
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .hero .btn {
-      display: inline-block;
-      padding: 12px 28px;
-      background: var(--accent);
-      color: var(--bg);
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 30px;
-      transition: background 0.2s;
-    }
-    .hero .btn:hover {
-      background: #9a6bfd;
-    }
-
-    /* ========== Features ========== */
-    .features {
+      flex: 1;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 40px;
-      padding: 60px 32px;
-      flex-grow: 1;
+      place-items: center;
+      padding: 40px 20px;
     }
-    .feature {
+    .glass-card {
+      max-width: 380px;
+      width: 100%;
       background: var(--surface);
-      border-radius: 12px;
-      padding: 24px 16px;
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 32px 24px;
       text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
     }
-    .feature:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    }
-    .feature .icon {
-      font-size: 2.8rem;
+    .glass-card h1 {
+      font-size: 2.4rem;
       margin-bottom: 12px;
     }
-    .feature .label {
+    .glass-card p {
+      color: var(--text-alt);
+      margin-bottom: 24px;
       font-size: 1rem;
-      font-weight: 600;
-      color: var(--text);
     }
 
-    /* ========== Footer ========== */
+    /* ——— Форма регистрации по нику ——— */
+    .glass-card form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .glass-card input {
+      flex: 1;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      font-size: 1rem;
+    }
+    .glass-card input::placeholder {
+      color: var(--text-alt);
+    }
+    .glass-card button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      background: var(--accent);
+      color: var(--bg-start);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .glass-card button:hover {
+      background: #a0d8ff;
+    }
+
+    /* ——— Секция VIP ——— */
+    .glass-card .vip {
+      display: inline-block;
+      margin-top: 8px;
+      color: var(--accent);
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .glass-card .vip:hover {
+      color: #a0d8ff;
+    }
+
+    /* ——— Footer ——— */
     footer {
       text-align: center;
-      padding: 16px 20px;
+      padding: 12px 20px;
       font-size: 0.85rem;
-      color: var(--text-secondary);
-      border-top: 1px solid var(--surface);
+      color: var(--text-alt);
+      backdrop-filter: blur(10px);
+      background: var(--surface);
     }
   </style>
 </head>
 <body>
 
-  <!-- Header с логотипом и ссылкой BuyVip -->
+  <!-- Header -->
   <header>
-    <img src="logo.png" alt="Logo" class="logo">
-    <nav>
-      <a href="/BuyVip" class="btn-buy">BuyVip</a>
-    </nav>
+    <img src="logo.png" alt="SkyForge Logo" class="logo">
+    <a href="/BuyVip" class="buyvip">BuyVip</a>
   </header>
 
-  <!-- Hero-секция -->
-  <section class="hero">
-    <h1>Добро пожаловать в мой проект!</h1>
-    <p>Кратко о твоём проекте — улови внимание посетителя парой предложений.</p>
-    <a href="#features" class="btn">Узнать больше</a>
-  </section>
+  <!-- Hero + Glassmorphism-карта -->
+  <main class="hero">
+    <div class="glass-card">
+      <h1>SkyForge</h1>
+      <p>Присоединяйся к нашему серверу. Регистрируйся по нику и получай доступ к уникальным возможностям.</p>
+      
+      <!-- Форма регистрации по нику -->
+      <form action="#" method="post">
+        <input type="text" name="nickname" placeholder="Твой никнейм" required>
+        <button type="submit">Register</button>
+      </form>
 
-  <!-- Раздел фич -->
-  <section id="features" class="features">
-    <div class="feature">
-      <div class="icon">💬</div>
-      <div class="label">Общение</div>
+      <!-- Ссылка на покупку VIP -->
+      <div class="vip">Хотите больше? <a href="/BuyVip">Купить VIP</a></div>
     </div>
-    <div class="feature">
-      <div class="icon">👥</div>
-      <div class="label">Сообщество</div>
-    </div>
-    <div class="feature">
-      <div class="icon">💰</div>
-      <div class="label">Экономика</div>
-    </div>
-    <div class="feature">
-      <div class="icon">⭐</div>
-      <div class="label">Опыт</div>
-    </div>
-  </section>
+  </main>
 
   <!-- Footer -->
   <footer>
-    © 2025 Твой проект. Все права защищены.
+    © 2025 SkyForge. Все права защищены.
   </footer>
 
 </body>
