@@ -6,7 +6,6 @@
   <title>🏕️ SkyForge Survival — Покупка VIP</title>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
   <style>
-    /* 1. CSS Variables & Themes */
     :root {
       --bg-light: #f0f4f8;
       --text-light: #222;
@@ -28,7 +27,6 @@
       background: var(--bg-dark);
       color: var(--text-dark);
     }
-    /* 2. Glass Panels */
     .glass {
       background: var(--glass);
       backdrop-filter: blur(12px);
@@ -39,97 +37,159 @@
       background: var(--glass-d);
       border: 1px solid rgba(0,0,0,0.5);
     }
-    /* 3. Layout */
     nav.navbar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 24px; height: 60px;
-      position: sticky; top:0; z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--glass);
     }
     header.header {
-      display: flex; align-items: center; gap: 24px;
-      padding: 32px 24px; margin: 16px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 80px 24px;           /* увеличил вертикальные отступы */
+      min-height: 240px;            /* заставляет блок быть «жирнее» */
+      margin: 16px;
       background: linear-gradient(135deg, var(--accent-d), var(--accent));
+      border-radius: 12px;
     }
     main {
-      max-width: 1100px; margin: 24px auto; padding: 0 16px;
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px;
     }
     .desc {
-      margin-bottom: 1.2em; font-style: italic; line-height:1.4;
+      margin-bottom: 1.2em;
+      font-style: italic;
+      line-height: 1.4;
     }
     section.shop {
       margin: 32px 0;
     }
     .vip-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
       gap: 20px;
     }
-    /* 4. Typography & Buttons */
-    .brand { font-size:1.5rem; font-weight:700; }
-    .menu { display:flex; gap:16px; font-weight:700; }
-    .menu .active { text-decoration: underline; }
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .menu {
+      display: flex;
+      gap: 16px;
+      font-weight: 700;
+    }
+    .menu .active {
+      text-decoration: underline;
+    }
     button {
-      font-family: inherit; font-weight:700;
-      cursor:pointer; outline:none; border:none;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+      border: none;
       transition: background .2s, transform .1s;
     }
     .ip-box {
-      display:flex; align-items:center; gap:8px;
-      font-size:.95rem; background:rgba(255,255,255,0.2);
-      padding:4px 8px; border-radius:6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .95rem;
+      background: rgba(255,255,255,0.2);
+      padding: 4px 8px;
+      border-radius: 6px;
     }
-    .ip-box button:hover { transform: translateY(-1px); }
+    .ip-box button:hover {
+      transform: translateY(-1px);
+    }
     .buy-btn {
-      background: var(--accent); color:#fff;
-      padding:8px 16px; border-radius:6px;
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
     }
-    .buy-btn:hover { background: var(--accent-d); transform: translateY(-2px); }
-    /* 5. Cards */
+    .buy-btn:hover {
+      background: var(--accent-d);
+      transform: translateY(-2px);
+    }
     .vip-card {
-      background: var(--glass); padding:16px;
-      border-radius:10px; text-align:center;
-      border:1px solid rgba(255,255,255,0.2);
+      background: var(--glass);
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.2);
       transition: transform .2s, box-shadow .2s;
     }
-    body.dark .vip-card { background: var(--glass-d); }
+    body.dark .vip-card {
+      background: var(--glass-d);
+    }
     .vip-card:hover {
       transform: translateY(-6px);
       box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     }
-    .vip-tier { font-size:1.8rem; color:var(--accent); margin-bottom:.5em; }
-    .vip-price{ font-size:1.2rem; margin-bottom:1em; }
-    .buy-tip { font-size:.85rem; font-style:italic; color:inherit; }
-    /* 6. Modal */
+    .vip-tier {
+      font-size: 1.8rem;
+      color: var(--accent);
+      margin-bottom: .5em;
+    }
+    .vip-price {
+      font-size: 1.2rem;
+      margin-bottom: 1em;
+    }
+    .buy-tip {
+      font-size: .85rem;
+      font-style: italic;
+      color: inherit;
+    }
     #modal {
-      display:none; position:fixed; inset:0;
-      background:rgba(0,0,0,0.6);
-      align-items:center; justify-content:center; z-index:20;
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
     }
     .modal-content {
-      background: var(--glass); backdrop-filter: blur(16px);
-      padding:20px; border-radius:12px; max-width:320px;
-      border:1px solid rgba(255,255,255,0.2);
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 320px;
+      border: 1px solid rgba(255,255,255,0.2);
+      position: relative;
     }
     body.dark .modal-content {
       background: var(--glass-d);
-      border:1px solid rgba(0,0,0,0.5);
+      border: 1px solid rgba(0,0,0,0.5);
     }
     .modal-content p {
-      white-space: pre-wrap; margin-bottom:16px;
+      white-space: pre-wrap;
+      margin-bottom: 16px;
     }
     .modal-close {
-      position:absolute; top:8px; right:12px;
-      background:none; font-size:1.2rem;
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      background: none;
+      font-size: 1.2rem;
     }
-    /* 7. Responsive */
-    @media(max-width:600px){
-      header.header { flex-direction:column; text-align:center; }
+    @media(max-width:600px) {
+      header.header {
+        flex-direction: column;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVIGATION -->
   <nav class="navbar glass">
     <div class="brand">SkyForge</div>
     <div class="menu">
@@ -138,12 +198,11 @@
     </div>
     <div>
       <button id="accent-btn" title="Сменить цвет акцента">🎨</button>
-      <input type="color" id="accent-picker">
-      <button id="theme-toggle" title="Тёмный / светлый режим">🌙</button>
+      <input type="color" id="accent-picker" style="display:none;">
+      <button id="theme-toggle" title="Тёмный/светлый режим">🌙</button>
     </div>
   </nav>
 
-  <!-- HEADER -->
   <header class="header">
     <div class="logo glass" style="width:120px;height:120px;display:flex;align-items:center;justify-content:center;">
       <img src="logo.png" alt="Logo" style="max-width:100px;max-height:100px;">
@@ -158,16 +217,14 @@
     </div>
   </header>
 
-  <!-- MAIN -->
   <main>
     <p class="desc">
-      Добро пожаловать на SkyForge Survival! Здесь вас ждёт суровый мир, полон приключений, охоты и строительства.
+      Добро пожаловать на SkyForge Survival! Сражайтесь с монстрами, стройте базы и объединяйтесь с друзьями.
     </p>
     <p class="desc">
-      Постройте базу, объединяйтесь в кланы и выживайте под ударами монстров и непогоды!
+      Исследуйте мир, добывайте ресурсы и создавайте процветающие поселения в этом суровом мире.
     </p>
 
-    <!-- SHOP -->
     <section class="shop">
       <h2 style="text-align:center;color:var(--accent);font-size:2.2rem;margin-bottom:16px;">
         Покупка VIP за аров
@@ -176,7 +233,6 @@
     </section>
   </main>
 
-  <!-- MODAL -->
   <div id="modal">
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal()">×</button>
@@ -185,58 +241,57 @@
     </div>
   </div>
 
-  <!-- SCRIPTS -->
   <script>
-    // 1. Theme & Accent
-    const themeToggle = document.getElementById('theme-toggle');
-    const accentBtn   = document.getElementById('accent-btn');
-    const picker      = document.getElementById('accent-picker');
+    // Theme & Accent
+    const toggle = document.getElementById('theme-toggle');
+    const accentBtn = document.getElementById('accent-btn');
+    const picker = document.getElementById('accent-picker');
 
-    // Load saved
-    if(localStorage.getItem('theme')==='dark') {
+    if (localStorage.getItem('theme') === 'dark') {
       document.body.classList.add('dark');
-      themeToggle.textContent = '☀️';
+      toggle.textContent = '☀️';
     }
-    const savedAcc = localStorage.getItem('accent');
-    if(savedAcc){
-      document.documentElement.style.setProperty('--accent', savedAcc);
-      document.documentElement.style.setProperty('--accent-d',
-        '#' + Math.max(parseInt(savedAcc.slice(1),16)-0x202020,0).toString(16).padStart(6,'0'));
+    const saved = localStorage.getItem('accent');
+    if (saved) {
+      document.documentElement.style.setProperty('--accent', saved);
+      const d = Math.max(parseInt(saved.slice(1),16)-0x202020,0);
+      const dark = '#' + d.toString(16).padStart(6,'0');
+      document.documentElement.style.setProperty('--accent-d', dark);
     }
 
-    themeToggle.onclick = ()=>{
+    toggle.onclick = () => {
       document.body.classList.toggle('dark');
-      const dark = document.body.classList.contains('dark');
-      themeToggle.textContent = dark?'☀️':'🌙';
-      localStorage.setItem('theme', dark?'dark':'light');
+      const is = document.body.classList.contains('dark');
+      toggle.textContent = is ? '☀️' : '🌙';
+      localStorage.setItem('theme', is ? 'dark' : 'light');
     };
 
-    accentBtn.onclick = ()=>picker.click();
-    picker.oninput = e=>{
+    accentBtn.onclick = () => picker.click();
+    picker.oninput = e => {
       const c = e.target.value;
       document.documentElement.style.setProperty('--accent', c);
       const d = Math.max(parseInt(c.slice(1),16)-0x202020,0);
-      const dark = '#'+d.toString(16).padStart(6,'0');
+      const dark = '#' + d.toString(16).padStart(6,'0');
       document.documentElement.style.setProperty('--accent-d', dark);
       localStorage.setItem('accent', c);
     };
 
-    // 2. Copy IP
-    function copyIP(){
+    // Copy IP
+    function copyIP() {
       const ip = document.getElementById('ip-text').innerText;
       navigator.clipboard.writeText(ip)
         .then(()=>alert('IP скопирован!'))
         .catch(()=>alert('Не удалось скопировать'));
     }
 
-    // 3. Generate VIP cards
+    // Generate VIP cards
     const vip = [
       {l:1,p:64},{l:2,p:80},{l:3,p:100},{l:4,p:130},
       {l:5,p:160},{l:6,p:200},{l:7,p:250},{l:8,p:300},
       {l:9,p:360},{l:10,p:430}
     ];
     const cont = document.getElementById('vip-cards');
-    vip.forEach(v=>{
+    vip.forEach(v => {
       const d = document.createElement('div');
       d.className = 'vip-card';
       d.innerHTML = `
@@ -248,18 +303,18 @@
       cont.appendChild(d);
     });
 
-    // 4. Buy VIP modal
-    function buyVip(l,p){
+    // Buy VIP
+    function buyVip(l,p) {
       const cmd = `/BuyVip ${l}`;
       navigator.clipboard.writeText(cmd);
       document.getElementById('modal-text').innerText =
         `Напишите в чат: ${cmd}\n\nДождитесь подтверждения и оплатите ${p} аров.`;
       document.getElementById('modal').style.display = 'flex';
     }
-    function closeModal(){
+    function closeModal() {
       document.getElementById('modal').style.display = 'none';
     }
-    window.onclick = e=>{ if(e.target.id==='modal') closeModal() };
+    window.onclick = e => { if (e.target.id === 'modal') closeModal(); };
   </script>
 </body>
 </html>
