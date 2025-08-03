@@ -2,210 +2,185 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1"
-  >
-  <title>SkyForge — Классический сервер выживания</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SkyForge — Главная</title>
   <style>
-    /* Базовые переменные */
     :root {
-      --clr-bg-start: #0d1117;
-      --clr-bg-end:   #171c24;
-      --clr-surface:  rgba(255,255,255,0.05);
-      --clr-accent:   #79c0ff;
-      --clr-text:     #c9d1d9;
-      --clr-text-alt: #8b949e;
-      --font-base:    1rem;
-      --radius:       12px;
-      --gap:          1.5rem;
+      --bg-start: #0d1117;
+      --bg-end:   #171c24;
+      --surface:  rgba(255,255,255,0.05);
+      --accent:   #79c0ff;
+      --text:     #c9d1d9;
+      --text-alt: #8b949e;
     }
-
-    /* Сброс стилей */
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      font-size: 100%; /* 1rem = 16px */
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      min-height: 100vh;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      color: var(--text);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: start;
-      padding: var(--gap);
-      font-family: "Segoe UI", sans-serif;
-      color: var(--clr-text);
-      background: linear-gradient(
-        135deg,
-        var(--clr-bg-start),
-        var(--clr-bg-end)
-      );
-      line-height: 1.5;
+      padding: 40px 20px;
+      min-height: 100vh;
     }
-
-    h1, h2 {
-      line-height: 1.2;
-    }
-
-    /* Заголовок сайта */
-    .site-header {
+    header {
       text-align: center;
-      margin-bottom: var(--gap);
+      margin-bottom: 30px;
     }
-
-    .site-title {
-      font-size: clamp(2rem, 5vw, 3rem);
-      color: var(--clr-accent);
-      margin-bottom: 0.25em;
+    header h1 {
+      font-size: 2.8rem;
+      color: var(--accent);
     }
-
-    .site-subtitle {
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      color: var(--clr-text-alt);
+    header p {
+      font-size: 1.1rem;
+      color: var(--text-alt);
     }
-
-    /* Карточка контента */
     .card {
-      background: var(--clr-surface);
-      backdrop-filter: blur(8px);
-      border-radius: var(--radius);
-      padding: var(--gap);
+      background: var(--surface);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 24px;
       max-width: 600px;
       width: 100%;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
       text-align: center;
+      margin-bottom: 40px;
     }
-
+    .card h2 {
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
     .card p {
-      margin-bottom: 1em;
+      font-size: 1rem;
+      margin-bottom: 12px;
     }
-
-    .rules {
-      text-align: left;
-      margin: 1em 0;
+    ul.rules {
       list-style: none;
-      padding-left: 0;
+      text-align: left;
+      margin: 20px 0;
     }
-
-    .rules li {
-      margin-bottom: 0.5em;
+    ul.rules li {
+      margin-bottom: 8px;
       font-size: 0.95rem;
     }
-
-    .rules li::before {
-      content: "• ";
-      color: var(--clr-accent);
-    }
-
-    /* IP-бокс и кнопка VIP */
     .ip-box {
-      display: inline-block;
-      padding: 0.75em 1.5em;
-      margin: 1em 0;
-      font-size: 1rem;
+      margin: 20px 0;
+      font-size: 1.1rem;
       font-weight: bold;
       background: rgba(255,255,255,0.1);
-      border-radius: var(--radius);
+      padding: 10px 20px;
+      border-radius: 8px;
       cursor: pointer;
       transition: background 0.2s;
     }
-
     .ip-box:hover {
-      background: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.2);
     }
-
-    .vip-btn {
-      display: inline-block;
-      padding: 0.75em 2em;
-      margin-top: 0.5em;
-      background: var(--clr-accent);
-      color: var(--clr-bg-start);
+    .vip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 16px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .vip-package {
+      background: var(--surface);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .vip-package:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.6);
+    }
+    .vip-level {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+    .vip-price {
+      font-size: 1rem;
+      margin-bottom: 12px;
+      color: var(--text-alt);
+    }
+    .buy-btn {
+      padding: 8px 16px;
+      background: var(--accent);
+      color: var(--bg-start);
       border: none;
-      border-radius: var(--radius);
-      font-weight: 600;
+      border-radius: 6px;
       cursor: pointer;
+      font-weight: 600;
       transition: background 0.2s;
     }
-
-    .vip-btn:hover {
+    .buy-btn:hover {
       background: #a0d8ff;
     }
-
-    /* Адаптивность */
-    @media (min-width: 768px) {
-      body {
-        padding: calc(var(--gap) * 2);
-      }
-
-      .card {
-        padding: calc(var(--gap) * 1.5);
-      }
+    footer {
+      margin-top: auto;
+      font-size: 0.85rem;
+      color: var(--text-alt);
+      text-align: center;
+      padding: 20px 0;
+    }
+    @media (max-width: 480px) {
+      header h1 { font-size: 2rem; }
+      .card { padding: 16px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Шапка -->
-  <header class="site-header">
-    <h1 class="site-title">SkyForge</h1>
-    <p class="site-subtitle">Классический сервер выживания — версия 1.20.1</p>
+  <header>
+    <h1>SkyForge</h1>
+    <p>Классический сервер выживания — версия 1.20.1</p>
   </header>
 
-  <!-- Основной контент -->
-  <section class="card">
+  <div class="card">
     <h2>Добро пожаловать!</h2>
-    <p>Здесь главное — честная игра и дружелюбное сообщество.</p>
+    <p>Честная игра, дружелюбное сообщество, никаких регистраций.</p>
     <ul class="rules">
-      <li>Гриферство запрещено</li>
-      <li>Обман игроков не допускается</li>
-      <li>Уважение к другим — обязательное правило</li>
+      <li>❌ Гриферство запрещено</li>
+      <li>❌ Обман игроков не допускается</li>
+      <li>✅ Уважение к другим — обязательное правило</li>
     </ul>
-    <p>Строй базы, объединяйся в города и наслаждайся выживанием вместе с друзьями!</p>
-
-    <div
-      class="ip-box"
-      id="ipBox"
-      title="Нажми, чтобы скопировать IP"
-    >
-      IP сервера: <span id="serverIp">SkyForgeOFFICIAL</span>
+    <p>Стройте, исследуйте, объединяйтесь и наслаждайтесь выживанием без хаоса.</p>
+    <div class="ip-box" onclick="navigator.clipboard.writeText('SkyForgeOFFICIAL')">
+      IP сервера: <strong>SkyForgeOFFICIAL</strong> (нажми, чтобы скопировать)
     </div>
+  </div>
 
-    <button class="vip-btn" id="vipBtn">Покупка VIP</button>
+  <section class="vip-grid">
+    <!-- 20 VIP-пакетов -->
+    <script>
+      const vipContainer = document.currentScript.parentElement;
+      for (let i = 1; i <= 20; i++) {
+        const level = `VIP ${i}`;
+        const price = i * 100;
+        const pkg = document.createElement('div');
+        pkg.className = 'vip-package';
+        pkg.innerHTML = `
+          <div class="vip-level">${level}</div>
+          <div class="vip-price">${price} ₽</div>
+          <button class="buy-btn" onclick="buyVip('${level}', ${price})">
+            Купить
+          </button>`;
+        vipContainer.appendChild(pkg);
+      }
+      function buyVip(level, price) {
+        alert(`Вы выбрали ${level} за ${price} ₽`);
+      }
+    </script>
   </section>
 
-  <!-- Подвал -->
-  <footer style="margin-top: var(--gap); font-size: 0.85rem; color: var(--clr-text-alt);">
-    &copy; <span id="year"></span> SkyForge. Все права защищены.
+  <footer>
+    © 2025 SkyForge. Все права защищены.
   </footer>
 
-  <script>
-    // Авто-вставка текущего года
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Копирование IP в буфер обмена
-    const ipBox = document.getElementById('ipBox');
-    ipBox.addEventListener('click', () => {
-      const ipText = document.getElementById('serverIp').textContent;
-      navigator.clipboard.writeText(ipText).then(() => {
-        ipBox.textContent = 'Скопировано: ' + ipText;
-        setTimeout(() => {
-          ipBox.textContent = 'IP сервера: ' + ipText;
-        }, 1500);
-      });
-    });
-
-    // Заглушка для кнопки VIP
-    document.getElementById('vipBtn').addEventListener('click', () => {
-      alert('Здесь будет процесс покупки VIP.');
-    });
-  </script>
 </body>
 </html>
