@@ -2,307 +2,325 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>SkyForge - Minecraft сервер</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🏕️ SkyForge Survival — Покупка VIP</title>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400italic,400&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #f4f4f4;
+      --text: #333;
+      --nav-bg: #5d4037;
+      --header-bg: #8d6e63;
+      --accent: #c68642;
+      --card-bg: #fff;
+      --modal-bg: rgba(0, 0, 0, .6);
+    }
+    body.dark {
+      --bg: #1e1e1e;
+      --text: #ddd;
+      --nav-bg: #3e2723;
+      --header-bg: #5d4037;
+      --accent: #c68642;
+      --card-bg: #2b2b2b;
+      --modal-bg: rgba(0, 0, 0, .8);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      margin: 0;
-      background: #f4f4f4;
-      font-family: 'Montserrat', Arial, sans-serif;
-      color: #555;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.5;
     }
-    .navbar {
-      background: #181F7A;
+    nav.navbar {
+      background: var(--nav-bg);
       color: #fff;
       display: flex;
       align-items: center;
-      padding: 0 40px;
-      height: 56px;
-      font-size: 1.15rem;
-      font-weight: 700;
       justify-content: space-between;
+      padding: 0 24px;
+      height: 56px;
     }
-    .navbar .menu {
-      display: flex;
-      gap: 32px;
-    }
-    .navbar .menu .active {
-      text-decoration: underline;
-    }
-    .navbar .menu .beta {
-      font-weight: 400;
-      font-style: italic;
-      color: #ff6a6a;
-      font-size: 1rem;
-      margin-left: 4px;
-    }
-    .navbar .brand {
-      font-weight: 700;
-      font-size: 1.15rem;
-    }
-    .header {
-      display: flex;
-      align-items: center;
-      background: #4652d4;
+    .navbar .brand { font-size: 1.3rem; font-weight: 700; }
+    .navbar .menu { display: flex; gap: 24px; font-weight: 700; }
+    .navbar .menu .active { text-decoration: underline; }
+    #theme-toggle {
+      background: none;
+      border: none;
       color: #fff;
-      padding: 32px 40px 32px 40px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform .2s;
     }
-    .logo {
-      width: 220px;
-      height: 220px;
-      background: #181F7A;
+    #theme-toggle:hover { transform: scale(1.1); }
+
+    .header {
+      background: var(--header-bg);
+      padding: 32px 24px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin-right: 40px;
-      border-radius: 6px;
-      flex-shrink: 0;
+      gap: 24px;
     }
-    .logo img {
-      max-width: 200px;
-      max-height: 200px;
-      border-radius: 2px;
+    .header .logo {
+      width: 140px; height: 140px;
+      background: var(--nav-bg);
+      border: 4px solid var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .header .logo img {
+      max-width: 120px; max-height: 120px;
       object-fit: contain;
     }
-    .title-block {
-      display: flex;
-      flex-direction: column;
-    }
+    .title-block { display: flex; flex-direction: column; gap: .4em; }
     .server-title {
-      font-size: 3rem;
-      font-weight: 700;
+      font-size: 2.8rem;
       font-style: italic;
-      margin-bottom: 0.4em;
-      margin-top: 0;
       color: #fff;
     }
     .server-version {
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-style: italic;
-      color: #a7c8f2;
-      font-weight: 600;
-      margin-bottom: 0.2em;
+      color: #eee;
     }
     .server-ip {
-      font-size: 2rem;
-      font-style: italic;
-      color: #8396ff;
-      margin-bottom: 0.5em;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-    }
-    .copy-btn {
-      background: none;
-      border: none;
-      color: #cddcfd;
-      font-size: 1.4rem;
-      cursor: pointer;
-      font-style: italic;
-      margin-left: 8px;
-      display: flex;
-      align-items: center;
-      padding: 0;
-      transition: color 0.2s;
-    }
-    .copy-btn:hover {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 1.2rem;
       color: #fff;
+      background: rgba(255,255,255,.2);
+      padding: 4px 8px;
+      border-radius: 4px;
     }
+    .server-ip button {
+      background: none; border: none; color: #fff;
+      cursor: pointer; font-size: 1rem;
+    }
+
     .main {
       max-width: 1200px;
-      margin: 32px auto 0 auto;
-      background: none;
-      padding: 0 40px 40px 40px;
-      font-size: 2rem;
+      margin: 24px auto;
+      padding: 0 24px;
     }
     .desc {
       font-style: italic;
-      color: #7b7b7b;
-      font-size: 2rem;
-      margin-bottom: 1.5em;
-      margin-top: 0;
-      line-height: 1.25;
+      margin-bottom: 1.2em;
     }
+
     .shop-section {
-      max-width: 1200px;
-      margin: 32px auto 0 auto;
-      padding: 0 40px 40px 40px;
+      margin-top: 16px;
+      padding: 0 24px 40px;
     }
     .shop-title {
-      font-size: 2.5rem;
+      font-size: 2.4rem;
+      color: var(--nav-bg);
+      text-align: center;
+      margin-bottom: 24px;
       font-weight: 700;
-      color: #181F7A;
-      margin-bottom: 1.2em;
     }
     .vip-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 28px;
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 20px;
     }
     .vip-card {
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 4px 18px 0 rgba(70,82,212,.09);
-      padding: 32px 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: box-shadow 0.2s;
-      position: relative;
+      background: var(--card-bg);
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      transition: transform .1s, box-shadow .2s;
     }
     .vip-card:hover {
-      box-shadow: 0 8px 32px 0 rgba(70,82,212,.17);
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,.2);
     }
     .vip-tier {
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: #4652d4;
-      margin-bottom: 0.6em;
-      letter-spacing: 1px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: .6em;
     }
     .vip-price {
-      font-size: 1.6rem;
-      color: #181F7A;
+      font-size: 1.2rem;
       margin-bottom: 1em;
       font-weight: 700;
     }
     .buy-btn {
-      background: linear-gradient(90deg, #4652d4 0%, #8396ff 100%);
+      background: var(--accent);
       color: #fff;
       border: none;
-      border-radius: 8px;
-      font-size: 1.25rem;
-      font-weight: 700;
-      padding: 12px 30px;
+      padding: 8px 16px;
+      border-radius: 4px;
       cursor: pointer;
-      margin-bottom: 0.5em;
-      margin-top: 8px;
-      box-shadow: 0 2px 8px rgba(70,82,212,.09);
-      transition: background 0.2s, box-shadow 0.2s;
+      font-weight: 700;
+      transition: background .2s;
     }
-    .buy-btn:hover {
-      background: linear-gradient(90deg, #8396ff 0%, #4652d4 100%);
-      box-shadow: 0 4px 16px rgba(70,82,212,.17);
-    }
-    .vip-card .buy-tip {
-      font-size: 1rem;
-      color: #7b7b7b;
-      margin-top: 4px;
+    .buy-btn:hover { background: #b57336; }
+    .buy-tip {
+      font-size: .85rem;
+      color: var(--text);
+      margin-top: 6px;
       font-style: italic;
     }
-    @media (max-width: 900px) {
-      .header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 32px 10px;
-      }
-      .logo {
-        margin-right: 0;
-        margin-bottom: 18px;
-      }
-      .main, .shop-section {
-        padding: 0 10px 40px 10px;
-      }
+
+    #modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--modal-bg);
+      align-items: center; justify-content: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 360px;
+      position: relative;
+      box-shadow: 0 6px 18px rgba(0,0,0,.3);
+      animation: fadeIn .2s ease-out;
+    }
+    .modal-content p {
+      white-space: pre-wrap;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .modal-content button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .modal-content button:hover { background: #b57336; }
+    .modal-close {
+      position: absolute;
+      top: 8px; right: 12px;
+      background: none; border: none;
+      font-size: 1.2rem; color: var(--text);
+      cursor: pointer;
+    }
+    .modal-close:hover { color: var(--accent); }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(.96) }
+      to { opacity: 1; transform: scale(1) }
+    }
+    @media (max-width: 700px) {
+      .header { flex-direction: column; text-align: center; }
+      .logo { margin-bottom: 16px; }
     }
   </style>
 </head>
 <body>
+
   <nav class="navbar">
     <div class="menu">
-      <span>Главное</span>
-      <span class="active">Покупка <span class="beta">(БЕТА)</span></span>
+      <span>Выживание</span>
+      <span class="active">Покупка<span class="beta">(БЕТА)</span></span>
     </div>
     <div class="brand">SkyForge</div>
+    <button id="theme-toggle" title="Переключить тему">🌙</button>
   </nav>
-  <div class="header">
+
+  <header class="header">
     <div class="logo">
-      <img src="logo.png" alt="SkyForge Logo" />
-      <!-- Замените src на верный путь к изображению -->
+      <img src="logo.png" alt="SkyForge Logo">
     </div>
     <div class="title-block">
-      <div class="server-title">SkyForge</div>
-      <div class="server-version">1.20.1</div>
+      <div class="server-title">🏕️ SkyForge Survival</div>
+      <div class="server-version">версия 1.20.1</div>
       <div class="server-ip">
-        <span><span style="font-weight:700;">SkyForgeOFFICALL.aternos.me:46890</span></span>
-        <button class="copy-btn" onclick="copyIP()" title="Копировать IP">
-          <svg height="24" width="24" style="vertical-align:middle;" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-          Копировать
-        </button>
+        <span id="ip-text">SkyForgeOFFICALL.aternos.me:46890</span>
+        <button onclick="copyIP()" title="Копировать IP">📋</button>
       </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <p class="desc">
+      Добро пожаловать на SkyForge Survival! Здесь выживание становится настоящим испытанием: охота, фермы, кланы и исследования.
+    </p>
+    <p class="desc">
+      Исследуйте мир, стройте базы, объединяйтесь с друзьями и докажите, что ваше поселение выживет в самых суровых условиях!
+    </p>
+  </main>
+
+  <section class="shop-section">
+    <h2 class="shop-title">Покупка VIP за аров</h2>
+    <div class="vip-cards" id="vip-cards"></div>
+  </section>
+
+  <div id="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <p id="modal-text"></p>
+      <button onclick="closeModal()">Закрыть</button>
     </div>
   </div>
-  <div class="main">
-    <div class="desc">
-      SkyForge — свободный сервер с элементами анархии. Здесь ты получаешь максимум свободы: нет приватoв, нет ограничений на строительство, нет навязанных путей развития. Но в отличие от полной анархии, у нас есть базовые правила: — Гриферство запрещено — Обман игроков не допускается — Уважение к другим — основа сообщества
-    </div>
-    <div class="desc">
-      Ты можешь строить, исследовать, сражаться, создавать кланы и развивать свои идеи. Мы не ограничиваем твой стиль игры, но следим за тем, чтобы каждый игрок чувствовал себя комфортно. SkyForge — это баланс между свободой и порядком. Здесь ценится честная игра, творчество и взаимодействие.
-    </div>
-  </div>
-  <div class="shop-section">
-    <div class="shop-title">Покупка VIP</div>
-    <div class="vip-cards">
-      <div class="vip-card">
-        <div class="vip-tier">VIP I</div>
-        <div class="vip-price">64 аров</div>
-        <button class="buy-btn" onclick="buyVIP('VIP I', 64)">Купить</button>
-        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
-      </div>
-      <div class="vip-card">
-        <div class="vip-tier">VIP II</div>
-        <div class="vip-price">80 аров</div>
-        <button class="buy-btn" onclick="buyVIP('VIP II', 80)">Купить</button>
-        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
-      </div>
-      <div class="vip-card">
-        <div class="vip-tier">VIP III</div>
-        <div class="vip-price">100 аров</div>
-        <button class="buy-btn" onclick="buyVIP('VIP III', 100)">Купить</button>
-        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
-      </div>
-      <div class="vip-card">
-        <div class="vip-tier">VIP IV</div>
-        <div class="vip-price">130 аров</div>
-        <button class="buy-btn" onclick="buyVIP('VIP IV', 130)">Купить</button>
-        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
-      </div>
-      <div class="vip-card">
-        <div class="vip-tier">VIP V</div>
-        <div class="vip-price">160 аров</div>
-        <button class="buy-btn" onclick="buyVIP('VIP V', 160)">Купить</button>
-        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
-      </div>
-      <div class="vip-card">
-        <div class="vip-tier">VIP VI</div>
-        <div class="vip-price">200 аров</div>
-        <button class="buy-btn" onclick="buyVIP('VIP VI', 200)">Купить</button>
-        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
-      </div>
-      <div class="vip-card">
-        <div class="vip-tier">VIP VII</div>
-        <div class="vip-price">250 аров</div>
-        <button class="buy-btn" onclick="buyVIP('VIP VII', 250)">Купить</button>
-        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
-      </div>
-      <div class="vip-card">
-        <div class="vip-tier">VIP VIII</div>
-        <div class="vip-price">300 аров</div>
-        <button class="buy-btn" onclick="buyVIP('VIP VIII', 300)">Купить</button>
-        <div class="buy-tip">Нажмите «Купить», чтобы скопировать уровень и цену</div>
-      </div>
-    </div>
-  </div>
+
   <script>
+    // Сохраняем тему
+    const btn = document.getElementById('theme-toggle');
+    const body = document.body;
+    const current = localStorage.getItem('theme');
+    if (current === 'dark') body.classList.add('dark'), btn.textContent = '☀️';
+
+    btn.onclick = () => {
+      body.classList.toggle('dark');
+      const isDark = body.classList.contains('dark');
+      btn.textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    };
+
+    // VIP уровни
+    const vipLevels = [
+      { level: 1, price: 64 }, { level: 2, price: 80 },
+      { level: 3, price: 100 },{ level: 4, price: 130 },
+      { level: 5, price: 160 },{ level: 6, price: 200 },
+      { level: 7, price: 250 },{ level: 8, price: 300 },
+      { level: 9, price: 360 },{ level:10, price: 430 }
+    ];
+    const container = document.getElementById('vip-cards');
+    vipLevels.forEach(v => {
+      const card = document.createElement('div');
+      card.className = 'vip-card';
+      card.innerHTML = `
+        <div class="vip-tier">VIP ${v.level}</div>
+        <div class="vip-price">${v.price} аров</div>
+        <button class="buy-btn" onclick="buyVip(${v.level}, ${v.price})">Купить</button>
+        <div class="buy-tip">Нажмите, чтобы скопировать команду</div>
+      `;
+      container.appendChild(card);
+    });
+
+    // Копирование IP
     function copyIP() {
-      navigator.clipboard.writeText("SkyForgeOFFICALL.aternos.me:46890");
-      alert("IP скопирован!");
+      const txt = document.getElementById('ip-text').innerText;
+      navigator.clipboard.writeText(txt)
+        .then(() => alert('IP скопирован!'))
+        .catch(() => alert('Ошибка копирования.'));
     }
-    function buyVIP(tier, price) {
-      navigator.clipboard.writeText(tier + " — " + price + " аров");
-      alert("Данные для покупки скопированы: " + tier + " — " + price + " аров");
-      // Здесь можно добавить интеграцию с магазином
+
+    // Покупка VIP
+    function buyVip(level, price) {
+      const cmd = `/BuyVip ${level}`;
+      navigator.clipboard.writeText(cmd);
+      const msg = `
+Напишите в чат:
+  ${cmd}
+
+Дождитесь подтверждения админа и оплатите ${price} аров.`;
+      document.getElementById('modal-text').innerText = msg.trim();
+      document.getElementById('modal').style.display = 'flex';
     }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+    window.onclick = e => { if (e.target.id === 'modal') closeModal(); };
   </script>
+
 </body>
 </html>
