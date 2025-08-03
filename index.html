@@ -2,124 +2,144 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Новый дизайн</title>
+  <title>Тёмный дизайн с BuyVip</title>
   <style>
-    /* CSS Reset */
+    /* ========== Цветовые переменные ========== */
+    :root {
+      --bg: #121212;
+      --surface: #1f1f1f;
+      --accent: #bb86fc;
+      --text: #e0e0e0;
+      --text-secondary: #a0a0a0;
+    }
+
+    /* ========== Базовый сброс ========== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
     body {
+      background: var(--bg);
+      color: var(--text);
       font-family: "Segoe UI", Arial, sans-serif;
-      color: #333;
-      line-height: 1.5;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
 
-    /* Header */
+    /* ========== Header & Nav ========== */
     header {
-      background: #fff;
-      padding: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: center;
+      background: var(--surface);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
     }
-    header .logo {
+    .logo {
       width: 140px;
     }
+    nav .btn-buy {
+      padding: 8px 20px;
+      background: var(--accent);
+      color: var(--bg);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    nav .btn-buy:hover {
+      background: #9a6bfd;
+    }
 
-    /* Hero Section */
+    /* ========== Hero ========== */
     .hero {
-      background: linear-gradient(135deg, #6b8cff, #88e0ef);
-      color: #fff;
       text-align: center;
       padding: 80px 20px;
     }
     .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
+      font-size: 2.8rem;
+      margin-bottom: 16px;
     }
     .hero p {
       font-size: 1.1rem;
-      margin-bottom: 30px;
+      margin-bottom: 24px;
+      color: var(--text-secondary);
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
     }
     .hero .btn {
       display: inline-block;
-      padding: 12px 30px;
-      background: #fff;
-      color: #6b8cff;
-      border-radius: 30px;
+      padding: 12px 28px;
+      background: var(--accent);
+      color: var(--bg);
       text-decoration: none;
       font-weight: bold;
-      transition: background 0.2s, color 0.2s;
+      border-radius: 30px;
+      transition: background 0.2s;
     }
     .hero .btn:hover {
-      background: #6b8cff;
-      color: #fff;
+      background: #9a6bfd;
     }
 
-    /* Features */
+    /* ========== Features ========== */
     .features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 40px;
-      padding: 60px 20px;
+      padding: 60px 32px;
       flex-grow: 1;
-      background: #f5f7fa;
     }
     .feature {
-      background: #fff;
+      background: var(--surface);
       border-radius: 12px;
-      padding: 30px 20px;
+      padding: 24px 16px;
       text-align: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
       transition: transform 0.2s, box-shadow 0.2s;
     }
     .feature:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     }
     .feature .icon {
       font-size: 2.8rem;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
     }
     .feature .label {
       font-size: 1rem;
       font-weight: 600;
-      color: #555;
+      color: var(--text);
     }
 
-    /* Footer */
+    /* ========== Footer ========== */
     footer {
-      background: #fff;
       text-align: center;
-      padding: 15px 20px;
+      padding: 16px 20px;
       font-size: 0.85rem;
-      color: #777;
-      border-top: 1px solid #e0e0e0;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--surface);
     }
   </style>
 </head>
 <body>
 
-  <!-- Header с логотипом -->
+  <!-- Header с логотипом и ссылкой BuyVip -->
   <header>
     <img src="logo.png" alt="Logo" class="logo">
+    <nav>
+      <a href="/BuyVip" class="btn-buy">BuyVip</a>
+    </nav>
   </header>
 
   <!-- Hero-секция -->
   <section class="hero">
     <h1>Добро пожаловать в мой проект!</h1>
-    <p>Краткое описание того, чем ты занимаешься. Можно вставить пару предложений, чтобы зацепить внимание.</p>
+    <p>Кратко о твоём проекте — улови внимание посетителя парой предложений.</p>
     <a href="#features" class="btn">Узнать больше</a>
   </section>
 
-  <!-- Фичи -->
+  <!-- Раздел фич -->
   <section id="features" class="features">
     <div class="feature">
       <div class="icon">💬</div>
