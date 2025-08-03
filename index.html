@@ -2,35 +2,41 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>🏕️ SkyForge Survival — Покупка VIP</title>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400italic,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
   <style>
+    /* === CSS Variables & Themes === */
     :root {
       --bg: #f4f4f4;
-      --text: #333;
-      --nav-bg: #5d4037;
-      --header-bg: #8d6e63;
-      --accent: #c68642;
+      --text: #222;
+      --nav-bg: #37474f;
+      --header-from: #546e7a;
+      --header-to: #29434e;
+      --accent: #2196f3;
+      --accent-2: #1976d2;
       --card-bg: #fff;
-      --modal-bg: rgba(0, 0, 0, .6);
+      --modal-bg: rgba(0,0,0,0.6);
     }
     body.dark {
       --bg: #1e1e1e;
       --text: #ddd;
-      --nav-bg: #3e2723;
-      --header-bg: #5d4037;
-      --accent: #c68642;
+      --nav-bg: #263238;
+      --header-from: #34515e;
+      --header-to: #1f2a33;
       --card-bg: #2b2b2b;
-      --modal-bg: rgba(0, 0, 0, .8);
+      --modal-bg: rgba(0,0,0,0.8);
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* Reset & Base */
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'Montserrat', sans-serif;
-      line-height: 1.5;
+      line-height:1.4;
     }
+    a { color: var(--accent); text-decoration: none; }
+    /* Navbar */
     nav.navbar {
       background: var(--nav-bg);
       color: #fff;
@@ -40,188 +46,164 @@
       padding: 0 24px;
       height: 56px;
     }
-    .navbar .brand { font-size: 1.3rem; font-weight: 700; }
-    .navbar .menu { display: flex; gap: 24px; font-weight: 700; }
-    .navbar .menu .active { text-decoration: underline; }
-    #theme-toggle {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: transform .2s;
+    .navbar .brand {
+      font-size:1.3rem; font-weight:700;
     }
-    #theme-toggle:hover { transform: scale(1.1); }
-
-    .header {
-      background: var(--header-bg);
-      padding: 32px 24px;
-      display: flex;
-      align-items: center;
-      gap: 24px;
+    .navbar .menu {
+      display:flex; gap:24px; font-weight:700;
     }
-    .header .logo {
-      width: 140px; height: 140px;
+    .navbar .menu span.active {
+      text-decoration: underline;
+    }
+    .navbar-controls {
+      display:flex; gap:16px; align-items:center;
+    }
+    #theme-toggle, #accent-btn {
+      background:none; border:none; cursor:pointer;
+      color:#fff; font-size:1.2rem;
+      transition:transform .2s;
+    }
+    #theme-toggle:hover, #accent-btn:hover {
+      transform:scale(1.1);
+    }
+    /* Hidden color input */
+    #accent-picker {
+      display:none;
+    }
+    /* Header */
+    header.header {
+      display:flex; align-items:center; gap:24px;
+      padding:32px 24px;
+      background: linear-gradient(135deg, var(--header-from), var(--header-to));
+    }
+    .logo {
+      width:140px; height:140px;
       background: var(--nav-bg);
       border: 4px solid var(--accent);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
+      border-radius:12px;
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden;
     }
-    .header .logo img {
-      max-width: 120px; max-height: 120px;
-      object-fit: contain;
+    .logo img {
+      max-width:120px; max-height:120px; object-fit:cover;
     }
-    .title-block { display: flex; flex-direction: column; gap: .4em; }
+    .title-block { display:flex; flex-direction:column; gap:.3em; }
     .server-title {
-      font-size: 2.8rem;
-      font-style: italic;
-      color: #fff;
+      font-size:2.6rem; font-style:italic; color:#fff;
     }
     .server-version {
-      font-size: 1.8rem;
-      font-style: italic;
-      color: #eee;
+      font-size:1.6rem; color:#eee;
     }
     .server-ip {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 1.2rem;
-      color: #fff;
-      background: rgba(255,255,255,.2);
-      padding: 4px 8px;
-      border-radius: 4px;
+      display:flex; align-items:center; gap:8px;
+      background:rgba(255,255,255,.2);
+      padding:4px 8px; border-radius:4px;
+      font-size:1rem; color:#fff;
     }
     .server-ip button {
-      background: none; border: none; color: #fff;
-      cursor: pointer; font-size: 1rem;
+      background:none; border:none; color:#fff; cursor:pointer;
     }
-
-    .main {
-      max-width: 1200px;
-      margin: 24px auto;
-      padding: 0 24px;
+    /* Main */
+    main.main {
+      max-width:1200px; margin:24px auto; padding:0 24px;
     }
     .desc {
-      font-style: italic;
-      margin-bottom: 1.2em;
+      font-style:italic; margin-bottom:1em;
     }
-
-    .shop-section {
-      margin-top: 16px;
-      padding: 0 24px 40px;
+    /* Shop */
+    section.shop-section {
+      padding:16px 24px 40px;
     }
     .shop-title {
-      font-size: 2.4rem;
-      color: var(--nav-bg);
-      text-align: center;
-      margin-bottom: 24px;
-      font-weight: 700;
+      font-size:2.4rem; text-align:center;
+      color: var(--nav-bg); margin-bottom:24px;
+      font-weight:700;
     }
     .vip-cards {
-      display: grid;
+      display:grid;
       grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-      gap: 20px;
+      gap:20px;
     }
     .vip-card {
       background: var(--card-bg);
-      border: 2px solid var(--accent);
-      border-radius: 8px;
-      padding: 16px;
-      text-align: center;
-      transition: transform .1s, box-shadow .2s;
+      border:2px solid var(--accent);
+      border-radius:10px;
+      padding:16px;
+      text-align:center;
+      transition: transform .2s, box-shadow .2s;
     }
     .vip-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 4px 12px rgba(0,0,0,.2);
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
     .vip-tier {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: .6em;
+      font-size:1.8rem; color: var(--accent);
+      font-weight:700; margin-bottom:.5em;
     }
     .vip-price {
-      font-size: 1.2rem;
-      margin-bottom: 1em;
-      font-weight: 700;
+      font-size:1.2rem; margin-bottom:1em; font-weight:700;
     }
     .buy-btn {
       background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 700;
+      color:#fff; border:none;
+      padding:8px 16px; border-radius:6px;
+      cursor:pointer; font-weight:700;
       transition: background .2s;
     }
-    .buy-btn:hover { background: #b57336; }
+    .buy-btn:hover { background: var(--accent-2); }
     .buy-tip {
-      font-size: .85rem;
-      color: var(--text);
-      margin-top: 6px;
-      font-style: italic;
+      font-size:.85rem; margin-top:6px; color:var(--text);
+      font-style:italic;
     }
-
+    /* Modal */
     #modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: var(--modal-bg);
-      align-items: center; justify-content: center;
-      z-index: 1000;
+      display:none; position:fixed; inset:0;
+      background:var(--modal-bg);
+      display:flex; align-items:center; justify-content:center;
+      z-index:1000;
     }
     .modal-content {
       background: var(--card-bg);
-      border-radius: 8px;
-      padding: 20px;
-      max-width: 360px;
-      position: relative;
-      box-shadow: 0 6px 18px rgba(0,0,0,.3);
-      animation: fadeIn .2s ease-out;
+      border-radius:8px; padding:20px; width:90%;
+      max-width:360px; position:relative;
+      box-shadow:0 6px 18px rgba(0,0,0,0.3);
     }
     .modal-content p {
-      white-space: pre-wrap;
-      margin-bottom: 16px;
+      white-space: pre-wrap; margin-bottom:16px;
       color: var(--text);
     }
     .modal-content button {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background .2s;
+      background: var(--accent); color:#fff;
+      border:none; padding:6px 14px; border-radius:4px;
+      cursor:pointer; transition:background .2s;
     }
-    .modal-content button:hover { background: #b57336; }
+    .modal-content button:hover {
+      background: var(--accent-2);
+    }
     .modal-close {
-      position: absolute;
-      top: 8px; right: 12px;
-      background: none; border: none;
-      font-size: 1.2rem; color: var(--text);
-      cursor: pointer;
+      position:absolute; top:8px; right:12px;
+      background:none; border:none; font-size:1.2rem;
+      color:var(--text); cursor:pointer;
     }
     .modal-close:hover { color: var(--accent); }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(.96) }
-      to { opacity: 1; transform: scale(1) }
-    }
-    @media (max-width: 700px) {
-      .header { flex-direction: column; text-align: center; }
-      .logo { margin-bottom: 16px; }
+    @media (max-width:700px) {
+      header.header { flex-direction:column; text-align:center; }
+      .logo { margin-bottom:16px; }
     }
   </style>
 </head>
 <body>
-
   <nav class="navbar">
+    <div class="brand">SkyForge</div>
     <div class="menu">
       <span>Выживание</span>
       <span class="active">Покупка<span class="beta">(БЕТА)</span></span>
     </div>
-    <div class="brand">SkyForge</div>
-    <button id="theme-toggle" title="Переключить тему">🌙</button>
+    <div class="navbar-controls">
+      <button id="accent-btn" title="Сменить цвет темы">🎨</button>
+      <input type="color" id="accent-picker">
+      <button id="theme-toggle" title="Тёмная/светлая тема">🌙</button>
+    </div>
   </nav>
 
   <header class="header">
@@ -240,10 +222,10 @@
 
   <main class="main">
     <p class="desc">
-      Добро пожаловать на SkyForge Survival! Здесь выживание становится настоящим испытанием: охота, фермы, кланы и исследования.
+      Добро пожаловать на SkyForge Survival! Выживайте в суровом мире, стройте базы и охотьтесь вместе с друзьями.
     </p>
     <p class="desc">
-      Исследуйте мир, стройте базы, объединяйтесь с друзьями и докажите, что ваше поселение выживет в самых суровых условиях!
+      Создавайте фермы, гильдии и покоряйте подземелья — свобода и испытания ждут вас здесь.
     </p>
   </main>
 
@@ -261,41 +243,48 @@
   </div>
 
   <script>
-    // Сохраняем тему
-    const btn = document.getElementById('theme-toggle');
+    // Сохранённая тема и цвет
+    const themeToggle = document.getElementById('theme-toggle');
+    const accentBtn = document.getElementById('accent-btn');
+    const colorPicker = document.getElementById('accent-picker');
     const body = document.body;
-    const current = localStorage.getItem('theme');
-    if (current === 'dark') body.classList.add('dark'), btn.textContent = '☀️';
 
-    btn.onclick = () => {
+    // Инициализация
+    const savedTheme = localStorage.getItem('theme');
+    const savedAccent = localStorage.getItem('accent');
+    if (savedTheme === 'dark') body.classList.add('dark'), themeToggle.textContent = '☀️';
+    if (savedAccent) {
+      document.documentElement.style.setProperty('--accent', savedAccent);
+      // чуть темнее
+      const d = parseInt(savedAccent.slice(1),16) - 0x101010;
+      const dark = '#'+Math.max(d,0).toString(16).padStart(6,'0');
+      document.documentElement.style.setProperty('--accent-2', dark);
+    }
+
+    // Переключение темы
+    themeToggle.onclick = () => {
       body.classList.toggle('dark');
       const isDark = body.classList.contains('dark');
-      btn.textContent = isDark ? '☀️' : '🌙';
+      themeToggle.textContent = isDark ? '☀️' : '🌙';
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
     };
 
-    // VIP уровни
-    const vipLevels = [
-      { level: 1, price: 64 }, { level: 2, price: 80 },
-      { level: 3, price: 100 },{ level: 4, price: 130 },
-      { level: 5, price: 160 },{ level: 6, price: 200 },
-      { level: 7, price: 250 },{ level: 8, price: 300 },
-      { level: 9, price: 360 },{ level:10, price: 430 }
-    ];
-    const container = document.getElementById('vip-cards');
-    vipLevels.forEach(v => {
-      const card = document.createElement('div');
-      card.className = 'vip-card';
-      card.innerHTML = `
-        <div class="vip-tier">VIP ${v.level}</div>
-        <div class="vip-price">${v.price} аров</div>
-        <button class="buy-btn" onclick="buyVip(${v.level}, ${v.price})">Купить</button>
-        <div class="buy-tip">Нажмите, чтобы скопировать команду</div>
-      `;
-      container.appendChild(card);
-    });
+    // Смена цвета темы
+    accentBtn.onclick = () => colorPicker.click();
+    colorPicker.oninput = e => {
+      const c = e.target.value;
+      document.documentElement.style.setProperty('--accent', c);
+      // простое затемнение
+      const rgb = parseInt(c.slice(1), 16);
+      const r = Math.max((rgb >> 16) - 20, 0);
+      const g = Math.max(((rgb >> 8)&0xFF) - 20, 0);
+      const b = Math.max((rgb &0xFF) - 20, 0);
+      const darker = `#${((r<<16)|(g<<8)|b).toString(16).padStart(6,'0')}`;
+      document.documentElement.style.setProperty('--accent-2', darker);
+      localStorage.setItem('accent', c);
+    };
 
-    // Копирование IP
+    // IP копирование
     function copyIP() {
       const txt = document.getElementById('ip-text').innerText;
       navigator.clipboard.writeText(txt)
@@ -303,24 +292,41 @@
         .catch(() => alert('Ошибка копирования.'));
     }
 
-    // Покупка VIP
-    function buyVip(level, price) {
-      const cmd = `/BuyVip ${level}`;
+    // Генерация VIP-карточек
+    const vipLevels = [
+      { l:1,p:64 },{ l:2,p:80 },{ l:3,p:100 },{ l:4,p:130 },
+      { l:5,p:160 },{ l:6,p:200 },{ l:7,p:250 },{ l:8,p:300 },
+      { l:9,p:360 },{ l:10,p:430 }
+    ];
+    const container = document.getElementById('vip-cards');
+    vipLevels.forEach(v => {
+      const card = document.createElement('div');
+      card.className = 'vip-card';
+      card.innerHTML = `
+        <div class="vip-tier">VIP ${v.l}</div>
+        <div class="vip-price">${v.p} аров</div>
+        <button class="buy-btn" onclick="buyVip(${v.l},${v.p})">Купить</button>
+        <div class="buy-tip">Нажмите, чтобы получить команду</div>
+      `;
+      container.appendChild(card);
+    });
+
+    // Модал для покупки
+    function buyVip(l, p) {
+      const cmd = `/BuyVip ${l}`;
       navigator.clipboard.writeText(cmd);
       const msg = `
 Напишите в чат:
   ${cmd}
 
-Дождитесь подтверждения админа и оплатите ${price} аров.`;
+Дождитесь подтверждения админа и оплатите ${p} аров.`;
       document.getElementById('modal-text').innerText = msg.trim();
       document.getElementById('modal').style.display = 'flex';
     }
-
     function closeModal() {
       document.getElementById('modal').style.display = 'none';
     }
-    window.onclick = e => { if (e.target.id === 'modal') closeModal(); };
+    window.onclick = e => { if (e.target.id==='modal') closeModal(); };
   </script>
-
 </body>
 </html>
