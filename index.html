@@ -28,13 +28,12 @@
       color: var(--text);
       background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
     }
-    a { text-decoration: none; color: inherit; }
 
     /* ——— Header ——— */
     header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       padding: 16px 32px;
       backdrop-filter: blur(10px);
       background: var(--surface);
@@ -43,7 +42,7 @@
       height: 50px;
     }
 
-    /* ——— Hero ——— */
+    /* ——— Главная секция ——— */
     .hero {
       flex: 1;
       display: flex;
@@ -120,7 +119,7 @@
       background: #a0d8ff;
     }
 
-    /* ——— Сообщение об успехе ——— */
+    /* ——— Сообщение об успешной регистрации ——— */
     .register-result {
       margin-top: 16px;
       color: var(--accent);
@@ -130,12 +129,13 @@
 
     /* ——— Кнопка BuyVip ——— */
     .vip .vip-btn {
-      display: inline-block;
       padding: 12px 28px;
       background: var(--accent);
       color: var(--bg-start);
+      border: none;
       border-radius: 8px;
       font-weight: 600;
+      cursor: pointer;
       transition: background 0.2s;
     }
     .vip .vip-btn:hover {
@@ -155,22 +155,22 @@
 </head>
 <body>
 
-  <!-- Header с логотипом -->
+  <!-- Header -->
   <header>
     <img src="logo.png" alt="SkyForge Logo" class="logo">
   </header>
 
-  <!-- Основной блок -->
+  <!-- Main -->
   <main class="hero">
     <div class="site-title">SkyForge</div>
 
     <div class="cards">
-      <!-- Карточка регистрации -->
+      <!-- Регистрация -->
       <div class="card register">
         <h2>Регистрация</h2>
-        <p>Введите свой никнейм, чтобы присоединиться к серверу.</p>
+        <p>Введите свой ник, чтобы присоединиться.</p>
         <form id="registerForm">
-          <input type="text" name="nickname" placeholder="Твой никнейм" required>
+          <input type="text" name="nickname" placeholder="Ваш никнейм" required>
           <button type="submit">Register</button>
         </form>
         <div class="register-result" id="registerResult">
@@ -178,10 +178,10 @@
         </div>
       </div>
 
-      <!-- Карточка VIP-покупки -->
+      <!-- Покупка VIP -->
       <div class="card vip">
         <h2>VIP-доступ</h2>
-        <p>Распахни новые возможности с нашим VIP-пакетом.</p>
+        <p>Откройте новые возможности с VIP-пакетом.</p>
         <button class="vip-btn" id="buyVipBtn">BuyVip</button>
       </div>
     </div>
@@ -193,7 +193,7 @@
   </footer>
 
   <script>
-    // Отменяем переход по submit и показываем сообщение
+    // Регистрация без перехода
     const form = document.getElementById('registerForm');
     const resultBox = document.getElementById('registerResult');
     const userNickSpan = document.getElementById('userNick');
@@ -202,16 +202,16 @@
       e.preventDefault();
       const nick = form.nickname.value.trim();
       if (!nick) return;
-      // Здесь можно добавить AJAX-запрос на сервер
       form.style.display = 'none';
       userNickSpan.textContent = nick;
       resultBox.style.display = 'block';
     });
 
-    // BuyVip тоже без перехода
+    // BuyVip без перехода
     document.getElementById('buyVipBtn').addEventListener('click', () => {
-      alert('Переход к покупке VIP…');
-      // Тут можно открыть модальное окно или AJAX-процесс
+      alert('Переход к покупке VIP на главном сайте…');
+      // здесь можно открыть модалку или редиректить на реальный адрес:
+      // window.location.href = '/';
     });
   </script>
 
