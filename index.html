@@ -13,7 +13,11 @@
       --text:     #c9d1d9;
       --text-alt: #8b949e;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       font-family: "Segoe UI", sans-serif;
       background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
@@ -21,69 +25,51 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 20px;
+      line-height: 1.5;
       min-height: 100vh;
+      padding: 20px;
     }
     header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
     }
     header h1 {
-      font-size: 2.8rem;
+      font-size: 3rem;
       color: var(--accent);
     }
     header p {
       font-size: 1.1rem;
       color: var(--text-alt);
-    }
-    .card {
-      background: var(--surface);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 24px;
-      max-width: 600px;
-      width: 100%;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .card h2 {
-      font-size: 1.6rem;
-      margin-bottom: 16px;
-      color: var(--accent);
-    }
-    .card p {
-      font-size: 1rem;
-      margin-bottom: 12px;
-    }
-    ul.rules {
-      list-style: none;
-      text-align: left;
-      margin: 20px 0;
-    }
-    ul.rules li {
-      margin-bottom: 8px;
-      font-size: 0.95rem;
+      margin-top: 8px;
     }
     .ip-box {
-      margin: 20px 0;
-      font-size: 1.1rem;
-      font-weight: bold;
-      background: rgba(255,255,255,0.1);
+      margin-top: 20px;
+      display: inline-block;
       padding: 10px 20px;
+      background: rgba(255,255,255,0.1);
       border-radius: 8px;
+      font-weight: bold;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background .2s;
     }
     .ip-box:hover {
       background: rgba(255,255,255,0.2);
+    }
+    .vip-section {
+      width: 100%;
+      max-width: 900px;
+      margin: 40px auto 20px;
+    }
+    .vip-section h2 {
+      text-align: center;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-size: 2rem;
     }
     .vip-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 16px;
-      width: 100%;
-      max-width: 900px;
     }
     .vip-package {
       background: var(--surface);
@@ -91,8 +77,7 @@
       border-radius: 12px;
       padding: 16px;
       text-align: center;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform .2s, box-shadow .2s;
     }
     .vip-package:hover {
       transform: translateY(-4px);
@@ -100,13 +85,13 @@
     }
     .vip-level {
       font-size: 1.1rem;
-      margin-bottom: 8px;
       color: var(--accent);
+      margin-bottom: 8px;
     }
     .vip-price {
       font-size: 1rem;
-      margin-bottom: 12px;
       color: var(--text-alt);
+      margin-bottom: 12px;
     }
     .buy-btn {
       padding: 8px 16px;
@@ -116,21 +101,25 @@
       border-radius: 6px;
       cursor: pointer;
       font-weight: 600;
-      transition: background 0.2s;
+      transition: background .2s;
     }
     .buy-btn:hover {
       background: #a0d8ff;
     }
     footer {
       margin-top: auto;
-      font-size: 0.85rem;
+      font-size: .85rem;
       color: var(--text-alt);
       text-align: center;
       padding: 20px 0;
     }
     @media (max-width: 480px) {
-      header h1 { font-size: 2rem; }
-      .card { padding: 16px; }
+      header h1 {
+        font-size: 2.2rem;
+      }
+      .vip-section h2 {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
@@ -139,48 +128,33 @@
   <header>
     <h1>SkyForge</h1>
     <p>Классический сервер выживания — версия 1.20.1</p>
+    <div class="ip-box" onclick="navigator.clipboard.writeText('SkyForgeOFFICIAL')">
+      IP сервера: <strong>SkyForgeOFFICIAL</strong>
+    </div>
   </header>
 
-  <div class="card">
-    <h2>Добро пожаловать!</h2>
-    <p>Честная игра, дружелюбное сообщество, никаких регистраций.</p>
-    <ul class="rules">
-      <li>❌ Гриферство запрещено</li>
-      <li>❌ Обман игроков не допускается</li>
-      <li>✅ Уважение к другим — обязательное правило</li>
-    </ul>
-    <p>Стройте, исследуйте, объединяйтесь и наслаждайтесь выживанием без хаоса.</p>
-    <div class="ip-box" onclick="navigator.clipboard.writeText('SkyForgeOFFICIAL')">
-      IP сервера: <strong>SkyForgeOFFICIAL</strong> (нажми, чтобы скопировать)
-    </div>
-  </div>
-
-  <section class="vip-grid">
-    <!-- 20 VIP-пакетов -->
-    <script>
-      const vipContainer = document.currentScript.parentElement;
-      for (let i = 1; i <= 20; i++) {
-        const level = `VIP ${i}`;
-        const price = i * 100;
-        const pkg = document.createElement('div');
-        pkg.className = 'vip-package';
-        pkg.innerHTML = `
-          <div class="vip-level">${level}</div>
-          <div class="vip-price">${price} ₽</div>
-          <button class="buy-btn" onclick="buyVip('${level}', ${price})">
-            Купить
-          </button>`;
-        vipContainer.appendChild(pkg);
-      }
-      function buyVip(level, price) {
-        alert(`Вы выбрали ${level} за ${price} ₽`);
-      }
-    </script>
+  <section class="vip-section">
+    <h2>VIP-пакеты</h2>
+    <div class="vip-grid" id="vipGrid"></div>
   </section>
 
-  <footer>
-    © 2025 SkyForge. Все права защищены.
-  </footer>
+  <footer>© 2025 SkyForge. Все права защищены.</footer>
+
+  <script>
+    const vipGrid = document.getElementById('vipGrid');
+    for (let i = 1; i <= 20; i++) {
+      const pkg = document.createElement('div');
+      const price = i * 100;
+      pkg.className = 'vip-package';
+      pkg.innerHTML = `
+        <div class="vip-level">VIP ${i}</div>
+        <div class="vip-price">${price} ₽</div>
+        <button class="buy-btn" onclick="alert('Вы выбрали VIP ${i} за ${price} ₽')">
+          Купить
+        </button>`;
+      vipGrid.appendChild(pkg);
+    }
+  </script>
 
 </body>
 </html>
