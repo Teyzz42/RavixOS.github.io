@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SkyForge</title>
   <style>
-    /* ——— Цветовые переменные ——— */
+    /*—— Цвета и фоны ——*/
     :root {
       --bg-start: #0d1117;
       --bg-end:   #171c24;
@@ -15,141 +15,145 @@
       --text-alt: #8b949e;
     }
 
-    /* ——— Сброс стилей ——— */
-    * {
-      margin: 0; padding: 0;
-      box-sizing: border-box;
-    }
+    /*—— Сброс и базовая раскладка ——*/
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      font-family: "Segoe UI", Arial, sans-serif;
-      color: var(--text);
-      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      min-height:100vh;
+      display:flex; flex-direction:column;
+      font-family:"Segoe UI",Arial,sans-serif;
+      color:var(--text);
+      background:linear-gradient(135deg,var(--bg-start),var(--bg-end));
     }
+    a { text-decoration:none; color:inherit; }
 
-    /* ——— Header ——— */
+    /*—— Хидер с логотипом ——*/
     header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px 32px;
-      backdrop-filter: blur(10px);
-      background: var(--surface);
+      padding:16px 32px;
+      backdrop-filter:blur(10px);
+      background:var(--surface);
+      display:flex; justify-content:center;
     }
-    .logo {
-      height: 50px;
-    }
+    .logo { height:50px; }
 
-    /* ——— Главная секция ——— */
+    /*—— Основная зона ——*/
     .hero {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-      gap: 40px;
+      flex:1;
+      display:flex; flex-direction:column;
+      align-items:center; padding:40px 20px;
+      gap:40px;
     }
     .site-title {
-      font-size: 2.8rem;
-      color: var(--accent);
+      font-size:2.8rem;
+      color:var(--accent);
     }
 
-    /* ——— Карточки регистрации и VIP ——— */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 32px;
-      width: 100%;
-      max-width: 960px;
-    }
+    /*—— Общие стили карточек ——*/
     .card {
-      background: var(--surface);
-      backdrop-filter: blur(12px);
-      border-radius: 16px;
-      padding: 32px 24px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-      text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s;
+      background:var(--surface);
+      backdrop-filter:blur(12px);
+      border-radius:16px;
+      padding:32px 24px;
+      box-shadow:0 8px 32px rgba(0,0,0,0.6);
+      text-align:center;
+      width:100%; max-width:360px;
+      transition:transform .2s,box-shadow .2s;
     }
     .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 48px rgba(0,0,0,0.7);
+      transform:translateY(-5px);
+      box-shadow:0 12px 48px rgba(0,0,0,0.7);
     }
     .card h2 {
-      font-size: 1.6rem;
-      margin-bottom: 12px;
+      font-size:1.6rem;
+      margin-bottom:12px;
     }
     .card p {
-      color: var(--text-alt);
-      margin-bottom: 20px;
-      font-size: 0.95rem;
+      color:var(--text-alt);
+      margin-bottom:20px;
+      font-size:.95rem;
     }
 
-    /* ——— Форма регистрации по нику ——— */
+    /*—— Форма регистрации ——*/
     .register form {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
+      display:flex; gap:8px; justify-content:center;
     }
     .register input {
-      flex: 1;
-      padding: 10px 14px;
-      border: none;
-      border-radius: 6px;
-      background: rgba(255,255,255,0.1);
-      color: var(--text);
-      font-size: 1rem;
+      flex:1; padding:10px 14px;
+      border:none; border-radius:6px;
+      background:rgba(255,255,255,0.1);
+      color:var(--text); font-size:1rem;
     }
     .register input::placeholder {
-      color: var(--text-alt);
+      color:var(--text-alt);
     }
     .register button {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 6px;
-      background: var(--accent);
-      color: var(--bg-start);
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
+      padding:10px 16px; border:none;
+      border-radius:6px;
+      background:var(--accent);
+      color:var(--bg-start);
+      font-weight:600;
+      cursor:pointer;
+      transition:background .2s;
     }
     .register button:hover {
-      background: #a0d8ff;
+      background:#a0d8ff;
     }
-
-    /* ——— Сообщение об успешной регистрации ——— */
     .register-result {
-      margin-top: 16px;
-      color: var(--accent);
-      font-weight: 600;
-      display: none;
+      margin-top:16px;
+      color:var(--accent);
+      font-weight:600;
+      display:none;
     }
 
-    /* ——— Кнопка BuyVip ——— */
+    /*—— VIP-кнопка ——*/
     .vip .vip-btn {
-      padding: 12px 28px;
-      background: var(--accent);
-      color: var(--bg-start);
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
+      padding:12px 28px;
+      background:var(--accent);
+      color:var(--bg-start);
+      border:none; border-radius:8px;
+      font-weight:600;
+      cursor:pointer;
+      transition:background .2s;
     }
     .vip .vip-btn:hover {
-      background: #a0d8ff;
+      background:#a0d8ff;
     }
 
-    /* ——— Footer ——— */
+    /*—— Фичи ——*/
+    .features {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+      gap:24px;
+      width:100%; max-width:800px;
+    }
+    .feature {
+      background:var(--surface);
+      backdrop-filter:blur(10px);
+      border-radius:12px;
+      padding:20px;
+      display:flex; flex-direction:column;
+      align-items:center;
+      transition:transform .2s;
+    }
+    .feature:hover {
+      transform:translateY(-4px);
+    }
+    .feature .icon {
+      font-size:2.4rem;
+      margin-bottom:12px;
+    }
+    .feature .label {
+      font-size:1rem;
+      color:var(--text);
+    }
+
+    /*—— Футер ——*/
     footer {
-      text-align: center;
-      padding: 12px 20px;
-      font-size: 0.85rem;
-      color: var(--text-alt);
-      backdrop-filter: blur(10px);
-      background: var(--surface);
+      text-align:center;
+      padding:12px 20px;
+      font-size:.85rem;
+      color:var(--text-alt);
+      backdrop-filter:blur(10px);
+      background:var(--surface);
     }
   </style>
 </head>
@@ -162,27 +166,48 @@
 
   <!-- Main -->
   <main class="hero">
-    <div class="site-title">SkyForge</div>
-
-    <div class="cards">
-      <!-- Регистрация -->
-      <div class="card register">
-        <h2>Регистрация</h2>
-        <p>Введите свой ник, чтобы присоединиться.</p>
-        <form id="registerForm">
-          <input type="text" name="nickname" placeholder="Ваш никнейм" required>
-          <button type="submit">Register</button>
-        </form>
-        <div class="register-result" id="registerResult">
-          Вы успешно зарегистрированы, <span id="userNick"></span>!
-        </div>
+    <!-- Секция регистрации -->
+    <div id="regSection" class="card register">
+      <h2>Регистрация</h2>
+      <p>Введите никнейм, чтобы начать.</p>
+      <form id="registerForm">
+        <input type="text" name="nickname" placeholder="Ваш никнейм" required>
+        <button type="submit">Register</button>
+      </form>
+      <div class="register-result" id="registerResult">
+        Вы зарегистрированы как <span id="userNick"></span>!
       </div>
+    </div>
 
-      <!-- Покупка VIP -->
+    <!-- Основной встроенный контент (скрыт до регистрации) -->
+    <div id="mainSection" style="display:none; width:100%; max-width:800px;">
+      <div class="site-title">SkyForge</div>
+
+      <!-- VIP-карта -->
       <div class="card vip">
         <h2>VIP-доступ</h2>
-        <p>Откройте новые возможности с VIP-пакетом.</p>
+        <p>Откройте эксклюзивные возможности.</p>
         <button class="vip-btn" id="buyVipBtn">BuyVip</button>
+      </div>
+
+      <!-- Фичи -->
+      <div class="features">
+        <div class="feature">
+          <div class="icon">💬</div>
+          <div class="label">Общение</div>
+        </div>
+        <div class="feature">
+          <div class="icon">👥</div>
+          <div class="label">Сообщество</div>
+        </div>
+        <div class="feature">
+          <div class="icon">💰</div>
+          <div class="label">Экономика</div>
+        </div>
+        <div class="feature">
+          <div class="icon">⭐</div>
+          <div class="label">Опыт</div>
+        </div>
       </div>
     </div>
   </main>
@@ -193,8 +218,10 @@
   </footer>
 
   <script>
-    // Регистрация без перехода
+    // Обработка регистрации
     const form = document.getElementById('registerForm');
+    const regSection = document.getElementById('regSection');
+    const mainSection = document.getElementById('mainSection');
     const resultBox = document.getElementById('registerResult');
     const userNickSpan = document.getElementById('userNick');
 
@@ -202,18 +229,22 @@
       e.preventDefault();
       const nick = form.nickname.value.trim();
       if (!nick) return;
+      // Скрыть форму, показать результат
       form.style.display = 'none';
       userNickSpan.textContent = nick;
       resultBox.style.display = 'block';
+      // Через секунду переключиться на основной контент
+      setTimeout(() => {
+        regSection.style.display = 'none';
+        mainSection.style.display = 'block';
+      }, 1000);
     });
 
-    // BuyVip без перехода
-    document.getElementById('buyVipBtn').addEventListener('click', () => {
-      alert('Переход к покупке VIP на главном сайте…');
-      // здесь можно открыть модалку или редиректить на реальный адрес:
-      // window.location.href = '/';
-    });
+    // Кнопка BuyVip
+    document.getElementById('buyVipBtn')
+      .addEventListener('click', () => {
+        alert('Здесь ваш встроенный процесс покупки VIP.');
+      });
   </script>
-
 </body>
 </html>
