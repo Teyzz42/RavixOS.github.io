@@ -120,6 +120,14 @@
       background: #a0d8ff;
     }
 
+    /* ——— Сообщение об успехе ——— */
+    .register-result {
+      margin-top: 16px;
+      color: var(--accent);
+      font-weight: 600;
+      display: none;
+    }
+
     /* ——— Кнопка BuyVip ——— */
     .vip .vip-btn {
       display: inline-block;
@@ -161,17 +169,20 @@
       <div class="card register">
         <h2>Регистрация</h2>
         <p>Введите свой никнейм, чтобы присоединиться к серверу.</p>
-        <form action="#" method="post">
+        <form id="registerForm">
           <input type="text" name="nickname" placeholder="Твой никнейм" required>
           <button type="submit">Register</button>
         </form>
+        <div class="register-result" id="registerResult">
+          Вы успешно зарегистрированы, <span id="userNick"></span>!
+        </div>
       </div>
 
       <!-- Карточка VIP-покупки -->
       <div class="card vip">
         <h2>VIP-доступ</h2>
         <p>Распахни новые возможности с нашим VIP-пакетом.</p>
-        <a href="/BuyVip" class="vip-btn">BuyVip</a>
+        <button class="vip-btn" id="buyVipBtn">BuyVip</button>
       </div>
     </div>
   </main>
@@ -180,6 +191,29 @@
   <footer>
     © 2025 SkyForge. Все права защищены.
   </footer>
+
+  <script>
+    // Отменяем переход по submit и показываем сообщение
+    const form = document.getElementById('registerForm');
+    const resultBox = document.getElementById('registerResult');
+    const userNickSpan = document.getElementById('userNick');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const nick = form.nickname.value.trim();
+      if (!nick) return;
+      // Здесь можно добавить AJAX-запрос на сервер
+      form.style.display = 'none';
+      userNickSpan.textContent = nick;
+      resultBox.style.display = 'block';
+    });
+
+    // BuyVip тоже без перехода
+    document.getElementById('buyVipBtn').addEventListener('click', () => {
+      alert('Переход к покупке VIP…');
+      // Тут можно открыть модальное окно или AJAX-процесс
+    });
+  </script>
 
 </body>
 </html>
