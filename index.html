@@ -3,346 +3,175 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>SkyForge</title>
+  <title>Svinland</title>
   <link
     href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap"
     rel="stylesheet"
   />
   <style>
-    /* === CSS-переменные и сброс === */
     :root {
-      --bg: #121212;
-      --fg: #e0e0e0;
+      --bg-image: url('background.jpg');
+      --glass-bg: rgba(255,255,255,0.12);
       --accent: #4ea8de;
-      --vip-accent: #deaa4e;
-      --glass: rgba(255, 255, 255, 0.1);
       --radius: 12px;
       --gap: 20px;
       --trans: 0.3s ease;
+      --fg-dark: #121212;
+      --fg-light: #fff;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Montserrat', sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-      display: flex;
-      flex-direction: column;
+      background: var(--bg-image) center/cover no-repeat fixed;
+      color: var(--fg-light);
       min-height: 100vh;
-      line-height: 1.5;
     }
-    a { color: var(--accent); text-decoration: none; transition: color var(--trans); }
-    a:hover { color: #7ec3ff; }
-
-    /* === Навигация === */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: var(--gap);
-      background: var(--glass);
-      backdrop-filter: blur(8px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 1.4rem;
+    a {
+      text-decoration: none;
+      transition: transform var(--trans), background var(--trans);
       font-weight: 700;
     }
-    .brand img { width: 36px; height: 36px; }
-    .nav-actions button {
-      padding: 6px 14px;
-      margin-left: 12px;
-      border: none;
-      border-radius: 6px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background var(--trans);
-    }
-    #login-btn { background: var(--accent); color: #fff; }
-    #login-btn:hover { background: #7ec3ff; }
-    #login-btn.logged { background: #7ec3ff; }
-
-    /* === Hero-блок === */
-    header.hero {
-      text-align: center;
-      background: linear-gradient(135deg, #243b55, #141e30);
-      padding: 80px 20px;
-      margin: var(--gap);
-      border-radius: var(--radius);
-    }
-    header.hero h1 {
-      font-size: 2.8rem;
-      margin-bottom: var(--gap);
-    }
-    header.hero .highlight { color: var(--accent); }
-    header.hero p {
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto var(--gap);
-      opacity: 0.9;
-    }
-    .hero .btn {
-      display: inline-block;
-      padding: 12px 28px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 8px;
-      font-weight: 700;
-      transition: background var(--trans), transform var(--trans);
-    }
-    .hero .btn:hover {
-      background: #7ec3ff;
-      transform: translateY(-2px);
-    }
-
-    /* === Секция преимуществ === */
-    .features {
-      display: grid;
-      gap: var(--gap);
-      max-width: 1200px;
-      margin: 0 auto var(--gap);
-      grid-template-columns: repeat(3,1fr);
-      padding: 0 20px;
-    }
-    .feature {
-      background: var(--glass);
-      backdrop-filter: blur(8px);
-      border-radius: var(--radius);
-      padding: var(--gap);
-      text-align: center;
-      transition: transform var(--trans), box-shadow var(--trans);
-    }
-    .feature:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-    }
-    .feature img {
-      width: 64px;
-      height: 64px;
-      margin-bottom: 16px;
-    }
-    .feature h3 {
-      font-size: 1.3rem;
-      margin-bottom: 8px;
-      color: var(--accent);
-    }
-    .feature p { font-size: 0.95rem; }
-
-    /* === Секция покупки VIP === */
-    .vip-section {
-      background: var(--glass);
-      backdrop-filter: blur(8px);
-      padding: var(--gap);
-      margin: 0 auto var(--gap);
-      border-radius: var(--radius);
-      max-width: 1200px;
-      width: calc(100% - 40px);
-    }
-    .vip-section h2 {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: var(--gap);
-    }
-    .vip-grid {
-      display: grid;
-      gap: var(--gap);
-      grid-template-columns: repeat(3,1fr);
-    }
-    .vip-card {
-      background: var(--bg);
-      border-radius: var(--radius);
-      padding: var(--gap);
-      text-align: center;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-      transition: transform var(--trans);
-    }
-    .vip-card:hover { transform: translateY(-4px); }
-    .vip-card h3 { margin-bottom: 8px; color: var(--vip-accent); }
-    .vip-card .price {
-      font-size: 1.6rem;
-      margin: var(--gap) 0;
-    }
-    .vip-card button {
-      padding: 10px 20px;
-      background: var(--vip-accent);
-      color: #121212;
-      border: none;
-      border-radius: 6px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background var(--trans), transform var(--trans);
-    }
-    .vip-card button:hover {
-      background: #f0c878;
-      transform: translateY(-2px);
-    }
-
-    /* === Модалка входа === */
-    #modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-    }
-    .modal-content {
-      background: var(--glass);
+    .glass {
+      background: var(--glass-bg);
       backdrop-filter: blur(12px);
       border-radius: var(--radius);
       padding: var(--gap);
-      width: 90%;
-      max-width: 320px;
-      text-align: center;
-      position: relative;
-    }
-    .modal-content label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 0.95rem;
-    }
-    .modal-content input {
-      width: 100%;
-      padding: 8px;
-      border-radius: 6px;
-      border: none;
-      margin-bottom: var(--gap);
-    }
-    .modal-content button {
-      padding: 10px 20px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-weight: 700;
-      cursor: pointer;
       transition: background var(--trans);
     }
-    .modal-content button:hover { background: #7ec3ff; }
-    .modal-close {
-      position: absolute;
-      top: 8px; right: 12px;
-      background: none; border: none;
-      font-size: 1.2rem; cursor: pointer;
-      color: #fff;
+
+    /* layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--gap);
+      display: flex;
+      gap: var(--gap);
+    }
+    .hero {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5em;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      line-height: 1.4;
+      max-width: 480px;
+    }
+    .buttons {
+      display: flex;
+      gap: var(--gap);
+      flex-wrap: wrap;
+    }
+    .btn-play {
+      background: var(--accent);
+      color: var(--fg-dark);
+      padding: 12px 24px;
+      border-radius: 8px;
+    }
+    .btn-play:hover {
+      transform: translateY(-2px);
+      background: #7ec3ff;
+    }
+    .btn-pass {
+      background: #fff;
+      color: var(--fg-dark);
+      padding: 12px 24px;
+      border-radius: 8px;
+    }
+    .btn-pass:hover {
+      transform: translateY(-2px);
+      background: #f4f4f4;
     }
 
-    /* === Отзывчивость === */
-    @media (max-width: 1024px) {
-      .features { grid-template-columns: repeat(2,1fr); }
-      .vip-grid { grid-template-columns: repeat(2,1fr); }
+    .features {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
     }
-    @media (max-width: 768px) {
-      header.hero h1 { font-size: 2.4rem; }
-      .features, .vip-grid { grid-template-columns: 1fr; }
-      nav { flex-direction: column; gap: 12px; }
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: var(--gap);
+      background: var(--glass-bg);
+      padding: var(--gap);
+      border-radius: var(--radius);
+    }
+    .feature img {
+      width: 48px;
+      height: 48px;
+    }
+    .feature-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .feature-text h4 {
+      margin-bottom: 4px;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+    .feature-text p {
+      font-size: 0.95rem;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 900px) {
+      .container { flex-direction: column; }
+      .hero h1 { font-size: 2.4rem; }
+      .hero p { max-width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Навигация -->
-  <nav>
-    <div class="brand">
-      <img src="pig.png" alt="logo"/>
-      SkyForge
-    </div>
-    <div class="nav-actions">
-      <button id="login-btn">Войти</button>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <header class="hero">
-    <h1>Добро пожаловать в <span class="highlight">SkyForge</span></h1>
-    <p>Играй бесплатно на любом устройстве — ПК, планшете или телефоне.</p>
-    <a href="#" class="btn">Играть</a>
-  </header>
-
-  <!-- Преимущества -->
-  <div class="features">
-    <div class="feature">
-      <img src="interaction.png" alt="Интерактив"/>
-      <h3>Интерактив</h3>
-      <p>Уникальные механики и системы взаимодействия.</p>
-    </div>
-    <div class="feature">
-      <img src="launcher.png" alt="Лаунчер"/>
-      <h3>Стабильный лаунчер</h3>
-      <p>Авто-обновления, поддержка модов — просто скачай и играй.</p>
-    </div>
-    <div class="feature">
-      <img src="economy.png" alt="Экономика"/>
-      <h3>Экономика</h3>
-      <p>Валюта, фермы и торговля на вашем рынке.</p>
-    </div>
-  </div>
-
-  <!-- Покупка VIP -->
-  <div class="vip-section">
-    <h2>Купить VIP</h2>
-    <div class="vip-grid">
-      <div class="vip-card">
-        <h3>Silver VIP</h3>
-        <div class="price">200&nbsp;₽</div>
-        <button>Купить</button>
+  <div class="container">
+    <!-- главный блок -->
+    <div class="hero glass">
+      <h1>Svinland</h1>
+      <p>Заходи в наш мир без лицензии — играй бесплатно и навсегда сохраняй свой пропуск!</p>
+      <div class="buttons">
+        <a href="#" class="btn-play">Играть бесплатно</a>
+        <a href="#" class="btn-pass">Купить пропуск — 1500 ₽</a>
       </div>
-      <div class="vip-card">
-        <h3>Gold VIP</h3>
-        <div class="price">500&nbsp;₽</div>
-        <button>Купить</button>
+    </div>
+
+    <!-- блок с фичами -->
+    <div class="features">
+      <div class="feature glass">
+        <img src="interaction.png" alt="Интерактив"/>
+        <div class="feature-text">
+          <h4>Классные системы</h4>
+          <p>Уникальные механики для общения и взаимодействия.</p>
+        </div>
       </div>
-      <div class="vip-card">
-        <h3>Platinum VIP</h3>
-        <div class="price">1 000&nbsp;₽</div>
-        <button>Купить</button>
+      <div class="feature glass">
+        <img src="community.png" alt="Сообщество"/>
+        <div class="feature-text">
+          <h4>Наше сообщество</h4>
+          <p>Дружелюбные игроки готовы помочь и играть вместе.</p>
+        </div>
+      </div>
+      <div class="feature glass">
+        <img src="economy.png" alt="Экономика"/>
+        <div class="feature-text">
+          <h4>Рабочая экономика</h4>
+          <p>Торгуй, строй фермы и копи внутриигровую валюту.</p>
+        </div>
+      </div>
+      <div class="feature glass">
+        <img src="experience.png" alt="Опыт"/>
+        <div class="feature-text">
+          <h4>Незабываемый опыт</h4>
+          <p>Каждый квест и путешествие запомнится надолго.</p>
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- Модалка входа -->
-  <div id="modal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal()">×</button>
-      <label for="nick">Введите ник:</label>
-      <input type="text" id="nick" placeholder="Ваш ник"/>
-      <button onclick="login()">Войти</button>
-    </div>
-  </div>
-
-  <script>
-    const loginBtn = document.getElementById('login-btn');
-    const modal = document.getElementById('modal');
-
-    loginBtn.addEventListener('click', () => {
-      modal.style.display = 'flex';
-    });
-    function closeModal() {
-      modal.style.display = 'none';
-    }
-    function login() {
-      const nick = document.getElementById('nick').value.trim();
-      if (!nick) return;
-      localStorage.setItem('sf_nick', nick);
-      loginBtn.textContent = nick;
-      loginBtn.classList.add('logged');
-      closeModal();
-    }
-    // При загрузке сохраняем состояние
-    document.addEventListener('DOMContentLoaded', () => {
-      const saved = localStorage.getItem('sf_nick');
-      if (saved) {
-        loginBtn.textContent = saved;
-        loginBtn.classList.add('logged');
-      }
-    });
-  </script>
 
 </body>
 </html>
-```
