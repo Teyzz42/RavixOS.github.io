@@ -1,175 +1,82 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Svinland</title>
-  <link
-    href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap"
-    rel="stylesheet"
-  />
+  <meta charset="UTF-8">
+  <title>Мой проект</title>
   <style>
-    :root {
-      --bg-image: url('background.jpg');
-      --glass-bg: rgba(255,255,255,0.12);
-      --accent: #4ea8de;
-      --radius: 12px;
-      --gap: 20px;
-      --trans: 0.3s ease;
-      --fg-dark: #121212;
-      --fg-light: #fff;
+    /* Сброс отступов и фон */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Montserrat', sans-serif;
-      background: var(--bg-image) center/cover no-repeat fixed;
-      color: var(--fg-light);
+      background: url('background.jpg') center/cover no-repeat fixed;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      text-align: center;
       min-height: 100vh;
-    }
-    a {
-      text-decoration: none;
-      transition: transform var(--trans), background var(--trans);
-      font-weight: 700;
-    }
-    .glass {
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      border-radius: var(--radius);
-      padding: var(--gap);
-      transition: background var(--trans);
-    }
-
-    /* layout */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: var(--gap);
-      display: flex;
-      gap: var(--gap);
-    }
-    .hero {
-      flex: 2;
       display: flex;
       flex-direction: column;
-      gap: var(--gap);
-    }
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5em;
-    }
-    .hero p {
-      font-size: 1.1rem;
-      line-height: 1.4;
-      max-width: 480px;
-    }
-    .buttons {
-      display: flex;
-      gap: var(--gap);
-      flex-wrap: wrap;
-    }
-    .btn-play {
-      background: var(--accent);
-      color: var(--fg-dark);
-      padding: 12px 24px;
-      border-radius: 8px;
-    }
-    .btn-play:hover {
-      transform: translateY(-2px);
-      background: #7ec3ff;
-    }
-    .btn-pass {
-      background: #fff;
-      color: var(--fg-dark);
-      padding: 12px 24px;
-      border-radius: 8px;
-    }
-    .btn-pass:hover {
-      transform: translateY(-2px);
-      background: #f4f4f4;
     }
 
+    /* Логотип */
+    .logo {
+      margin: 40px auto 20px;
+      width: 120px; /* Подкорректируй, если нужно */
+    }
+
+    /* Контейнер для эмодзи-фич */
     .features {
-      flex: 1;
       display: flex;
-      flex-direction: column;
-      gap: var(--gap);
-    }
-    .feature {
-      display: flex;
-      align-items: center;
-      gap: var(--gap);
-      background: var(--glass-bg);
-      padding: var(--gap);
-      border-radius: var(--radius);
-    }
-    .feature img {
-      width: 48px;
-      height: 48px;
-    }
-    .feature-text {
-      display: flex;
-      flex-direction: column;
-    }
-    .feature-text h4 {
-      margin-bottom: 4px;
-      color: var(--accent);
-      font-size: 1.1rem;
-    }
-    .feature-text p {
-      font-size: 0.95rem;
-      line-height: 1.3;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      margin-bottom: 40px;
     }
 
-    @media (max-width: 900px) {
-      .container { flex-direction: column; }
-      .hero h1 { font-size: 2.4rem; }
-      .hero p { max-width: 100%; }
+    .feature {
+      font-size: 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .feature-label {
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+
+    /* Пример hover-эффекта для эмодзи */
+    .feature:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- главный блок -->
-    <div class="hero glass">
-      <h1>Svinland</h1>
-      <p>Заходи в наш мир без лицензии — играй бесплатно и навсегда сохраняй свой пропуск!</p>
-      <div class="buttons">
-        <a href="#" class="btn-play">Играть бесплатно</a>
-        <a href="#" class="btn-pass">Купить пропуск — 1500 ₽</a>
-      </div>
-    </div>
+  <!-- Иконка Logo -->
+  <img src="logo.png" alt="Logo" class="logo">
 
-    <!-- блок с фичами -->
-    <div class="features">
-      <div class="feature glass">
-        <img src="interaction.png" alt="Интерактив"/>
-        <div class="feature-text">
-          <h4>Классные системы</h4>
-          <p>Уникальные механики для общения и взаимодействия.</p>
-        </div>
-      </div>
-      <div class="feature glass">
-        <img src="community.png" alt="Сообщество"/>
-        <div class="feature-text">
-          <h4>Наше сообщество</h4>
-          <p>Дружелюбные игроки готовы помочь и играть вместе.</p>
-        </div>
-      </div>
-      <div class="feature glass">
-        <img src="economy.png" alt="Экономика"/>
-        <div class="feature-text">
-          <h4>Рабочая экономика</h4>
-          <p>Торгуй, строй фермы и копи внутриигровую валюту.</p>
-        </div>
-      </div>
-      <div class="feature glass">
-        <img src="experience.png" alt="Опыт"/>
-        <div class="feature-text">
-          <h4>Незабываемый опыт</h4>
-          <p>Каждый квест и путешествие запомнится надолго.</p>
-        </div>
-      </div>
+  <!-- Блок с эмодзи-функциями -->
+  <div class="features">
+    <div class="feature">
+      💬
+      <span class="feature-label">Общение</span>
+    </div>
+    <div class="feature">
+      👥
+      <span class="feature-label">Сообщество</span>
+    </div>
+    <div class="feature">
+      💰
+      <span class="feature-label">Экономика</span>
+    </div>
+    <div class="feature">
+      ⭐
+      <span class="feature-label">Опыт</span>
     </div>
   </div>
 
