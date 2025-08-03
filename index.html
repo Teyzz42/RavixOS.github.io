@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>SVINLAND</title>
+  <title>SkyForge</title>
   <link
     href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap"
     rel="stylesheet"
@@ -14,7 +14,7 @@
       --bg: #121212;
       --fg: #e0e0e0;
       --accent: #4ea8de;
-      --glass: rgba(255, 255, 255, 0.1);
+      --glass: rgba(255,255,255,0.1);
       --radius: 12px;
       --gap: 20px;
       --transition: 0.3s ease;
@@ -28,7 +28,6 @@
       font-family: 'Montserrat', sans-serif;
       background: var(--bg);
       color: var(--fg);
-      line-height: 1.5;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -67,6 +66,11 @@
       font-size: 1.4rem;
       font-weight: 700;
     }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
     .nav-right ul {
       list-style: none;
       display: flex;
@@ -75,49 +79,52 @@
     .nav-right li {
       font-size: 0.95rem;
     }
-    .nav-right .login,
-    .nav-right .vip-buy {
+    #login-btn {
       padding: 6px 14px;
+      background: var(--accent);
+      border: none;
       border-radius: 6px;
+      color: #fff;
       font-weight: 700;
+      cursor: pointer;
       transition: background var(--transition);
     }
-    .nav-right .login {
-      background: var(--accent);
-    }
-    .nav-right .login:hover {
+    #login-btn:hover {
       background: #7ec3ff;
     }
-    .nav-right .vip-buy {
-      background: #deaa4e;
-      margin-left: 8px;
+
+    /* === Секции === */
+    section {
+      display: none;
+      padding: 60px 20px;
+      flex: 1;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    .nav-right .vip-buy:hover {
-      background: #f0c878;
+    section.active {
+      display: block;
     }
 
     /* === Hero === */
-    header.hero {
+    #home {
       text-align: center;
-      padding: 80px 20px;
       background: linear-gradient(135deg, #243b55, #141e30);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--gap);
+      color: #fff;
+      border-radius: var(--radius);
+      margin: var(--gap);
+      padding: 80px 20px;
     }
-    header.hero h1 {
+    #home h1 {
       font-size: 2.8rem;
       margin-bottom: var(--gap);
     }
-    header.hero .highlight {
+    #home .highlight {
       color: var(--accent);
     }
-    header.hero p {
+    #home p {
       font-size: 1.1rem;
       max-width: 600px;
+      margin: 0 auto var(--gap);
       opacity: 0.9;
     }
     .hero-buttons {
@@ -126,39 +133,25 @@
       flex-wrap: wrap;
       justify-content: center;
     }
-    header.hero .btn,
-    header.hero .btn-vip {
-      display: inline-block;
+    .btn {
       padding: 12px 28px;
+      background: var(--accent);
+      color: #fff;
       border-radius: 8px;
       font-weight: 700;
       transition: background var(--transition), transform var(--transition);
     }
-    header.hero .btn {
-      background: var(--accent);
-      color: #fff;
-    }
-    header.hero .btn:hover {
+    .btn:hover {
       background: #7ec3ff;
       transform: translateY(-2px);
     }
-    header.hero .btn-vip {
-      background: #deaa4e;
-      color: #121212;
-    }
-    header.hero .btn-vip:hover {
-      background: #f0c878;
-      transform: translateY(-2px);
-    }
 
-    /* === Преимущества === */
-    section.features {
+    /* === Преимущества на главной === */
+    #home .features {
       display: grid;
       gap: var(--gap);
-      padding: 60px 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-      grid-template-columns: repeat(4, 1fr);
+      margin-top: var(--gap);
+      grid-template-columns: repeat(3, 1fr);
     }
     .feature {
       background: var(--glass);
@@ -170,7 +163,7 @@
     }
     .feature:hover {
       transform: translateY(-6px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
     .feature img {
       width: 64px;
@@ -186,54 +179,101 @@
       font-size: 0.95rem;
     }
 
-    /* === Итоговый блок === */
-    section.footer-section {
-      padding: 60px 20px;
+    /* === Магазин === */
+    #shop h2 {
+      font-size: 2rem;
+      margin-bottom: var(--gap);
       text-align: center;
-      background: #1a1a1a;
     }
-    section.footer-section h2 {
-      font-size: 1.6rem;
-      margin-bottom: 12px;
+    #shop .shop-list {
+      list-style: none;
+      display: grid;
+      gap: var(--gap);
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
     }
-    section.footer-section p {
-      max-width: 600px;
-      margin: 0 auto;
-      opacity: 0.8;
+    #shop .shop-list li {
+      background: var(--glass);
+      padding: var(--gap);
+      border-radius: var(--radius);
+      text-align: center;
+    }
+
+    /* === Профиль === */
+    #profile h2 {
+      font-size: 2rem;
+      margin-bottom: var(--gap);
+      text-align: center;
+    }
+    #profile .info {
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    /* === Модалка входа === */
+    #modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+    .modal-content {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      padding: var(--gap);
+      max-width: 320px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+    }
+    .modal-content label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: var(--gap);
+    }
+    .modal-content button {
+      padding: 10px 20px;
+      background: var(--accent);
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+    .modal-content button:hover {
+      background: #7ec3ff;
+    }
+    .modal-close {
+      position: absolute;
+      top: 8px; right: 12px;
+      background: none; border: none;
+      font-size: 1.2rem; cursor: pointer;
+      color: #fff;
     }
 
     /* === Отзывчивость === */
-    @media (max-width: 1200px) {
-      section.features {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      header.hero h1 {
-        font-size: 2.4rem;
+    @media (max-width: 1024px) {
+      #home .features {
+        grid-template-columns: repeat(2,1fr);
       }
     }
-    @media (max-width: 900px) {
-      section.features {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      header.hero p {
-        font-size: 1rem;
-      }
-    }
-    @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-        gap: 12px;
-      }
-      .nav-right ul {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      section.features {
-        grid-template-columns: 1fr;
-      }
-      header.hero h1 {
-        font-size: 2rem;
-      }
+    @media (max-width: 768px) {
+      #home h1 { font-size: 2.4rem; }
+      #home p { font-size: 1rem; }
+      #home .features { grid-template-columns: 1fr; }
+      nav { flex-direction: column; gap: 12px; }
+      .nav-right ul { flex-wrap: wrap; justify-content: center; }
     }
   </style>
 </head>
@@ -242,59 +282,117 @@
   <!-- Навигация -->
   <nav>
     <div class="nav-left">
-      <img src="pig.png" alt="иконка"/>
-      <div class="brand">SVINLAND</div>
+      <img src="pig.png" alt="logo"/>
+      <div class="brand">SkyForge</div>
     </div>
     <div class="nav-right">
       <ul>
-        <li><a href="#">Главная</a></li>
-        <li><a href="#">Магазин</a></li>
-        <li><a href="#" class="login">Войти</a></li>
-        <li><a href="#" class="vip-buy">Купить VIP</a></li>
+        <li><a href="#" data-page="home">Главная</a></li>
+        <li><a href="#" data-page="shop">Магазин</a></li>
+        <li><a href="#" data-page="profile">Профиль</a></li>
       </ul>
+      <button id="login-btn">Войти</button>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="hero">
-    <h1>Добро пожаловать в <span class="highlight">SVINLAND</span></h1>
-    <p>Бесплатный вход и простая регистрация. Получи максимум от игры с VIP-профилем!</p>
+  <!-- Секции -->
+  <section id="home" class="active">
+    <h1>Добро пожаловать в <span class="highlight">SkyForge</span></h1>
+    <p>Играй бесплатно на любом устройстве — ПК, планшете или телефоне.</p>
     <div class="hero-buttons">
-      <a href="#" class="btn">Играть бесплатно</a>
-      <a href="#" class="btn-vip">Купить VIP</a>
+      <a href="#" class="btn">Играть</a>
     </div>
-  </header>
-
-  <!-- Преимущества -->
-  <section class="features">
-    <div class="feature">
-      <img src="interaction.png" alt="Механики"/>
-      <h3>Интерактив</h3>
-      <p>Уникальные системы взаимодействия и кастомные механики.</p>
-    </div>
-    <div class="feature">
-      <img src="launcher.png" alt="Лаунчер"/>
-      <h3>Стабильный лаунчер</h3>
-      <p>Авто-апдейты, поддержка модов и сборок — просто запускай и играй.</p>
-    </div>
-    <div class="feature">
-      <img src="economy.png" alt="Экономика"/>
-      <h3>Экономика</h3>
-      <p>Внутренняя валюта, фермы и торговля на вашем рынке.</p>
-    </div>
-    <div class="feature">
-      <img src="vip.png" alt="VIP"/>
-      <h3>VIP-преимущества</h3>
-      <p>Эксклюзивные наборы, привилегии и ускоренный прогресс.</p>
+    <div class="features">
+      <div class="feature">
+        <img src="interaction.png" alt="Интерактив"/>
+        <h3>Интерактив</h3>
+        <p>Уникальные механики и системы взаимодействия.</p>
+      </div>
+      <div class="feature">
+        <img src="launcher.png" alt="Лаунчер"/>
+        <h3>Стабильный лаунчер</h3>
+        <p>Авто-обновления, поддержка модов — просто скачай и играй.</p>
+      </div>
+      <div class="feature">
+        <img src="economy.png" alt="Экономика"/>
+        <h3>Экономика</h3>
+        <p>Валюта, фермы и торговля на вашем рынке.</p>
+      </div>
     </div>
   </section>
 
-  <!-- Итоговый блок -->
-  <section class="footer-section">
-    <h2>Начни прямо сейчас</h2>
-    <p>Присоединяйся к нам с любого устройства — ПК, планшета или телефона.</p>
+  <section id="shop">
+    <h2>Магазин SkyForge</h2>
+    <ul class="shop-list">
+      <li>Набор «Начинающий» — бесплатно</li>
+      <li>Набор «Игрок» — 100 монет</li>
+      <li>Набор «Ветеран» — 250 монет</li>
+      <li>Набор «Легенда» — 500 монет</li>
+    </ul>
   </section>
 
+  <section id="profile">
+    <h2>Профиль</h2>
+    <div class="info" id="profile-content">
+      Вы не авторизованы.
+    </div>
+  </section>
+
+  <!-- Модалка входа -->
+  <div id="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <label for="nick">Введите ник:</label>
+      <input type="text" id="nick" placeholder="Ваш ник"/>
+      <button onclick="login()">Войти</button>
+    </div>
+  </div>
+
+  <script>
+    // Страницы
+    const links = document.querySelectorAll('nav a[data-page]');
+    const sections = document.querySelectorAll('section');
+    links.forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      const page = a.dataset.page;
+      sections.forEach(s => s.classList.toggle('active', s.id === page));
+    }));
+
+    // Логика входа
+    const loginBtn = document.getElementById('login-btn');
+    const modal = document.getElementById('modal');
+    const profileContent = document.getElementById('profile-content');
+
+    loginBtn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+    });
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+    function login() {
+      const nick = document.getElementById('nick').value.trim();
+      if (!nick) return;
+      localStorage.setItem('sf_nick', nick);
+      updateProfile();
+      closeModal();
+      loginBtn.textContent = nick;
+    }
+
+    // Профиль
+    function updateProfile() {
+      const nick = localStorage.getItem('sf_nick');
+      if (nick) {
+        profileContent.textContent = `Ваш ник: ${nick}`;
+      } else {
+        profileContent.textContent = 'Вы не авторизованы.';
+      }
+    }
+
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', () => {
+      updateProfile();
+    });
+  </script>
 </body>
 </html>
 ```
