@@ -2,334 +2,147 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>🌍 SkyForge — Покупка VIP</title>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400italic,400&display=swap" rel="stylesheet">
+  <title>Новый дизайн</title>
   <style>
-    /* Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* CSS Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      background: #f4f4f4;
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
       color: #333;
       line-height: 1.5;
-    }
-    .navbar {
-      background: #181F7A;
-      color: #fff;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 40px;
-      height: 56px;
-    }
-    .navbar .menu { display: flex; gap: 32px; font-weight: 700; }
-    .navbar .menu .active { text-decoration: underline; }
-    .navbar .beta {
-      font-style: italic;
-      color: #ff6a6a;
-      font-weight: 400;
-      font-size: .9rem;
-      margin-left: 4px;
-    }
-    .navbar .brand { font-size: 1.2rem; font-weight: 700; }
-
-    .header {
-      display: flex;
-      align-items: center;
-      background: #4652d4;
-      color: #fff;
-      padding: 32px 40px;
-      gap: 40px;
-    }
-    .logo {
-      width: 180px; height: 180px;
-      background: #181F7A;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .logo img {
-      max-width: 160px; max-height: 160px;
-      object-fit: contain;
-    }
-    .title-block { display: flex; flex-direction: column; gap: .2em; }
-    .server-title { font-size: 3rem; font-style: italic; }
-    .server-version {
-      font-size: 2rem;
-      font-style: italic;
-      color: #a7c8f2;
-      font-weight: 600;
-    }
-    .server-ip {
-      font-size: 1.6rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .server-ip code {
-      background: rgba(255,255,255,0.2);
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-    .copy-btn {
-      background: none;
-      border: none;
-      color: #cddcfd;
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      transition: color .2s;
-    }
-    .copy-btn:hover { color: #fff; }
-
-    .main {
-      max-width: 1200px;
-      margin: 32px auto;
-      padding: 0 40px 40px;
-    }
-    .desc {
-      font-style: italic;
-      color: #555;
-      margin-bottom: 1.5em;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    .shop-section {
-      margin-top: 20px;
-      padding: 0 40px 40px;
-    }
-    .shop-title {
-      font-size: 2.5rem;
-      color: #181F7A;
-      font-weight: 700;
+    /* Header */
+    header {
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       text-align: center;
-      margin-bottom: 24px;
     }
-    .vip-cards {
+    header .logo {
+      width: 140px;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #6b8cff, #88e0ef);
+      color: #fff;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #fff;
+      color: #6b8cff;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.2s, color 0.2s;
+    }
+    .hero .btn:hover {
+      background: #6b8cff;
+      color: #fff;
+    }
+
+    /* Features */
+    .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 28px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 40px;
+      padding: 60px 20px;
+      flex-grow: 1;
+      background: #f5f7fa;
     }
-    .vip-card {
+    .feature {
       background: #fff;
       border-radius: 12px;
-      box-shadow: 0 4px 18px rgba(70,82,212,0.09);
-      padding: 24px;
+      padding: 30px 20px;
       text-align: center;
-      position: relative;
-      transition: box-shadow .2s, transform .1s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .vip-card:hover {
-      box-shadow: 0 8px 32px rgba(70,82,212,0.17);
-      transform: translateY(-4px);
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
     }
-    .vip-tier {
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: #4652d4;
-      margin-bottom: .6em;
-      letter-spacing: 1px;
+    .feature .icon {
+      font-size: 2.8rem;
+      margin-bottom: 15px;
     }
-    .vip-price {
-      font-size: 1.4rem;
-      color: #181F7A;
-      margin-bottom: 1.2em;
-      font-weight: 700;
-    }
-    .buy-btn {
-      background: linear-gradient(90deg, #4652d4 0%, #8396ff 100%);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 28px;
+    .feature .label {
       font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background .2s, box-shadow .2s;
-    }
-    .buy-btn:hover {
-      background: linear-gradient(90deg, #8396ff 0%, #4652d4 100%);
-      box-shadow: 0 4px 16px rgba(70,82,212,0.17);
-    }
-    .buy-tip {
-      font-size: .9rem;
-      color: #777;
-      margin-top: 8px;
-      font-style: italic;
+      font-weight: 600;
+      color: #555;
     }
 
-    /* Modal */
-    #modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-    .modal-content {
+    /* Footer */
+    footer {
       background: #fff;
-      border-radius: 8px;
-      padding: 24px;
-      max-width: 360px;
-      text-align: left;
-      position: relative;
-      animation: fadeIn .2s ease-out;
-    }
-    .modal-content p {
-      margin-bottom: 16px;
-      font-size: 1rem;
-      color: #333;
-      white-space: pre-wrap;
-    }
-    .modal-content button {
-      background: #4652d4;
-      color: #fff;
-      border: none;
-      padding: 8px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: .9rem;
-      transition: background .2s;
-    }
-    .modal-content button:hover {
-      background: #3849a3;
-    }
-    .modal-close {
-      position: absolute;
-      top: 8px; right: 12px;
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      cursor: pointer;
-      color: #999;
-    }
-    .modal-close:hover { color: #666; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.96) }
-      to { opacity: 1; transform: scale(1) }
-    }
-
-    @media (max-width: 900px) {
-      .header { flex-direction: column; text-align: center; padding: 24px 20px; }
-      .main, .shop-section { padding: 0 20px 40px; }
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 0.85rem;
+      color: #777;
+      border-top: 1px solid #e0e0e0;
     }
   </style>
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="menu">
-      <span>Главное</span>
-      <span class="active">Покупка<span class="beta">(БЕТА)</span></span>
+  <!-- Header с логотипом -->
+  <header>
+    <img src="logo.png" alt="Logo" class="logo">
+  </header>
+
+  <!-- Hero-секция -->
+  <section class="hero">
+    <h1>Добро пожаловать в мой проект!</h1>
+    <p>Краткое описание того, чем ты занимаешься. Можно вставить пару предложений, чтобы зацепить внимание.</p>
+    <a href="#features" class="btn">Узнать больше</a>
+  </section>
+
+  <!-- Фичи -->
+  <section id="features" class="features">
+    <div class="feature">
+      <div class="icon">💬</div>
+      <div class="label">Общение</div>
     </div>
-    <div class="brand">SkyForge</div>
-  </nav>
-
-  <div class="header">
-    <div class="logo">
-      <img src="logo.png" alt="SkyForge Logo">
+    <div class="feature">
+      <div class="icon">👥</div>
+      <div class="label">Сообщество</div>
     </div>
-    <div class="title-block">
-      <div class="server-title">🌍 SkyForge</div>
-      <div class="server-version">1.20.1</div>
-      <div class="server-ip">
-        IP: <code id="ip-text">SkyForgeOFFICALL.aternos.me:46890</code>
-        <button class="copy-btn" onclick="copyIP()">
-          📋
-        </button>
-      </div>
+    <div class="feature">
+      <div class="icon">💰</div>
+      <div class="label">Экономика</div>
     </div>
-  </div>
-
-  <div class="main">
-    <div class="desc">
-      SkyForge — свободный сервер с элементами анархии. Здесь нет приватoв и ограничений на строительство, ценится честная игра и творчество.
+    <div class="feature">
+      <div class="icon">⭐</div>
+      <div class="label">Опыт</div>
     </div>
-    <div class="desc">
-      Обмана нет, уважение к другим важно, а кланы и квесты создаются самими игроками. Полная свобода в рамках базовых правил.
-    </div>
-  </div>
+  </section>
 
-  <div class="shop-section">
-    <div class="shop-title">Покупка VIP за аров</div>
-    <div class="vip-cards" id="vip-cards">
-      <!-- Карточки генерируются скриптом -->
-    </div>
-  </div>
+  <!-- Footer -->
+  <footer>
+    © 2025 Твой проект. Все права защищены.
+  </footer>
 
-  <!-- Модальное окно -->
-  <div id="modal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal()">×</button>
-      <p id="modal-text"></p>
-      <button onclick="closeModal()">Закрыть</button>
-    </div>
-  </div>
-
-  <script>
-    // VIP-уровни и цены
-    const vipLevels = [
-      { level: 1, price: 64 },
-      { level: 2, price: 80 },
-      { level: 3, price: 100 },
-      { level: 4, price: 130 },
-      { level: 5, price: 160 },
-      { level: 6, price: 200 },
-      { level: 7, price: 250 },
-      { level: 8, price: 300 },
-      { level: 9, price: 360 },
-      { level:10, price: 430 }
-    ];
-
-    // Генерация карточек
-    const container = document.getElementById('vip-cards');
-    vipLevels.forEach(v => {
-      const card = document.createElement('div');
-      card.className = 'vip-card';
-      card.innerHTML = `
-        <div class="vip-tier">VIP ${v.level}</div>
-        <div class="vip-price">${v.price} аров</div>
-        <button class="buy-btn" onclick="buyVip(${v.level}, ${v.price})">Купить</button>
-        <div class="buy-tip">Нажми, чтобы получить инструкцию</div>
-      `;
-      container.appendChild(card);
-    });
-
-    // Копировать IP
-    function copyIP() {
-      const txt = document.getElementById('ip-text').innerText;
-      navigator.clipboard.writeText(txt)
-        .then(() => alert('IP скопирован!'))
-        .catch(() => alert('Ошибка копирования.'));
-    }
-
-    // Покупка VIP
-    function buyVip(level, price) {
-      const cmd = `/BuyVip ${level}`;
-      navigator.clipboard.writeText(cmd);
-      const text = `
-Напишите в чат:
-  ${cmd}
-
-Когда админ подтвердит заявку — оплатите ${price} аров.`;
-      document.getElementById('modal-text').innerText = text.trim();
-      document.getElementById('modal').style.display = 'flex';
-    }
-
-    // Закрыть модалку
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-    }
-    window.onclick = e => {
-      if (e.target.id === 'modal') closeModal();
-    };
-  </script>
 </body>
 </html>
