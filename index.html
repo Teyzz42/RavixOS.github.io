@@ -3,321 +3,244 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>🏕️ SkyForge Survival</title>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet"/>
+  <title>SVINLAND</title>
+  <link
+    href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    /* === Переменные & Темы === */
+    /* === Переменные === */
     :root {
-      --bg-light:   #f0f4f8;
-      --text-light: #222;
-      --bg-dark:    #121417;
-      --text-dark:  #e0e0e0;
-      --accent:     #2468A0;  /* чуть темнее голубого */
-      --accent-d:   #1f567b;
-      --glass:      rgba(255,255,255,0.12);
-      --glass-d:    rgba(0,0,0,0.4);
-      --radius:     12px;
-      --trans:      .3s ease;
-      --gap:        24px;
+      --bg: #121212;
+      --fg: #e0e0e0;
+      --accent: #4ea8de;
+      --glass: rgba(255,255,255,0.1);
+      --radius: 12px;
+      --gap: 20px;
+      --transition: 0.3s ease;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
     }
     body {
-      margin:0; padding:0;
-      font-family:'Montserrat',sans-serif;
-      background:var(--bg-light);
-      color:var(--text-light);
-      transition: background var(--trans), color var(--trans);
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.5;
     }
-    body.dark {
-      background:var(--bg-dark);
-      color:var(--text-dark);
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color var(--transition);
     }
-    .glass {
-      background: var(--glass);
-      backdrop-filter: blur(12px);
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,0.25);
-      transition: background var(--trans), border var(--trans);
-    }
-    body.dark .glass {
-      background: var(--glass-d);
-      border: 1px solid rgba(0,0,0,0.6);
+    a:hover {
+      color: #7ec3ff;
     }
 
-    /* === Навигация === */
-    nav.navbar {
+    /* === Навбар === */
+    nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 var(--gap);
-      height: 60px;
-      position: sticky; top:0;
+      padding: var(--gap);
       background: var(--glass);
-      z-index:10;
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0; z-index: 100;
     }
-    .brand { font-size: 1.5rem; font-weight:700; }
-    .controls { display:flex; gap:12px; align-items:center; }
-    button { cursor:pointer; border:none; background:none; }
-
-    /* === Шапка === */
-    header.hero {
-      position: relative;
-      margin: var(--gap) var(--gap) 0;
-      padding: calc(var(--gap)*2) var(--gap);
-      background: linear-gradient(135deg, var(--accent-d), var(--accent));
-      border-radius: var(--radius);
-      min-height: 300px;
-      display: flex; flex-wrap: wrap;
-      align-items: center; gap: var(--gap);
-      transition: background var(--trans);
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .hero .logo {
-      flex-shrink:0;
-      width: 140px; height:140px;
-      background: var(--glass);
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,0.25);
-      display:flex; align-items:center; justify-content:center;
+    .nav-left img {
+      width: 36px; height: 36px;
     }
-    .hero .logo img {
-      max-width:120px; max-height:120px;
+    .nav-left .brand {
+      font-size: 1.4rem;
+      font-weight: 700;
     }
-    .hero .info {
-      flex:1;
-      color:#fff;
+    .nav-right ul {
+      list-style: none;
+      display: flex;
+      gap: 16px;
     }
-    .hero h1 {
-      margin:0 0 8px;
-      font-size: 2.8rem;
-      font-style: italic;
-    }
-    .hero .version {
-      margin-bottom:16px;
-      font-size:1.1rem;
-      opacity: .8;
-    }
-    .hero .ip-box {
-      display:inline-flex; align-items:center; gap:8px;
-      background: rgba(255,255,255,0.2);
-      padding:4px 8px; border-radius:6px;
+    .nav-right li {
       font-size: 0.95rem;
     }
-    .hero .ip-box button:hover {
-      transform: translateY(-1px);
+    .nav-right .login {
+      padding: 6px 14px;
+      background: var(--accent);
+      border-radius: 6px;
+      font-weight: 700;
+      transition: background var(--transition);
     }
-    .hero .join-btn {
-      margin-top: var(--gap);
-      display:inline-block;
-      background: #fff;
-      color: var(--accent-d);
-      padding:10px 24px;
-      border-radius:6px;
-      font-weight:700;
-      transition: background var(--trans), transform var(--trans);
+    .nav-right .login:hover {
+      background: #7ec3ff;
     }
-    .hero .join-btn:hover {
-      background: #f4f4f4;
+
+    /* === Hero === */
+    header.hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #243b55, #141e30);
+    }
+    header.hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: var(--gap);
+    }
+    header.hero .highlight {
+      color: var(--accent);
+    }
+    header.hero p {
+      font-size: 1.1rem;
+      margin-bottom: var(--gap);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0.9;
+    }
+    header.hero .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      font-weight: 700;
+      transition: background var(--transition), transform var(--transition);
+    }
+    header.hero .btn:hover {
+      background: #7ec3ff;
       transform: translateY(-2px);
     }
 
     /* === Блок преимуществ === */
-    main {
-      max-width: 1100px;
-      margin: var(--gap) auto;
-      padding: 0 var(--gap);
-    }
     .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
       gap: var(--gap);
-      margin-bottom: var(--gap);
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: auto;
+      grid-template-columns: repeat(3, 1fr);
     }
     .feature {
       background: var(--glass);
-      padding: var(--gap);
+      backdrop-filter: blur(8px);
       border-radius: var(--radius);
-      text-align:center;
-      border:1px solid rgba(255,255,255,0.25);
-      transition: transform var(--trans), box-shadow var(--trans);
-    }
-    body.dark .feature {
-      background: var(--glass-d);
+      padding: var(--gap);
+      text-align: center;
+      transition: transform var(--transition), box-shadow var(--transition);
     }
     .feature:hover {
       transform: translateY(-6px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .feature img {
+      width: 64px; height: 64px;
+      margin-bottom: 16px;
     }
     .feature h3 {
-      margin-bottom:12px;
-      font-size:1.4rem;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
       color: var(--accent);
     }
     .feature p {
-      font-size:0.95rem;
-      line-height:1.4;
+      font-size: 0.95rem;
     }
 
-    /* === Модалка === */
-    #modal {
-      display:none;
-      position:fixed; inset:0;
-      background: rgba(0,0,0,0.6);
-      align-items:center; justify-content:center;
-      z-index:20;
+    /* === Итоги === */
+    .footer-section {
+      padding: 60px 20px;
+      text-align: center;
+      background: #1a1a1a;
     }
-    .modal-content {
-      position:relative;
-      background:var(--glass);
-      backdrop-filter: blur(16px);
-      padding: var(--gap);
-      border-radius:var(--radius);
-      max-width:360px; width:90%;
-      border:1px solid rgba(255,255,255,0.25);
+    .footer-section h2 {
+      font-size: 1.6rem;
+      margin-bottom: 12px;
     }
-    body.dark .modal-content {
-      background:var(--glass-d);
-      border:1px solid rgba(0,0,0,0.6);
-    }
-    .modal-content p {
-      margin-bottom: var(--gap);
-      font-size:1rem;
-      white-space: pre-wrap;
-    }
-    .modal-close {
-      position:absolute; top:8px; right:12px;
-      font-size:1.2rem; background:none; border:none;
-      cursor:pointer;
-    }
-    /* === Toast === */
-    #toast {
-      position: fixed;
-      bottom: 24px; left:50%;
-      transform: translateX(-50%);
-      background: var(--accent);
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 24px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .3s ease;
-      font-weight:700;
+    .footer-section p {
+      max-width: 600px;
+      margin: auto;
+      opacity: 0.8;
     }
 
-    /* === Адаптация под телефон === */
-    @media(max-width:700px){
-      .hero { flex-direction:column; text-align:center; }
-      .hero .info, .hero .join-btn { width:100%; }
-      .features { grid-template-columns: 1fr; }
-      nav.navbar { flex-direction:column; gap:8px; padding:8px 16px; }
+    /* === Отзывчивость === */
+    @media (max-width: 1024px) {
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .nav-right ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .features {
+        grid-template-columns: 1fr;
+      }
+      header.hero h1 {
+        font-size: 2.2rem;
+      }
+      header.hero p {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar glass">
-    <div class="brand">SkyForge</div>
-    <div class="controls">
-      <button id="theme-toggle" title="Тема">🌙</button>
-      <button id="accent-btn" title="Цвет">🎨</button>
-      <input type="color" id="accent-picker" style="display:none"/>
+  <!-- Навигация -->
+  <nav>
+    <div class="nav-left">
+      <img src="pig.png" alt="pig icon"/>
+      <div class="brand">SVINLAND</div>
+    </div>
+    <div class="nav-right">
+      <ul>
+        <li><a href="#">Главная</a></li>
+        <li><a href="#">Магазин</a></li>
+        <li><a href="#">Профиль</a></li>
+        <li><a href="#" class="login">Войти</a></li>
+      </ul>
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- Hero -->
   <header class="hero">
-    <div class="logo glass">
-      <img src="pig.png" alt="Pig Mascot"/>
-    </div>
-    <div class="info">
-      <h1>🏕️ SkyForge Survival</h1>
-      <div class="version">версия 1.20.1</div>
-      <div class="ip-box">
-        <span id="ip-text">SkyForgeOFFICALL.aternos.me:46890</span>
-        <button onclick="copyIP()">📋</button>
-      </div>
-      <a href="#" class="join-btn" onclick="copyIP()">Присоединиться бесплатно</a>
-    </div>
+    <h1>Вы ждали и вот он — <span class="highlight">SVINLAND</span></h1>
+    <p>Присоединяйся бесплатно и начинай играть прямо сейчас!</p>
+    <a href="#" class="btn">Играть бесплатно</a>
   </header>
 
-  <!-- FEATURES -->
-  <main>
-    <div class="features">
-      <div class="feature">
-        <h3>Интерактивная экономика</h3>
-        <p>Торгуйте, стройте рынок и создавайте фермы для заработка.</p>
-      </div>
-      <div class="feature">
-        <h3>Большое сообщество</h3>
-        <p>Сотни игроков онлайн каждый день — найдите друзей и создавайте гильдии.</p>
-      </div>
-      <div class="feature">
-        <h3>Стабильный лаунчер</h3>
-        <p>Автоматические обновления, моды и кастомные сборки.</p>
-      </div>
-      <div class="feature">
-        <h3>Увлекательные эвенты</h3>
-        <p>Сражения, турниры и сезонные квесты с наградами.</p>
-      </div>
+  <!-- Преимущества -->
+  <section class="features">
+    <div class="feature">
+      <img src="interaction.png" alt="interaction"/>
+      <h3>Интерактив</h3>
+      <p>Уникальные системы взаимодействия и кастомные механики.</p>
     </div>
-  </main>
-
-  <!-- MODAL -->
-  <div id="modal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal()">×</button>
-      <p>IP скопирован в буфер обмена!<br>Вставьте в поле “IP сервера” и нажмите подключиться.</p>
-      <button class="buy-btn" onclick="closeModal()">Закрыть</button>
+    <div class="feature">
+      <img src="community.png" alt="community"/>
+      <h3>Сообщество</h3>
+      <p>Более 200 онлайн-игроков ежедневно, заводи друзей и гильдии.</p>
     </div>
-  </div>
+    <div class="feature">
+      <img src="economy.png" alt="economy"/>
+      <h3>Экономика</h3>
+      <p>Рабочий рынок, фермы и внутренняя валюта для торговли.</p>
+    </div>
+  </section>
 
-  <div id="toast"></div>
+  <!-- Итоговый блок -->
+  <section class="footer-section">
+    <h2>Интересные впечатления</h2>
+    <p>Каждый найдет здесь что-то своё — от спокойной игры в выживание до масштабных турниров.</p>
+  </section>
 
-  <script>
-    // Тема & Цвет
-    const themeBtn = document.getElementById('theme-toggle');
-    const accentBtn = document.getElementById('accent-btn');
-    const picker = document.getElementById('accent-picker');
-    if(localStorage.theme==='dark'){
-      document.body.classList.add('dark');
-      themeBtn.textContent='☀️';
-    }
-    if(localStorage.accent){
-      document.documentElement.style.setProperty('--accent', localStorage.accent);
-      const v = Math.max(parseInt(localStorage.accent.slice(1),16)-0x202020,0);
-      document.documentElement.style.setProperty('--accent-d','#'+v.toString(16).padStart(6,'0'));
-    }
-    themeBtn.onclick = ()=>{
-      document.body.classList.toggle('dark');
-      const dark = document.body.classList.contains('dark');
-      themeBtn.textContent = dark?'☀️':'🌙';
-      localStorage.theme = dark?'dark':'light';
-    };
-    accentBtn.onclick = ()=>picker.click();
-    picker.oninput = e=>{
-      const c = e.target.value;
-      document.documentElement.style.setProperty('--accent',c);
-      const v = Math.max(parseInt(c.slice(1),16)-0x202020,0);
-      document.documentElement.style.setProperty('--accent-d','#'+v.toString(16).padStart(6,'0'));
-      localStorage.accent = c;
-    };
-
-    // Копия IP + Toast
-    function copyIP(){
-      const ip = document.getElementById('ip-text').innerText;
-      navigator.clipboard.writeText(ip).then(()=>{
-        const t = document.getElementById('toast');
-        t.textContent = 'IP скопирован!';
-        t.style.opacity = '1';
-        setTimeout(()=> t.style.opacity='0',2000);
-      });
-    }
-
-    // Модалка (не используется для join-btn)
-    function closeModal(){ document.getElementById('modal').style.display='none'; }
-    window.onclick = e=>{
-      if(e.target.id==='modal') closeModal();
-    };
-  </script>
 </body>
 </html>
-```
