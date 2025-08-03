@@ -9,37 +9,29 @@
     rel="stylesheet"
   />
   <style>
-    /* === Переменные === */
+    /* === CSS-переменные и сброс === */
     :root {
       --bg: #121212;
       --fg: #e0e0e0;
       --accent: #4ea8de;
-      --glass: rgba(255,255,255,0.1);
+      --vip-accent: #deaa4e;
+      --glass: rgba(255, 255, 255, 0.1);
       --radius: 12px;
       --gap: 20px;
-      --transition: 0.3s ease;
+      --trans: 0.3s ease;
     }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Montserrat', sans-serif;
       background: var(--bg);
       color: var(--fg);
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
+      line-height: 1.5;
     }
-    a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: color var(--transition);
-    }
-    a:hover {
-      color: #7ec3ff;
-    }
+    a { color: var(--accent); text-decoration: none; transition: color var(--trans); }
+    a:hover { color: #7ec3ff; }
 
     /* === Навигация === */
     nav {
@@ -53,105 +45,68 @@
       top: 0;
       z-index: 100;
     }
-    .nav-left {
+    .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-    }
-    .nav-left img {
-      width: 36px;
-      height: 36px;
-    }
-    .nav-left .brand {
       font-size: 1.4rem;
       font-weight: 700;
     }
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .nav-right ul {
-      list-style: none;
-      display: flex;
-      gap: 16px;
-    }
-    .nav-right li {
-      font-size: 0.95rem;
-    }
-    #login-btn {
+    .brand img { width: 36px; height: 36px; }
+    .nav-actions button {
       padding: 6px 14px;
-      background: var(--accent);
+      margin-left: 12px;
       border: none;
       border-radius: 6px;
-      color: #fff;
       font-weight: 700;
       cursor: pointer;
-      transition: background var(--transition);
+      transition: background var(--trans);
     }
-    #login-btn:hover {
-      background: #7ec3ff;
-    }
+    #login-btn { background: var(--accent); color: #fff; }
+    #login-btn:hover { background: #7ec3ff; }
+    #login-btn.logged { background: #7ec3ff; }
 
-    /* === Секции === */
-    section {
-      display: none;
-      padding: 60px 20px;
-      flex: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    section.active {
-      display: block;
-    }
-
-    /* === Hero === */
-    #home {
+    /* === Hero-блок === */
+    header.hero {
       text-align: center;
       background: linear-gradient(135deg, #243b55, #141e30);
-      color: #fff;
-      border-radius: var(--radius);
-      margin: var(--gap);
       padding: 80px 20px;
+      margin: var(--gap);
+      border-radius: var(--radius);
     }
-    #home h1 {
+    header.hero h1 {
       font-size: 2.8rem;
       margin-bottom: var(--gap);
     }
-    #home .highlight {
-      color: var(--accent);
-    }
-    #home p {
+    header.hero .highlight { color: var(--accent); }
+    header.hero p {
       font-size: 1.1rem;
       max-width: 600px;
       margin: 0 auto var(--gap);
       opacity: 0.9;
     }
-    .hero-buttons {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .btn {
+    .hero .btn {
+      display: inline-block;
       padding: 12px 28px;
       background: var(--accent);
       color: #fff;
       border-radius: 8px;
       font-weight: 700;
-      transition: background var(--transition), transform var(--transition);
+      transition: background var(--trans), transform var(--trans);
     }
-    .btn:hover {
+    .hero .btn:hover {
       background: #7ec3ff;
       transform: translateY(-2px);
     }
 
-    /* === Преимущества на главной === */
-    #home .features {
+    /* === Секция преимуществ === */
+    .features {
       display: grid;
       gap: var(--gap);
-      margin-top: var(--gap);
-      grid-template-columns: repeat(3, 1fr);
+      max-width: 1200px;
+      margin: 0 auto var(--gap);
+      grid-template-columns: repeat(3,1fr);
+      padding: 0 20px;
     }
     .feature {
       background: var(--glass);
@@ -159,7 +114,7 @@
       border-radius: var(--radius);
       padding: var(--gap);
       text-align: center;
-      transition: transform var(--transition), box-shadow var(--transition);
+      transition: transform var(--trans), box-shadow var(--trans);
     }
     .feature:hover {
       transform: translateY(-6px);
@@ -175,38 +130,55 @@
       margin-bottom: 8px;
       color: var(--accent);
     }
-    .feature p {
-      font-size: 0.95rem;
-    }
+    .feature p { font-size: 0.95rem; }
 
-    /* === Магазин === */
-    #shop h2 {
+    /* === Секция покупки VIP === */
+    .vip-section {
+      background: var(--glass);
+      backdrop-filter: blur(8px);
+      padding: var(--gap);
+      margin: 0 auto var(--gap);
+      border-radius: var(--radius);
+      max-width: 1200px;
+      width: calc(100% - 40px);
+    }
+    .vip-section h2 {
+      text-align: center;
       font-size: 2rem;
       margin-bottom: var(--gap);
-      text-align: center;
     }
-    #shop .shop-list {
-      list-style: none;
+    .vip-grid {
       display: grid;
       gap: var(--gap);
-      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      grid-template-columns: repeat(3,1fr);
     }
-    #shop .shop-list li {
-      background: var(--glass);
-      padding: var(--gap);
+    .vip-card {
+      background: var(--bg);
       border-radius: var(--radius);
+      padding: var(--gap);
       text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      transition: transform var(--trans);
     }
-
-    /* === Профиль === */
-    #profile h2 {
-      font-size: 2rem;
-      margin-bottom: var(--gap);
-      text-align: center;
+    .vip-card:hover { transform: translateY(-4px); }
+    .vip-card h3 { margin-bottom: 8px; color: var(--vip-accent); }
+    .vip-card .price {
+      font-size: 1.6rem;
+      margin: var(--gap) 0;
     }
-    #profile .info {
-      text-align: center;
-      font-size: 1.1rem;
+    .vip-card button {
+      padding: 10px 20px;
+      background: var(--vip-accent);
+      color: #121212;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--trans), transform var(--trans);
+    }
+    .vip-card button:hover {
+      background: #f0c878;
+      transform: translateY(-2px);
     }
 
     /* === Модалка входа === */
@@ -224,8 +196,8 @@
       backdrop-filter: blur(12px);
       border-radius: var(--radius);
       padding: var(--gap);
-      max-width: 320px;
       width: 90%;
+      max-width: 320px;
       text-align: center;
       position: relative;
     }
@@ -244,16 +216,14 @@
     .modal-content button {
       padding: 10px 20px;
       background: var(--accent);
+      color: #fff;
       border: none;
       border-radius: 6px;
-      color: #fff;
       font-weight: 700;
       cursor: pointer;
-      transition: background var(--transition);
+      transition: background var(--trans);
     }
-    .modal-content button:hover {
-      background: #7ec3ff;
-    }
+    .modal-content button:hover { background: #7ec3ff; }
     .modal-close {
       position: absolute;
       top: 8px; right: 12px;
@@ -264,16 +234,13 @@
 
     /* === Отзывчивость === */
     @media (max-width: 1024px) {
-      #home .features {
-        grid-template-columns: repeat(2,1fr);
-      }
+      .features { grid-template-columns: repeat(2,1fr); }
+      .vip-grid { grid-template-columns: repeat(2,1fr); }
     }
     @media (max-width: 768px) {
-      #home h1 { font-size: 2.4rem; }
-      #home p { font-size: 1rem; }
-      #home .features { grid-template-columns: 1fr; }
+      header.hero h1 { font-size: 2.4rem; }
+      .features, .vip-grid { grid-template-columns: 1fr; }
       nav { flex-direction: column; gap: 12px; }
-      .nav-right ul { flex-wrap: wrap; justify-content: center; }
     }
   </style>
 </head>
@@ -281,62 +248,62 @@
 
   <!-- Навигация -->
   <nav>
-    <div class="nav-left">
+    <div class="brand">
       <img src="pig.png" alt="logo"/>
-      <div class="brand">SkyForge</div>
+      SkyForge
     </div>
-    <div class="nav-right">
-      <ul>
-        <li><a href="#" data-page="home">Главная</a></li>
-        <li><a href="#" data-page="shop">Магазин</a></li>
-        <li><a href="#" data-page="profile">Профиль</a></li>
-      </ul>
+    <div class="nav-actions">
       <button id="login-btn">Войти</button>
     </div>
   </nav>
 
-  <!-- Секции -->
-  <section id="home" class="active">
+  <!-- Hero -->
+  <header class="hero">
     <h1>Добро пожаловать в <span class="highlight">SkyForge</span></h1>
     <p>Играй бесплатно на любом устройстве — ПК, планшете или телефоне.</p>
-    <div class="hero-buttons">
-      <a href="#" class="btn">Играть</a>
-    </div>
-    <div class="features">
-      <div class="feature">
-        <img src="interaction.png" alt="Интерактив"/>
-        <h3>Интерактив</h3>
-        <p>Уникальные механики и системы взаимодействия.</p>
-      </div>
-      <div class="feature">
-        <img src="launcher.png" alt="Лаунчер"/>
-        <h3>Стабильный лаунчер</h3>
-        <p>Авто-обновления, поддержка модов — просто скачай и играй.</p>
-      </div>
-      <div class="feature">
-        <img src="economy.png" alt="Экономика"/>
-        <h3>Экономика</h3>
-        <p>Валюта, фермы и торговля на вашем рынке.</p>
-      </div>
-    </div>
-  </section>
+    <a href="#" class="btn">Играть</a>
+  </header>
 
-  <section id="shop">
-    <h2>Магазин SkyForge</h2>
-    <ul class="shop-list">
-      <li>Набор «Начинающий» — бесплатно</li>
-      <li>Набор «Игрок» — 100 монет</li>
-      <li>Набор «Ветеран» — 250 монет</li>
-      <li>Набор «Легенда» — 500 монет</li>
-    </ul>
-  </section>
-
-  <section id="profile">
-    <h2>Профиль</h2>
-    <div class="info" id="profile-content">
-      Вы не авторизованы.
+  <!-- Преимущества -->
+  <div class="features">
+    <div class="feature">
+      <img src="interaction.png" alt="Интерактив"/>
+      <h3>Интерактив</h3>
+      <p>Уникальные механики и системы взаимодействия.</p>
     </div>
-  </section>
+    <div class="feature">
+      <img src="launcher.png" alt="Лаунчер"/>
+      <h3>Стабильный лаунчер</h3>
+      <p>Авто-обновления, поддержка модов — просто скачай и играй.</p>
+    </div>
+    <div class="feature">
+      <img src="economy.png" alt="Экономика"/>
+      <h3>Экономика</h3>
+      <p>Валюта, фермы и торговля на вашем рынке.</p>
+    </div>
+  </div>
+
+  <!-- Покупка VIP -->
+  <div class="vip-section">
+    <h2>Купить VIP</h2>
+    <div class="vip-grid">
+      <div class="vip-card">
+        <h3>Silver VIP</h3>
+        <div class="price">200&nbsp;₽</div>
+        <button>Купить</button>
+      </div>
+      <div class="vip-card">
+        <h3>Gold VIP</h3>
+        <div class="price">500&nbsp;₽</div>
+        <button>Купить</button>
+      </div>
+      <div class="vip-card">
+        <h3>Platinum VIP</h3>
+        <div class="price">1 000&nbsp;₽</div>
+        <button>Купить</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Модалка входа -->
   <div id="modal">
@@ -349,19 +316,8 @@
   </div>
 
   <script>
-    // Страницы
-    const links = document.querySelectorAll('nav a[data-page]');
-    const sections = document.querySelectorAll('section');
-    links.forEach(a => a.addEventListener('click', e => {
-      e.preventDefault();
-      const page = a.dataset.page;
-      sections.forEach(s => s.classList.toggle('active', s.id === page));
-    }));
-
-    // Логика входа
     const loginBtn = document.getElementById('login-btn');
     const modal = document.getElementById('modal');
-    const profileContent = document.getElementById('profile-content');
 
     loginBtn.addEventListener('click', () => {
       modal.style.display = 'flex';
@@ -373,26 +329,20 @@
       const nick = document.getElementById('nick').value.trim();
       if (!nick) return;
       localStorage.setItem('sf_nick', nick);
-      updateProfile();
-      closeModal();
       loginBtn.textContent = nick;
+      loginBtn.classList.add('logged');
+      closeModal();
     }
-
-    // Профиль
-    function updateProfile() {
-      const nick = localStorage.getItem('sf_nick');
-      if (nick) {
-        profileContent.textContent = `Ваш ник: ${nick}`;
-      } else {
-        profileContent.textContent = 'Вы не авторизованы.';
-      }
-    }
-
-    // Инициализация
+    // При загрузке сохраняем состояние
     document.addEventListener('DOMContentLoaded', () => {
-      updateProfile();
+      const saved = localStorage.getItem('sf_nick');
+      if (saved) {
+        loginBtn.textContent = saved;
+        loginBtn.classList.add('logged');
+      }
     });
   </script>
+
 </body>
 </html>
 ```
