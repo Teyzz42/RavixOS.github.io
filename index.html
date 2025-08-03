@@ -2,249 +2,210 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SkyForge</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  >
+  <title>SkyForge — Классический сервер выживания</title>
   <style>
-    /*—— Цвета и фоны ——*/
+    /* Базовые переменные */
     :root {
-      --bg-start: #0d1117;
-      --bg-end:   #171c24;
-      --surface:  rgba(255,255,255,0.05);
-      --accent:   #79c0ff;
-      --text:     #c9d1d9;
-      --text-alt: #8b949e;
+      --clr-bg-start: #0d1117;
+      --clr-bg-end:   #171c24;
+      --clr-surface:  rgba(255,255,255,0.05);
+      --clr-accent:   #79c0ff;
+      --clr-text:     #c9d1d9;
+      --clr-text-alt: #8b949e;
+      --font-base:    1rem;
+      --radius:       12px;
+      --gap:          1.5rem;
     }
 
-    /*—— Сброс и базовая раскладка ——*/
-    * { margin:0; padding:0; box-sizing:border-box; }
+    /* Сброс стилей */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 100%; /* 1rem = 16px */
+    }
+
     body {
-      min-height:100vh;
-      display:flex; flex-direction:column;
-      font-family:"Segoe UI",Arial,sans-serif;
-      color:var(--text);
-      background:linear-gradient(135deg,var(--bg-start),var(--bg-end));
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      padding: var(--gap);
+      font-family: "Segoe UI", sans-serif;
+      color: var(--clr-text);
+      background: linear-gradient(
+        135deg,
+        var(--clr-bg-start),
+        var(--clr-bg-end)
+      );
+      line-height: 1.5;
     }
-    a { text-decoration:none; color:inherit; }
 
-    /*—— Хидер с логотипом ——*/
-    header {
-      padding:16px 32px;
-      backdrop-filter:blur(10px);
-      background:var(--surface);
-      display:flex; justify-content:center;
+    h1, h2 {
+      line-height: 1.2;
     }
-    .logo { height:50px; }
 
-    /*—— Основная зона ——*/
-    .hero {
-      flex:1;
-      display:flex; flex-direction:column;
-      align-items:center; padding:40px 20px;
-      gap:40px;
+    /* Заголовок сайта */
+    .site-header {
+      text-align: center;
+      margin-bottom: var(--gap);
     }
+
     .site-title {
-      font-size:2.8rem;
-      color:var(--accent);
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--clr-accent);
+      margin-bottom: 0.25em;
     }
 
-    /*—— Общие стили карточек ——*/
+    .site-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--clr-text-alt);
+    }
+
+    /* Карточка контента */
     .card {
-      background:var(--surface);
-      backdrop-filter:blur(12px);
-      border-radius:16px;
-      padding:32px 24px;
-      box-shadow:0 8px 32px rgba(0,0,0,0.6);
-      text-align:center;
-      width:100%; max-width:360px;
-      transition:transform .2s,box-shadow .2s;
+      background: var(--clr-surface);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      padding: var(--gap);
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      text-align: center;
     }
-    .card:hover {
-      transform:translateY(-5px);
-      box-shadow:0 12px 48px rgba(0,0,0,0.7);
-    }
-    .card h2 {
-      font-size:1.6rem;
-      margin-bottom:12px;
-    }
+
     .card p {
-      color:var(--text-alt);
-      margin-bottom:20px;
-      font-size:.95rem;
+      margin-bottom: 1em;
     }
 
-    /*—— Форма регистрации ——*/
-    .register form {
-      display:flex; gap:8px; justify-content:center;
-    }
-    .register input {
-      flex:1; padding:10px 14px;
-      border:none; border-radius:6px;
-      background:rgba(255,255,255,0.1);
-      color:var(--text); font-size:1rem;
-    }
-    .register input::placeholder {
-      color:var(--text-alt);
-    }
-    .register button {
-      padding:10px 16px; border:none;
-      border-radius:6px;
-      background:var(--accent);
-      color:var(--bg-start);
-      font-weight:600;
-      cursor:pointer;
-      transition:background .2s;
-    }
-    .register button:hover {
-      background:#a0d8ff;
-    }
-    .register-result {
-      margin-top:16px;
-      color:var(--accent);
-      font-weight:600;
-      display:none;
+    .rules {
+      text-align: left;
+      margin: 1em 0;
+      list-style: none;
+      padding-left: 0;
     }
 
-    /*—— VIP-кнопка ——*/
-    .vip .vip-btn {
-      padding:12px 28px;
-      background:var(--accent);
-      color:var(--bg-start);
-      border:none; border-radius:8px;
-      font-weight:600;
-      cursor:pointer;
-      transition:background .2s;
-    }
-    .vip .vip-btn:hover {
-      background:#a0d8ff;
+    .rules li {
+      margin-bottom: 0.5em;
+      font-size: 0.95rem;
     }
 
-    /*—— Фичи ——*/
-    .features {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-      gap:24px;
-      width:100%; max-width:800px;
-    }
-    .feature {
-      background:var(--surface);
-      backdrop-filter:blur(10px);
-      border-radius:12px;
-      padding:20px;
-      display:flex; flex-direction:column;
-      align-items:center;
-      transition:transform .2s;
-    }
-    .feature:hover {
-      transform:translateY(-4px);
-    }
-    .feature .icon {
-      font-size:2.4rem;
-      margin-bottom:12px;
-    }
-    .feature .label {
-      font-size:1rem;
-      color:var(--text);
+    .rules li::before {
+      content: "• ";
+      color: var(--clr-accent);
     }
 
-    /*—— Футер ——*/
-    footer {
-      text-align:center;
-      padding:12px 20px;
-      font-size:.85rem;
-      color:var(--text-alt);
-      backdrop-filter:blur(10px);
-      background:var(--surface);
+    /* IP-бокс и кнопка VIP */
+    .ip-box {
+      display: inline-block;
+      padding: 0.75em 1.5em;
+      margin: 1em 0;
+      font-size: 1rem;
+      font-weight: bold;
+      background: rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .ip-box:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .vip-btn {
+      display: inline-block;
+      padding: 0.75em 2em;
+      margin-top: 0.5em;
+      background: var(--clr-accent);
+      color: var(--clr-bg-start);
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .vip-btn:hover {
+      background: #a0d8ff;
+    }
+
+    /* Адаптивность */
+    @media (min-width: 768px) {
+      body {
+        padding: calc(var(--gap) * 2);
+      }
+
+      .card {
+        padding: calc(var(--gap) * 1.5);
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <img src="logo.png" alt="SkyForge Logo" class="logo">
+  <!-- Шапка -->
+  <header class="site-header">
+    <h1 class="site-title">SkyForge</h1>
+    <p class="site-subtitle">Классический сервер выживания — версия 1.20.1</p>
   </header>
 
-  <!-- Main -->
-  <main class="hero">
-    <!-- Секция регистрации -->
-    <div id="regSection" class="card register">
-      <h2>Регистрация</h2>
-      <p>Введите никнейм, чтобы начать.</p>
-      <form id="registerForm">
-        <input type="text" name="nickname" placeholder="Ваш никнейм" required>
-        <button type="submit">Register</button>
-      </form>
-      <div class="register-result" id="registerResult">
-        Вы зарегистрированы как <span id="userNick"></span>!
-      </div>
+  <!-- Основной контент -->
+  <section class="card">
+    <h2>Добро пожаловать!</h2>
+    <p>Здесь главное — честная игра и дружелюбное сообщество.</p>
+    <ul class="rules">
+      <li>Гриферство запрещено</li>
+      <li>Обман игроков не допускается</li>
+      <li>Уважение к другим — обязательное правило</li>
+    </ul>
+    <p>Строй базы, объединяйся в города и наслаждайся выживанием вместе с друзьями!</p>
+
+    <div
+      class="ip-box"
+      id="ipBox"
+      title="Нажми, чтобы скопировать IP"
+    >
+      IP сервера: <span id="serverIp">SkyForgeOFFICIAL</span>
     </div>
 
-    <!-- Основной встроенный контент (скрыт до регистрации) -->
-    <div id="mainSection" style="display:none; width:100%; max-width:800px;">
-      <div class="site-title">SkyForge</div>
+    <button class="vip-btn" id="vipBtn">Покупка VIP</button>
+  </section>
 
-      <!-- VIP-карта -->
-      <div class="card vip">
-        <h2>VIP-доступ</h2>
-        <p>Откройте эксклюзивные возможности.</p>
-        <button class="vip-btn" id="buyVipBtn">BuyVip</button>
-      </div>
-
-      <!-- Фичи -->
-      <div class="features">
-        <div class="feature">
-          <div class="icon">💬</div>
-          <div class="label">Общение</div>
-        </div>
-        <div class="feature">
-          <div class="icon">👥</div>
-          <div class="label">Сообщество</div>
-        </div>
-        <div class="feature">
-          <div class="icon">💰</div>
-          <div class="label">Экономика</div>
-        </div>
-        <div class="feature">
-          <div class="icon">⭐</div>
-          <div class="label">Опыт</div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    © 2025 SkyForge. Все права защищены.
+  <!-- Подвал -->
+  <footer style="margin-top: var(--gap); font-size: 0.85rem; color: var(--clr-text-alt);">
+    &copy; <span id="year"></span> SkyForge. Все права защищены.
   </footer>
 
   <script>
-    // Обработка регистрации
-    const form = document.getElementById('registerForm');
-    const regSection = document.getElementById('regSection');
-    const mainSection = document.getElementById('mainSection');
-    const resultBox = document.getElementById('registerResult');
-    const userNickSpan = document.getElementById('userNick');
+    // Авто-вставка текущего года
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const nick = form.nickname.value.trim();
-      if (!nick) return;
-      // Скрыть форму, показать результат
-      form.style.display = 'none';
-      userNickSpan.textContent = nick;
-      resultBox.style.display = 'block';
-      // Через секунду переключиться на основной контент
-      setTimeout(() => {
-        regSection.style.display = 'none';
-        mainSection.style.display = 'block';
-      }, 1000);
+    // Копирование IP в буфер обмена
+    const ipBox = document.getElementById('ipBox');
+    ipBox.addEventListener('click', () => {
+      const ipText = document.getElementById('serverIp').textContent;
+      navigator.clipboard.writeText(ipText).then(() => {
+        ipBox.textContent = 'Скопировано: ' + ipText;
+        setTimeout(() => {
+          ipBox.textContent = 'IP сервера: ' + ipText;
+        }, 1500);
+      });
     });
 
-    // Кнопка BuyVip
-    document.getElementById('buyVipBtn')
-      .addEventListener('click', () => {
-        alert('Здесь ваш встроенный процесс покупки VIP.');
-      });
+    // Заглушка для кнопки VIP
+    document.getElementById('vipBtn').addEventListener('click', () => {
+      alert('Здесь будет процесс покупки VIP.');
+    });
   </script>
 </body>
 </html>
