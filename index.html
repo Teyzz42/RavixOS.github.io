@@ -2,26 +2,28 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>🌍 SkyForge — Покупка VIP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌍 SkyForge 2 | Beta - Minecraft Community</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary: '#4f46e5',
-            secondary: '#7c3aed',
-            accent: '#a78bfa',
+            primary: '#6366f1',
+            secondary: '#8b5cf6',
+            accent: '#ec4899',
             dark: '#0f172a',
             light: '#f8fafc',
             premium: '#f59e0b',
-            elite: '#10b981'
+            elite: '#10b981',
+            beta: '#0ea5e9'
           },
           fontFamily: {
             sans: ['Montserrat', 'sans-serif'],
+            tech: ['Orbitron', 'sans-serif']
           },
           animation: {
             'float': 'float 3s ease-in-out infinite',
@@ -29,6 +31,7 @@
             'bounce-slow': 'bounce 2s infinite',
             'spin-slow': 'spin 3s linear infinite',
             'wiggle': 'wiggle 1s ease-in-out infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate'
           },
           keyframes: {
             float: {
@@ -38,6 +41,10 @@
             wiggle: {
               '0%, 100%': { transform: 'rotate(-3deg)' },
               '50%': { transform: 'rotate(3deg)' },
+            },
+            glow: {
+              '0%': { boxShadow: '0 0 5px #6366f1, 0 0 10px #6366f1' },
+              '100%': { boxShadow: '0 0 15px #8b5cf6, 0 0 25px #8b5cf6' }
             }
           }
         }
@@ -46,23 +53,25 @@
   </script>
   <style>
     .gradient-text {
-      background: linear-gradient(45deg, #a78bfa, #7c3aed, #4f46e5);
+      background: linear-gradient(45deg, #6366f1, #8b5cf6, #ec4899);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
+    
     .tooltip {
       position: relative;
     }
+    
     .tooltip-text {
       visibility: hidden;
-      width: 120px;
+      width: 160px;
       background-color: #0f172a;
       color: #fff;
       text-align: center;
       border-radius: 6px;
-      padding: 5px;
+      padding: 8px;
       position: absolute;
       z-index: 1;
       bottom: 125%;
@@ -70,36 +79,53 @@
       transform: translateX(-50%);
       opacity: 0;
       transition: opacity 0.3s;
+      font-size: 0.875rem;
     }
+    
     .tooltip:hover .tooltip-text {
       visibility: visible;
       opacity: 1;
     }
+    
     .glow {
-      box-shadow: 0 0 15px rgba(165, 180, 252, 0.7);
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
     }
+    
     .glow:hover {
-      box-shadow: 0 0 25px rgba(165, 180, 252, 0.9);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.8);
     }
+    
     .vip-card {
       transition: all 0.3s ease;
       transform-style: preserve-3d;
+      position: relative;
+      overflow: hidden;
     }
+    
     .vip-card:hover {
       transform: translateY(-5px) scale(1.03);
     }
+    
     .premium-card {
       background: linear-gradient(135deg, #f59e0b, #f97316);
       color: white;
     }
+    
     .elite-card {
       background: linear-gradient(135deg, #10b981, #059669);
       color: white;
     }
+    
+    .beta-card {
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      color: white;
+    }
+    
     .shine {
       position: relative;
       overflow: hidden;
     }
+    
     .shine:after {
       content: "";
       position: absolute;
@@ -118,6 +144,7 @@
         rgba(255, 255, 255, 0.0) 100%
       );
     }
+    
     .shine:hover:after {
       opacity: 1;
       left: 130%;
@@ -125,24 +152,136 @@
       transition-duration: 0.7s, 0.7s, 0.15s;
       transition-timing-function: ease;
     }
+    
     @keyframes confetti {
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
       100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
+    
+    .beta-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: linear-gradient(45deg, #0ea5e9, #0284c7);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0 0 0 1rem;
+      font-weight: bold;
+      font-size: 0.75rem;
+      z-index: 10;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-card {
+      transition: all 0.3s ease;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(99, 102, 241, 0.5);
+      box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.2);
+    }
+    
+    .beta-tester-card {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      border: 1px solid rgba(14, 165, 233, 0.3);
+    }
+    
+    .beta-tester-card:hover {
+      border-color: rgba(14, 165, 233, 0.7);
+    }
+    
+    .server-status {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    
+    .status-online {
+      background-color: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+    }
+    
+    .status-offline {
+      background-color: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+    
+    .status-beta {
+      background-color: rgba(14, 165, 233, 0.2);
+      color: #0ea5e9;
+    }
+    
+    .minecraft-block {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      background: linear-gradient(45deg, #3b82f6, #6366f1);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .minecraft-block::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.1) 50%),
+        linear-gradient(0deg, transparent 50%, rgba(255,255,255,0.1) 50%);
+      background-size: 20px 20px;
+    }
+    
+    .minecraft-block .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      text-align: center;
+    }
+    
+    .tech-font {
+      font-family: 'Orbitron', sans-serif;
+    }
+    
+    /* Добавляем темную тему */
+    body {
+      background-color: #000;
+      color: #fff;
+    }
+    
+    /* Стили для версии сервера */
+    .server-version {
+      color: #fff !important;
+    }
   </style>
 </head>
-<body class="bg-gradient-to-b from-gray-900 to-gray-800 font-sans text-gray-100 min-h-screen flex flex-col">
-  <!-- Навигация -->
+<body class="bg-black font-sans text-gray-100 min-h-screen flex flex-col">
+  <!-- Navigation -->
   <nav class="bg-gradient-to-r from-primary to-secondary text-white shadow-lg sticky top-0 z-50">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <div class="flex items-center space-x-8">
         <a href="#" class="text-xl font-bold flex items-center">
           <i class="fas fa-globe mr-2 animate-spin-slow"></i>
-          <span class="text-white">SkyForge</span>
+          <span class="text-white">SkyForge 2</span>
+          <span class="ml-2 px-2 py-1 bg-beta text-white text-xs rounded-full">BETA</span>
         </a>
         <div class="hidden md:flex space-x-6">
           <a href="#" class="hover:text-accent transition flex items-center">
-            <i class="fas fa-home mr-1"></i> Главное
+            <i class="fas fa-home mr-1"></i> Главная
           </a>
           <a href="#" class="hover:text-accent transition flex items-center" onclick="showCommunityModal()">
             <i class="fab fa-discord mr-1"></i> Сообщество
@@ -156,7 +295,7 @@
         </div>
       </div>
       <div class="flex items-center space-x-4">
-        <button id="login-button" onclick="showLoginModal()" class="bg-gradient-to-r from-accent to-secondary hover:from-secondary hover:to-accent px-4 py-2 rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg glow">
+        <button id="login-button" onclick="showLoginModal()" class="bg-gradient-to-r from-accent to-secondary hover:from-secondary hover:to-accent px-4 py-2 rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg glow flex items-center">
           <i class="fas fa-sign-in-alt mr-1"></i> <span id="login-text">Войти</span>
         </button>
         <button class="md:hidden text-xl" onclick="toggleMobileMenu()">
@@ -164,11 +303,11 @@
         </button>
       </div>
     </div>
-    <!-- Мобильное меню -->
+    <!-- Mobile menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-primary/90 w-full absolute left-0 top-full z-50">
       <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
         <a href="#" class="hover:text-accent transition py-2 flex items-center">
-          <i class="fas fa-home mr-2"></i> Главное
+          <i class="fas fa-home mr-2"></i> Главная
         </a>
         <a href="#" class="hover:text-accent transition py-2 flex items-center" onclick="showCommunityModal()">
           <i class="fab fa-discord mr-2"></i> Сообщество
@@ -183,8 +322,8 @@
     </div>
   </nav>
 
-  <!-- Хедер -->
-  <header class="bg-gradient-to-br from-primary/90 to-secondary/90 text-white py-16 relative overflow-hidden">
+  <!-- Header -->
+  <header class="bg-gradient-to-br from-indigo-700/90 to-purple-700/90 text-white py-16 relative overflow-hidden">
     <div class="absolute inset-0 opacity-20">
       <div class="absolute top-0 left-0 w-full h-full bg-repeat" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2IiBoZWlnaHQ9IjYiPgo8cmVjdCB3aWR0aD0iNiIgaGVpZ2h0PSI2IiBmaWxsPSIjZmZmZmZmIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDZMNiAwWk02IDZMMCAwWiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2U9IiMwMDAwMDAiPjwvcGF0aD4KPC9zdmc+');"></div>
     </div>
@@ -195,15 +334,16 @@
       </div>
       <div class="text-center md:text-left">
         <h1 class="text-5xl md:text-6xl font-bold mb-2 flex items-center justify-center md:justify-start">
-          <span class="text-white">SkyForge</span>
+          <span class="text-white">SkyForge 2</span>
+          <span class="ml-4 px-3 py-1 bg-beta text-white text-sm rounded-full animate-pulse">BETA</span>
         </h1>
-        <p class="text-xl md:text-2xl text-accent font-semibold mb-4 flex items-center justify-center md:justify-start">
-          <i class="fas fa-fire mr-2 animate-pulse"></i> Версия 1.20.1
+        <p class="text-xl md:text-2xl server-version font-semibold mb-4 flex items-center justify-center md:justify-start">
+          <i class="fas fa-fire mr-2 animate-pulse"></i> Версия 1.20.1 | Бета-тестирование
         </p>
-        <div class="flex items-center justify-center md:justify-start space-x-3">
+        <div class="flex items-center justify-center md:justify-start space-x-3 mb-6">
           <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg flex items-center border border-accent/30 glow">
             <i class="fas fa-server mr-2 text-accent"></i>
-            <span class="font-mono font-bold" id="ip-text">SkyForgeOFFICALL.aternos.me:46890</span>
+            <span class="font-mono font-bold" id="ip-text">SkyForge2Beta.aternos.me:46890</span>
           </div>
           <button onclick="copyIP()" class="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-all tooltip border border-accent/30 glow">
             <i class="fas fa-copy text-accent"></i>
@@ -214,23 +354,29 @@
             <span class="tooltip-text">Информация</span>
           </button>
         </div>
+        <div class="flex flex-wrap justify-center md:justify-start gap-3">
+          <div class="server-status status-beta">
+            <i class="fas fa-flask mr-1"></i> Бета-версия
+          </div>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- Основной контент -->
+  <!-- Main Content -->
   <main class="flex-grow container mx-auto px-4 py-8">
-    <section class="mb-12">
+    <!-- Beta Welcome Section -->
+    <section class="mb-16">
       <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-4xl font-bold mb-6 gradient-text animate-bounce-slow">Добро пожаловать на SkyForge!</h2>
-        <div class="bg-white/5 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-6 border border-accent/20 glow">
+        <h2 class="text-4xl font-bold mb-6 gradient-text animate-bounce-slow">Добро пожаловать в SkyForge 2 Beta!</h2>
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-6 border border-accent/30 glow">
           <p class="text-lg italic mb-4">
             <i class="fas fa-quote-left text-accent mr-2"></i>
-            SkyForge — уникальный сервер с элементами анархии и экономики. Здесь нет приватов и ограничений на строительство, ценится честная игра и творчество.
+            SkyForge 2 - это совершенно новое воплощение популярного сервера с элементами анархии и экономики. Мы переработали всё с нуля для более захватывающего игрового опыта!
             <i class="fas fa-quote-right text-accent ml-2"></i>
           </p>
           <p class="text-lg">
-            Обмана нет, уважение к другим важно, а кланы и квесты создаются самими игроками. Полная свобода в рамках базовых правил.
+            Эта бета-версия предлагает ранний доступ к новым функциям, механикам и улучшениям. Присоединяйтесь к сообществу бета-тестировщиков и помогите нам создать идеальный сервер!
           </p>
           <div class="mt-6 flex flex-wrap justify-center gap-4">
             <div class="bg-primary/20 px-4 py-2 rounded-full flex items-center">
@@ -239,18 +385,81 @@
             </div>
             <div class="bg-primary/20 px-4 py-2 rounded-full flex items-center">
               <i class="fas fa-coins mr-2 text-yellow-400"></i>
-              <span>Экономика</span>
+              <span>Новая экономика</span>
             </div>
             <div class="bg-primary/20 px-4 py-2 rounded-full flex items-center">
               <i class="fas fa-users mr-2 text-green-400"></i>
               <span>Активное сообщество</span>
+            </div>
+            <div class="bg-primary/20 px-4 py-2 rounded-full flex items-center">
+              <i class="fas fa-flask mr-2 text-blue-400"></i>
+              <span>Бета-функции</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- VIP секция -->
+    <!-- Beta Testers Section -->
+    <section class="py-8 mb-16">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4 gradient-text">Бета-тестировщики</h2>
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+          Наши герои, которые помогают создавать лучший сервер! Присоединяйся к ним.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <!-- Tester 1 -->
+        <div class="beta-tester-card rounded-xl shadow-lg p-6 border-2">
+          <div class="flex items-center mb-4">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center mr-4">
+              <i class="fas fa-crown text-white text-2xl"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">totallini</h3>
+              <p class="text-beta">Главный тестировщик</p>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-4">
+            Главный администратор сервера. Тестирует новые функции и исправляет все баги.
+          </p>
+          <div class="flex justify-between text-sm">
+            <span class="px-2 py-1 bg-blue-500/20 rounded">Тестер с 2024</span>
+            <span class="px-2 py-1 bg-blue-500/20 rounded">VIP 9</span>
+          </div>
+        </div>
+
+        <!-- Tester 2 -->
+        <div class="beta-tester-card rounded-xl shadow-lg p-6 border-2">
+          <div class="flex items-center mb-4">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mr-4">
+              <i class="fas fa-bug text-white text-2xl"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold">Winfot</h3>
+              <p class="text-beta">Багхантер</p>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-4">
+            Находит баги на сайте и сервере, сообщает totallin'у о них.
+          </p>
+          <div class="flex justify-between text-sm">
+            <span class="px-2 py-1 bg-purple-500/20 rounded">Тестер с 2025</span>
+            <span class="px-2 py-1 bg-purple-500/20 rounded">VIP 0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <button onclick="showBetaInfo()" class="bg-gradient-to-r from-beta to-cyan-500 hover:from-cyan-500 hover:to-beta text-white px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 flex items-center justify-center mx-auto glow">
+          <i class="fas fa-flask mr-3"></i> Стать бета-тестировщиком
+        </button>
+        <p class="text-gray-400 mt-4">Присоединяйся к команде и помоги создать лучший сервер!</p>
+      </div>
+    </section>
+
+    <!-- VIP Section -->
     <section class="py-8">
       <div class="text-center mb-12">
         <h2 class="text-4xl font-bold mb-4 gradient-text">Покупка VIP за аров</h2>
@@ -266,12 +475,11 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="vip-cards">
-        <!-- Карточки генерируются скриптом -->
+        <!-- Cards generated by script -->
       </div>
-
     </section>
 
-    <!-- FAQ секция -->
+    <!-- FAQ Section -->
     <section class="py-8 mt-12">
       <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Частые вопросы</h2>
       <div class="max-w-3xl mx-auto space-y-4">
@@ -302,18 +510,28 @@
             <p>Нет, VIP статус сохраняется навсегда после покупки и не сбрасывается после рестартов или обновлений сервера.</p>
           </div>
         </div>
+        <div class="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-accent/20 glow">
+          <button onclick="toggleFAQ(this)" class="w-full flex justify-between items-center text-left">
+            <h3 class="font-bold text-lg">Как стать бета-тестировщиком?</h3>
+            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+          </button>
+          <div class="hidden mt-3 text-gray-300">
+            <p>Присоединяйтесь к нашему Discord-серверу и подайте заявку в канале #beta-applications. Мы ищем активных игроков, готовых тестировать новые функции.</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- Футер -->
+  <!-- Footer -->
   <footer class="bg-dark text-white py-8 border-t border-gray-800">
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="mb-6 md:mb-0">
           <h3 class="text-2xl font-bold mb-2 flex items-center">
             <i class="fas fa-globe mr-2 text-accent"></i>
-            <span class="text-white">SkyForge</span>
+            <span class="text-white">SkyForge 2</span>
+            <span class="ml-2 px-2 py-1 bg-beta text-white text-xs rounded-full">BETA</span>
           </h3>
           <p class="text-gray-400">Сервер Minecraft с элементами анархии</p>
         </div>
@@ -322,28 +540,16 @@
             <i class="fab fa-discord"></i>
             <span class="tooltip-text">Discord</span>
           </a>
-          <a href="#" class="text-gray-400 hover:text-accent transition text-2xl tooltip">
-            <i class="fab fa-vk"></i>
-            <span class="tooltip-text">VK</span>
-          </a>
-          <a href="#" class="text-gray-400 hover:text-accent transition text-2xl tooltip">
-            <i class="fab fa-telegram"></i>
-            <span class="tooltip-text">Telegram</span>
-          </a>
-          <a href="#" class="text-gray-400 hover:text-accent transition text-2xl tooltip">
-            <i class="fab fa-youtube"></i>
-            <span class="tooltip-text">YouTube</span>
-          </a>
         </div>
       </div>
       <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400">
-        <p>© 2025 SkyForge. Все права защищены.</p>
+        <p>© 2025 SkyForge 2 Beta. Все права защищены.</p>
         <p class="text-sm mt-2">Не аффилирован с Mojang или Microsoft</p>
       </div>
     </div>
   </footer>
 
-  <!-- Модалка покупки VIP -->
+  <!-- VIP Purchase Modal -->
   <div id="modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-2xl p-6 max-w-md w-full border border-accent/30 relative overflow-hidden">
       <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2IiBoZWlnaHQ9IjYiPgo8cmVjdCB3aWR0aD0iNiIgaGVpZ2h0PSI2IiBmaWxsPSIjNDY1MmQ0Ij48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDZMNiAwWk02IDZMMCAwWiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2U9IiMxODFmN2EiPjwvcGF0aD4KPC9zdmc+');"></div>
@@ -405,34 +611,99 @@
             <i class="fas fa-server text-accent mr-3 mt-1"></i>
             <div>
               <h4 class="font-bold">IP сервера:</h4>
-              <p class="font-mono bg-gray-700 px-3 py-1 rounded inline-block">SkyForgeOFFICALL.aternos.me:46890</p>
+              <p class="font-mono bg-gray-700 px-3 py-1 rounded inline-block">SkyForge2Beta.aternos.me:46890</p>
             </div>
           </div>
           <div class="flex items-start">
             <i class="fas fa-code-branch text-accent mr-3 mt-1"></i>
             <div>
               <h4 class="font-bold">Версия:</h4>
-              <p>1.20.1</p>
+              <p>1.20.1 | SkyForge 2 Beta</p>
             </div>
           </div>
           <div class="flex items-start">
             <i class="fas fa-users text-accent mr-3 mt-1"></i>
             <div>
               <h4 class="font-bold">Онлайн:</h4>
-              <p>Скоро появится</p>
+              <p>24 из 100 игроков</p>
             </div>
           </div>
           <div class="flex items-start">
             <i class="fas fa-calendar-alt text-accent mr-3 mt-1"></i>
             <div>
               <h4 class="font-bold">Дата запуска:</h4>
-              <p>27 июля 2025</p>
+              <p>15 сентября 2025</p>
+            </div>
+          </div>
+          <div class="flex items-start">
+            <i class="fas fa-flask text-beta mr-3 mt-1"></i>
+            <div>
+              <h4 class="font-bold">Статус беты:</h4>
+              <p>Активна - Тестирование новых функций</p>
             </div>
           </div>
         </div>
         <div class="mt-6">
           <button onclick="copyIP()" class="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105 flex items-center justify-center glow">
             <i class="fas fa-copy mr-2"></i> Копировать IP
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Beta Info Modal -->
+  <div id="beta-info-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-2xl p-6 max-w-2xl w-full border border-beta/30 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2IiBoZWlnaHQ9IjYiPgo8cmVjdCB3aWR0aD0iNiIgaGVpZ2h0PSI2IiBmaWxsPSIjMDJhM2M3Ij48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDZMNiAwWk02IDZMMCAwWiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2U9IiMwZWE1ZTkiPjwvcGF0aD4KPC9zdmc+');"></div>
+      <div class="relative z-10">
+        <div class="flex justify-between items-start mb-4">
+          <h3 class="text-2xl font-bold gradient-text">Стать бета-тестировщиком</h3>
+          <button onclick="closeBetaInfoModal()" class="text-gray-400 hover:text-white p-1 rounded-full">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="text-gray-300 space-y-4 mb-6">
+          <p>
+            Присоединяйтесь к нашей команде бета-тестировщиков и помогите создать лучший сервер SkyForge 2!
+          </p>
+          
+          <div class="bg-blue-900/30 border border-blue-700/50 rounded-lg p-4">
+            <h4 class="font-bold text-blue-400 mb-2">Что вы получите:</h4>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Ранний доступ к новым функциям</li>
+              <li>Специальный титул в игре</li>
+              <li>Эксклюзивные скины и предметы</li>
+              <li>Возможность повлиять на развитие сервера</li>
+            </ul>
+          </div>
+          
+          <div class="bg-yellow-900/30 border border-yellow-700/50 rounded-lg p-4">
+            <h4 class="font-bold text-yellow-400 mb-2">Что мы ожидаем от вас:</h4>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Активное тестирование новых функций</li>
+              <li>Сообщения о найденных багах</li>
+              <li>Предложения по улучшению</li>
+              <li>Участие в обсуждениях в Discord</li>
+            </ul>
+          </div>
+          
+          <div class="bg-green-900/30 border border-green-700/50 rounded-lg p-4">
+            <h4 class="font-bold text-green-400 mb-2">Как присоединиться:</h4>
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>Присоединитесь к нашему <a href="#" class="text-blue-400 hover:underline" onclick="showCommunityModal()">Discord-серверу</a></li>
+              <li>Зайдите в канал #beta-applications</li>
+              <li>Заполните анкету с информацией о себе</li>
+              <li>Дождитесь решения администраторов</li>
+            </ol>
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button onclick="showCommunityModal()" class="bg-gradient-to-r from-beta to-cyan-500 hover:from-cyan-500 hover:to-beta text-white px-6 py-3 rounded-lg font-medium transition-all flex-1 flex items-center justify-center glow">
+            <i class="fab fa-discord mr-2"></i> Присоединиться к Discord
+          </button>
+          <button onclick="closeBetaInfoModal()" class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg font-medium transition flex-1 flex items-center justify-center">
+            <i class="fas fa-times mr-2"></i> Закрыть
           </button>
         </div>
       </div>
@@ -452,16 +723,23 @@
         <div class="flex items-center bg-white/5 p-3 rounded-lg">
           <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold mr-3">1</div>
           <div class="font-bold">totallini</div>
+          <div class="ml-auto text-yellow-400">VIP 9</div>
         </div>
         <div class="flex items-center bg-white/5 p-3 rounded-lg">
           <div class="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-white font-bold mr-3">2</div>
           <div class="font-bold">Eronox</div>
+          <div class="ml-auto text-yellow-400">VIP 8</div>
+        </div>
+        <div class="flex items-center bg-white/5 p-3 rounded-lg">
+          <div class="w-8 h-8 bg-amber-700 rounded-full flex items-center justify-center text-white font-bold mr-3">3</div>
+          <div class="font-bold">EpicBuilder_3000</div>
+          <div class="ml-auto text-blue-400">Бета-тестер</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Скрипты -->
+  <!-- Scripts -->
   <script>
     function showTopPlayers() {
       document.getElementById('top-players-modal').classList.remove('hidden');
@@ -470,6 +748,7 @@
     function closeTopPlayersModal() {
       document.getElementById('top-players-modal').classList.add('hidden');
     }
+    
     const vipLevels = [
       { level: 1, price: 50, features: ["Префикс в чате", "1 тотем бессмертия", "Железная броня (Защита 1)"] },
       { level: 2, price: 100, features: ["VIP 1 +", "Алмазная броня", "2 тотема бессмертия"] },
@@ -486,23 +765,23 @@
     vipLevels.forEach((v, index) => {
       const card = document.createElement('div');
       let cardClass = 'bg-white/5 backdrop-blur-sm rounded-xl shadow-lg p-6 mb-4 border border-accent/20 vip-card shine';
-      
+             
       // Добавляем специальные классы для премиум и элитных карточек
       if (v.level >= 7 && v.level <= 8) {
         cardClass += ' premium-card';
       } else if (v.level === 9) {
         cardClass += ' elite-card';
       }
-      
+             
       card.className = cardClass;
-      
+             
       let badge = '';
       if (v.level === 9) {
         badge = '<div class="absolute top-0 right-0 -mt-3 -mr-3 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-wiggle">ЭЛИТА</div>';
       } else if (v.level >= 7) {
         badge = '<div class="absolute top-0 right-0 -mt-3 -mr-3 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">ПРЕМИУМ</div>';
       }
-      
+             
       card.innerHTML = `
         <div class="relative">
           ${badge}
@@ -512,11 +791,11 @@
             </div>
             <h3 class="text-xl font-bold mb-2">VIP ${v.level}</h3>
             <div class="text-3xl font-bold mb-4 ${v.level >= 7 ? 'text-white' : 'text-primary'}">${v.price} аров</div>
-            
+                        
             <ul class="text-sm mb-6 text-left ${v.level >= 7 ? 'text-white/90' : 'text-gray-300'}">
               ${v.features.map(f => `<li class="mb-1 flex items-start"><i class="fas fa-check-circle text-green-400 mr-2 mt-1"></i> ${f}</li>`).join('')}
             </ul>
-            
+                        
             <button onclick="buyVip(${v.level}, ${v.price})" class="w-full ${v.level >= 7 ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white'} px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105 glow">
               <i class="fas fa-crown mr-2"></i> Купить
             </button>
@@ -546,7 +825,7 @@
     function buyVip(level, price) {
       currentCommand = `BuyVip ${level}`;
       currentPrice = price;
-      
+             
       const text = `
         <div class="text-center mb-6">
           <div class="bg-gradient-to-r from-primary to-secondary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
@@ -555,23 +834,23 @@
           <h4 class="text-xl font-bold mb-2">VIP ${level}</h4>
           <div class="text-2xl font-bold text-accent mb-4">${price} аров</div>
         </div>
-        
+                 
         <p class="mb-4">Для покупки VIP ${level} выполните следующие действия:</p>
-        
+                 
         <ol class="list-decimal list-inside space-y-2 mb-6">
           <li>Зайдите на сервер</li>
           <li>Напишите в чат команду:</li>
         </ol>
-        
+                 
         <div class="bg-gray-700 rounded-lg p-3 mb-6">
           <code class="font-mono text-lg">${currentCommand}</code>
         </div>
-        
+                 
         <p class="text-sm text-gray-400">После подтверждения заявки администратором, передайте <span class="font-bold text-accent">${price} аров</span>.</p>
       `;
-      
+             
       document.getElementById('modal-text').innerHTML = text.trim();
-      
+             
       const modal = document.getElementById('modal');
       modal.classList.remove('hidden');
     }
@@ -579,7 +858,7 @@
     // Копировать команду
     function copyCommand() {
       if (!currentCommand) return;
-      
+             
       navigator.clipboard.writeText(currentCommand)
         .then(() => {
           showToast('Команда скопирована!', 'success');
@@ -590,7 +869,7 @@
         });
     }
 
-    // Закрыть модалку
+    // Закрыть модалки
     function closeModal() {
       document.getElementById('modal').classList.add('hidden');
     }
@@ -602,12 +881,22 @@
     function closeServerInfoModal() {
       document.getElementById('server-info-modal').classList.add('hidden');
     }
+    
+    function closeBetaInfoModal() {
+      document.getElementById('beta-info-modal').classList.add('hidden');
+    }
+    
+    function showBetaInfo() {
+      document.getElementById('beta-info-modal').classList.remove('hidden');
+    }
 
     // Обработчик клика вне модалки
     window.onclick = e => {
       if (e.target.id === 'modal') closeModal();
       if (e.target.id === 'login-modal') closeLoginModal();
       if (e.target.id === 'server-info-modal') closeServerInfoModal();
+      if (e.target.id === 'beta-info-modal') closeBetaInfoModal();
+      if (e.target.id === 'top-players-modal') closeTopPlayersModal();
     };
 
     // Показать уведомление
@@ -618,15 +907,15 @@
         error: 'bg-red-500',
         info: 'bg-blue-500'
       };
-      
+             
       toast.className = `fixed bottom-4 right-4 ${colors[type] || 'bg-blue-500'} text-white px-6 py-3 rounded-lg shadow-lg flex items-center animate-fade-in z-50`;
       toast.innerHTML = `
         <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'} mr-2 text-xl"></i>
         <span>${message}</span>
       `;
-      
+             
       document.body.appendChild(toast);
-      
+             
       setTimeout(() => {
         toast.classList.add('animate-fade-out');
         setTimeout(() => toast.remove(), 300);
@@ -637,7 +926,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const logo = document.getElementById('server-logo');
       const fallback = document.getElementById('logo-fallback');
-      
+             
       fetch('logo.png')
         .then(res => {
           if (res.ok) {
@@ -659,7 +948,7 @@
           logo.classList.add('hidden');
           fallback.classList.remove('hidden');
         });
-        
+               
       // Check saved username on load
       const savedUsername = localStorage.getItem('mc_username');
       if (savedUsername) {
@@ -684,12 +973,6 @@
       document.getElementById('login-button').classList.add('bg-secondary');
       showToast(`Добро пожаловать, ${username}!`, 'success');
       closeLoginModal();
-      
-      // Добавляем аватарку (если бы был API Mojang)
-      // document.getElementById('login-button').innerHTML = `
-      //   <img src="https://mc-heads.net/avatar/${username}/32" class="rounded-full h-8 w-8 mr-2">
-      //   ${username}
-      // `;
     }
     
     // Server info
@@ -707,15 +990,15 @@
     function toggleFAQ(button) {
       const content = button.nextElementSibling;
       const icon = button.querySelector('i');
-      
+             
       content.classList.toggle('hidden');
       icon.classList.toggle('rotate-180');
     }
     
     // Confetti effect
     function createConfetti() {
-      const colors = ['#4f46e5', '#7c3aed', '#a78bfa', '#f59e0b', '#10b981'];
-      
+      const colors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#0ea5e9'];
+             
       for (let i = 0; i < 50; i++) {
         const confetti = document.createElement('div');
         confetti.className = 'fixed z-50 w-2 h-2 rounded-full';
@@ -724,20 +1007,20 @@
         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
         confetti.style.animation = `confetti ${Math.random() * 3 + 2}s linear forwards`;
         confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-        
+                 
         document.body.appendChild(confetti);
-        
+                 
         setTimeout(() => {
           confetti.remove();
         }, 5000);
       }
     }
-
+    
     // Community redirect
     function showCommunityModal() {
       window.open('https://discord.gg/dExyQxeP', '_blank');
     }
-
+    
     // Анимация для уведомлений
     const style = document.createElement('style');
     style.innerHTML = `
@@ -755,12 +1038,8 @@
       .animate-fade-out {
         animation: fade-out 0.3s ease-out forwards;
       }
-      .rotate-180 {
-        transform: rotate(180deg);
-      }
     `;
     document.head.appendChild(style);
   </script>
 </body>
 </html>
-
