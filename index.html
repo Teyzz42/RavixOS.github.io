@@ -1,103 +1,238 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RavixOS - Оптимизированная Windows</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RavixOS — Центр сборок</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/feather-icons"></script>
   <style>
-    body {
-      background: url('10.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
+    :root { --primary:#ff0033; --secondary:#ff4444; }
+    body { margin:0; background:#0a0a0a; color:#fff; font-family:'Segoe UI',system-ui,sans-serif; display:flex; min-height:100vh; }
+
+    /* Фон */
+    body::before {
+      content:""; position:fixed; inset:0;
+      background:radial-gradient(circle at 20% 30%,rgba(255,0,51,.12),transparent 60%),
+                 radial-gradient(circle at 80% 70%,rgba(255,68,68,.12),transparent 60%);
+      animation:moveBg 14s infinite alternate; z-index:0;
     }
-    .bg-primary {
-      background: rgba(0, 0, 0, 0.75);
-      border-bottom: 1px solid #3a86ff;
-      backdrop-filter: blur(6px);
+    @keyframes moveBg { from { background-position:0% 0%; } to { background-position:100% 100%; } }
+
+    /* Сайдбар */
+    .sidebar {
+      width:240px; background:#111; border-right:1px solid rgba(255,255,255,.1);
+      display:flex; flex-direction:column; padding:1rem; gap:.5rem;
+      position:fixed; top:0; bottom:0; left:0; z-index:10;
     }
-    .bg-secondary {
-      background: rgba(0, 0, 0, 0.65);
-      border: 1px solid #3a86ff;
-      border-radius: 10px;
+    .brand {
+      font-size:1.4rem; font-weight:800; margin-bottom:.75rem;
+      background:linear-gradient(90deg,var(--primary),var(--secondary));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
     }
-    .btn-primary {
-      background: linear-gradient(90deg, #3a86ff, #8338ec);
-      color: #fff;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(58,134,255,0.5);
+    .nav-btn {
+      padding:.75rem 1rem; border-radius:10px; font-weight:600; text-align:left;
+      background:#1a1a1a; transition:.25s; cursor:pointer; border:1px solid transparent;
     }
-    .btn-primary:hover {
-      background: linear-gradient(90deg, #8338ec, #ff006e);
-      transform: translateY(-2px);
-      box-shadow: 0 0 20px rgba(255,0,110,0.6);
+    .nav-btn:hover { background:#202020; border-color:rgba(255,0,51,.35); box-shadow:0 0 12px rgba(255,0,51,.35); }
+    .nav-btn.active {
+      background:linear-gradient(90deg,rgba(255,0,51,.25),rgba(255,68,68,.25));
+      border-color:rgba(255,0,51,.5);
+      box-shadow:0 0 16px rgba(255,0,51,.5);
     }
+
+    /* Контент */
+    .main { margin-left:240px; flex:1; padding:2rem; position:relative; z-index:1; }
+    .screen { display:none; animation:fade .25s ease-out; }
+    .screen.active { display:block; }
+    @keyframes fade { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+    .section-title {
+      font-size:2rem; font-weight:800; margin-bottom:1.25rem;
+      background:linear-gradient(90deg,var(--primary),var(--secondary));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; }
+
+    .card {
+      background:#151515; border:1px solid rgba(255,255,255,.1);
+      border-radius:12px; overflow:hidden; transition:.25s;
+      display:flex; flex-direction:column; justify-content:space-between;
+      box-shadow:inset 0 0 10px rgba(255,0,51,.12);
+    }
+    .card:hover { transform:translateY(-6px); box-shadow:0 0 22px rgba(255,0,51,.35); }
+    .card img { width:100%; height:140px; object-fit:cover; }
+    .card-body { padding:1rem; text-align:center; }
+    .card h3 { font-weight:700; margin-bottom:.5rem; }
+
+    .btn {
+      display:inline-block; margin-top:.5rem;
+      padding:.6rem 1.2rem; border-radius:999px; font-weight:600;
+      background:linear-gradient(45deg,var(--primary),var(--secondary));
+      color:#fff; transition:.25s; border:none; cursor:pointer;
+    }
+    .btn:hover { transform:scale(1.05); box-shadow:0 0 20px rgba(255,0,51,.6); }
+
+    /* Главный экран */
+    .hero {
+      background:#121212; border:1px solid rgba(255,255,255,.08); border-radius:14px;
+      padding:2rem; box-shadow:0 0 20px rgba(255,0,51,.18);
+    }
+    .hero-title {
+      font-size:2.4rem; font-weight:900; margin-bottom:.75rem;
+      background:linear-gradient(90deg,var(--primary),var(--secondary),var(--primary));
+      background-size:200% 200%; animation:flow 8s linear infinite;
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    @keyframes flow { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+    .hero-sub { color:#cfcfcf; opacity:.9; line-height:1.6; }
+    .hero-list { margin-top:1rem; color:#ddd; }
+    .hero-cta { margin-top:1.25rem; }
+    footer { margin-top:2rem; padding:1rem; text-align:center; opacity:.6; font-size:.9rem; }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="bg-primary p-6">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-3xl font-bold tracking-wide">RavixOS</h1>
-      <nav class="hidden md:flex space-x-6">
-        <a href="https://www.youtube.com/channel/UCxB6YKp0SjoK-c84i7evYHA" class="hover:text-red-500">YouTube</a>
-        <a href="https://drive.google.com/file/d/1bX77vClUliQ2zjmOvbXWBRcMSxQoeVxf/view?usp=drive_link" class="hover:text-red-500">Скачать</a>
-      </nav>
-      <button class="md:hidden">
-        <i data-feather="menu"></i>
-      </button>
-    </div>
-  </header>
 
-  <!-- Main -->
-  <main class="container mx-auto p-6">
-    <section class="text-center py-20">
-      <h2 class="text-5xl font-bold mb-6 drop-shadow-lg">RavixOS 10 22H2 LTSC</h2>
-      <p class="text-lg mb-8 opacity-90">Минималистичная и оптимизированная Windows. Только то, что вам нужно.</p>
-      <a href="https://drive.google.com/file/d/1bX77vClUliQ2zjmOvbXWBRcMSxQoeVxf/view?usp=drive_link" 
-         class="btn-primary px-10 py-4 rounded-lg text-xl font-bold mb-16 inline-block">
-         Скачать
-      </a>
+  <!-- Левое меню категорий -->
+  <aside class="sidebar">
+    <div class="brand">RavixOS</div>
+    <button class="nav-btn active" data-target="home">Главный экран</button>
+    <button class="nav-btn" data-target="win7">RavixOS 7</button>
+    <button class="nav-btn" data-target="win8">RavixOS 8</button>
+    <button class="nav-btn" data-target="win81">RavixOS 8.1</button>
+    <button class="nav-btn" data-target="win10">RavixOS 10</button>
+    <button class="nav-btn" data-target="win11">RavixOS 11</button>
+    <button class="nav-btn" data-target="news">Новости</button>
+  </aside>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        <div class="bg-secondary p-6">
-          <h3 class="text-2xl font-bold mb-4 text-red-500">Отключено:</h3>
-          <ul class="space-y-2 text-left">
-            <li>• Ненужные компоненты</li>
-            <li>• Автообновления</li>
-            <li>• UWP-приложения</li>
-            <li>• Телеметрия</li>
-            <li>• Защитник Windows</li>
-            <li>• Cortana</li>
-            <li>• OneDrive</li>
-          </ul>
-        </div>
-        <div class="bg-secondary p-6">
-          <h3 class="text-2xl font-bold mb-4 text-blue-400">Включено:</h3>
-          <ul class="space-y-2 text-left">
-            <li>• Повышенная производительность (+30%)</li>
-            <li>• Прозрачность эффектов</li>
-            <li>• Оптимизация игр</li>
-            <li>• Все системные функции</li>
-            <li>• Стабильность LTSC</li>
-            <li>• Улучшенная безопасность</li>
-            <li>• Поддержка DirectX 12</li>
-          </ul>
+  <!-- Главная область -->
+  <main class="main">
+    <!-- Главный экран (без сборок) -->
+    <section id="home" class="screen active">
+      <div class="hero">
+        <div class="hero-title">RavixOS — Центр сборок</div>
+        <p class="hero-sub">
+          RavixOS — это оптимизированные сборки Windows, созданные для скорости, стабильности и чистоты.
+          Мы убираем лишние компоненты, отключаем ненужные службы и настраиваем систему под максимальную
+          производительность и минимальное потребление ресурсов. Всё, чтобы система ощущалась лёгкой и быстрой.
+        </p>
+        <ul class="hero-list list-disc list-inside space-y-2">
+          <li>🚀 Ускоренный запуск и отзывчивость системы</li>
+          <li>🧹 Удаление предустановленного мусора и ненужных сервисов</li>
+          <li>🔒 Приватность и безопасность с продуманными настройками</li>
+          <li>🎨 Чистый минималистичный интерфейс без перегруза</li>
+          <li>⚡ Оптимизация под игры, работу и стриминг</li>
+        </ul>
+        <div class="hero-cta">
+          <button class="btn" id="open10">Смотреть сборку RavixOS 10</button>
         </div>
       </div>
     </section>
+
+    <!-- Категория 7 -->
+    <section id="win7" class="screen">
+      <div class="section-title">RavixOS 7</div>
+      <div class="grid">
+        <div class="card">
+          <img src="https://wparena.com/wp-content/uploads/2009/09/img0.jpg" alt="Win7">
+          <div class="card-body">
+            <h3>RavixOS 7</h3>
+            <p class="text-gray-400 text-sm mb-2">(в разработке)</p>
+            <button class="btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Категория 8 -->
+    <section id="win8" class="screen">
+      <div class="section-title">RavixOS 8</div>
+      <div class="grid">
+        <div class="card">
+          <img src="https://wallpaperswide.com/download/windows_8_default-wallpaper-1680x1050.jpg" alt="Win8">
+          <div class="card-body">
+            <h3>RavixOS 8</h3>
+            <p class="text-gray-400 text-sm mb-2">(в разработке)</p>
+            <button class="btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Категория 8.1 -->
+    <section id="win81" class="screen">
+      <div class="section-title">RavixOS 8.1</div>
+      <div class="grid">
+        <div class="card">
+          <img src="https://static.wikia.nocookie.net/windowswallpaper/images/1/1e/Windows_8.1_-_img0.jpg" alt="Win8.1">
+          <div class="card-body">
+            <h3>RavixOS 8.1</h3>
+            <p class="text-gray-400 text-sm mb-2">(в разработке)</p>
+            <button class="btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Категория 10 -->
+    <section id="win10" class="screen">
+      <div class="section-title">RavixOS 10</div>
+      <div class="grid">
+        <div class="card">
+          <img src="https://miro.medium.com/v2/resize:fit:2000/1*ZHlAyBps9qQRERH4E0LEhg.jpeg" alt="Win10">
+          <div class="card-body">
+            <h3>RavixOS 10 LTSC 22H2</h3>
+            <a href="https://drive.google.com/file/d/1bX77vClUliQ2zjmOvbXWBRcMSxQoeVxf/view?usp=drive_link" target="_blank" class="btn">Скачать</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Категория 11 -->
+    <section id="win11" class="screen">
+      <div class="section-title">RavixOS 11</div>
+      <p class="text-gray-400">Пока нет сборок.</p>
+    </section>
+
+    <!-- Новости -->
+    <section id="news" class="screen">
+      <div class="section-title">Новости</div>
+      <p class="text-gray-400">Пока новостей нет.</p>
+    </section>
+
+    <footer>© 2025 RavixOS. Все права защищены.</footer>
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-primary p-6">
-    <div class="container mx-auto text-center">
-      <p>© 2025 RavixOS</p>
-      <p class="mt-2">Мой дискорд: <span class="text-blue-400">@totalliniyt</span></p>
-    </div>
-  </footer>
+  <script>
+    // Переключение экранов по клику в левом меню
+    const buttons = document.querySelectorAll('.nav-btn');
+    const screens = document.querySelectorAll('.screen');
 
-  <script>feather.replace()</script>
+    function showScreen(id) {
+      screens.forEach(s => s.classList.toggle('active', s.id === id));
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.target;
+        showScreen(target);
+        history.replaceState(null, '', '#' + target);
+      });
+    });
+
+    // CTA на главном: открыть RavixOS 10
+    document.getElementById('open10')?.addEventListener('click', () => {
+      showScreen('win10');
+      history.replaceState(null, '', '#win10');
+    });
+
+    // Открыть экран из хэша URL при загрузке
+    window.addEventListener('DOMContentLoaded', () => {
+      const initial = location.hash?.slice(1) || 'home';
+      showScreen(initial);
+    });
+  </script>
 </body>
 </html>
+```
