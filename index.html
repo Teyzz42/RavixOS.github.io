@@ -6,94 +6,164 @@
   <title>RavixOS — Центр сборок</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root { --primary:#ff0033; --secondary:#ff4444; }
-    body { margin:0; background:#0a0a0a; color:#fff; font-family:'Segoe UI',system-ui,sans-serif; display:flex; min-height:100vh; }
-
-    /* Фон */
-    body::before {
-      content:""; position:fixed; inset:0;
-      background:radial-gradient(circle at 20% 30%,rgba(255,0,51,.12),transparent 60%),
-                 radial-gradient(circle at 80% 70%,rgba(255,68,68,.12),transparent 60%);
-      animation:moveBg 14s infinite alternate; z-index:0;
+    :root {
+      --primary:#ff0033;      /* Ravix Red */
+      --secondary:#7a23ff;    /* Ravix Violet */
+      --accent:#ff7a7a;       /* Soft accent */
+      --bg:#0a0a0a;
+      --panel:#121212;
     }
-    @keyframes moveBg { from { background-position:0% 0%; } to { background-position:100% 100%; } }
 
-    /* Сайдбар */
+    /* Base */
+    html, body { height:100%; }
+    body {
+      margin:0; background:var(--bg); color:#fff;
+      font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
+      display:flex; min-height:100vh;
+    }
+
+    /* Dynamic background */
+    body::before {
+      content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+      background:
+        radial-gradient(1200px 800px at 20% 20%, rgba(255,0,51,.10), transparent 60%),
+        radial-gradient(1000px 600px at 80% 80%, rgba(122,35,255,.10), transparent 60%);
+      filter:saturate(1.2);
+      animation:bgShift 18s ease-in-out infinite alternate;
+    }
+    @keyframes bgShift {
+      0%   { transform:translate3d(0,0,0); }
+      100% { transform:translate3d(-12px, 8px, 0); }
+    }
+
+    /* Sidebar */
     .sidebar {
-      width:240px; background:#111; border-right:1px solid rgba(255,255,255,.1);
-      display:flex; flex-direction:column; padding:1rem; gap:.5rem;
+      width:260px; background:linear-gradient(180deg, #101010 0%, #0e0e0e 100%);
+      border-right:1px solid rgba(255,255,255,.08);
+      display:flex; flex-direction:column; padding:1rem; gap:.6rem;
       position:fixed; top:0; bottom:0; left:0; z-index:10;
+      box-shadow:0 0 24px rgba(255,0,51,.08);
+      backdrop-filter:saturate(1.2);
     }
     .brand {
-      font-size:1.4rem; font-weight:800; margin-bottom:.75rem;
-      background:linear-gradient(90deg,var(--primary),var(--secondary));
+      font-size:1.5rem; font-weight:900; letter-spacing:.5px; margin-bottom:1rem;
+      background:linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-shadow:0 0 14px rgba(255,0,51,.35);
     }
     .nav-btn {
-      padding:.75rem 1rem; border-radius:10px; font-weight:600; text-align:left;
-      background:#1a1a1a; transition:.25s; cursor:pointer; border:1px solid transparent;
+      padding:.8rem 1rem; border-radius:12px; font-weight:700; text-align:left;
+      background:#171717; transition:.25s; cursor:pointer; border:1px solid rgba(255,255,255,.06);
+      color:#eaeaea; position:relative; overflow:hidden;
     }
-    .nav-btn:hover { background:#202020; border-color:rgba(255,0,51,.35); box-shadow:0 0 12px rgba(255,0,51,.35); }
+    .nav-btn:hover {
+      background:#1d1d1d; border-color:rgba(255,0,51,.35);
+      box-shadow:0 0 14px rgba(122,35,255,.30), inset 0 0 10px rgba(255,0,51,.12);
+      transform:translateY(-1px);
+    }
     .nav-btn.active {
-      background:linear-gradient(90deg,rgba(255,0,51,.25),rgba(255,68,68,.25));
-      border-color:rgba(255,0,51,.5);
-      box-shadow:0 0 16px rgba(255,0,51,.5);
+      background:linear-gradient(90deg, rgba(255,0,51,.22), rgba(122,35,255,.22));
+      border-color:rgba(255,0,51,.45);
+      box-shadow:0 0 18px rgba(255,0,51,.45), inset 0 0 12px rgba(122,35,255,.20);
     }
 
-    /* Контент */
-    .main { margin-left:240px; flex:1; padding:2rem; position:relative; z-index:1; }
+    /* Main */
+    .main { margin-left:260px; flex:1; padding:2rem; position:relative; z-index:1; }
     .screen { display:none; animation:fade .25s ease-out; }
     .screen.active { display:block; }
     @keyframes fade { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
 
+    /* Headings */
     .section-title {
-      font-size:2rem; font-weight:800; margin-bottom:1.25rem;
-      background:linear-gradient(90deg,var(--primary),var(--secondary));
+      font-size:2rem; font-weight:900; margin-bottom:1.25rem;
+      background:linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip:text; background-clip:text; color:transparent;
     }
 
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; }
-
+    /* Grid + cards */
+    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1.4rem; }
     .card {
-      background:#151515; border:1px solid rgba(255,255,255,.1);
-      border-radius:12px; overflow:hidden; transition:.25s;
+      position:relative; border-radius:14px; overflow:hidden;
+      background:linear-gradient(180deg, #161616 0%, #121212 100%);
+      border:1px solid rgba(255,255,255,.08);
       display:flex; flex-direction:column; justify-content:space-between;
-      box-shadow:inset 0 0 10px rgba(255,0,51,.12);
+      transition:.25s; isolation:isolate;
     }
-    .card:hover { transform:translateY(-6px); box-shadow:0 0 22px rgba(255,0,51,.35); }
-    .card img { width:100%; height:140px; object-fit:cover; }
+    .card::before {
+      content:""; position:absolute; inset:-1px;
+      border-radius:16px;
+      padding:1px; background:linear-gradient(135deg, rgba(255,0,51,.55), rgba(122,35,255,.55));
+      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude;
+      opacity:.25; pointer-events:none;
+    }
+    .card:hover {
+      transform:translateY(-6px);
+      box-shadow:0 0 28px rgba(255,0,51,.28), 0 0 18px rgba(122,35,255,.18);
+    }
+    .card img { width:100%; height:150px; object-fit:cover; filter:saturate(1.1) contrast(1.05); }
     .card-body { padding:1rem; text-align:center; }
-    .card h3 { font-weight:700; margin-bottom:.5rem; }
+    .card h3 { font-weight:800; margin-bottom:.5rem; }
 
-    .btn {
-      display:inline-block; margin-top:.5rem;
-      padding:.6rem 1.2rem; border-radius:999px; font-weight:600;
-      background:linear-gradient(45deg,var(--primary),var(--secondary));
-      color:#fff; transition:.25s; border:none; cursor:pointer;
+    /* Special: badge NEW for 2.0 */
+    .badge {
+      position:absolute; top:10px; left:10px; z-index:2;
+      background:linear-gradient(90deg, var(--primary), var(--secondary));
+      color:#fff; font-size:.75rem; font-weight:900; padding:.35rem .6rem; border-radius:999px;
+      box-shadow:0 0 14px rgba(255,0,51,.5);
     }
-    .btn:hover { transform:scale(1.05); box-shadow:0 0 20px rgba(255,0,51,.6); }
 
-    /* Главный экран */
+    /* Buttons */
+    .btn {
+      display:inline-block; margin-top:.6rem;
+      padding:.7rem 1.2rem; border-radius:999px; font-weight:800; letter-spacing:.3px;
+      background:linear-gradient(45deg, var(--primary), var(--secondary));
+      color:#fff; transition:.22s; border:none; cursor:pointer;
+      box-shadow:0 0 16px rgba(255,0,51,.45);
+    }
+    .btn:hover {
+      transform:translateY(-1px) scale(1.03);
+      box-shadow:0 0 22px rgba(255,0,51,.6), 0 0 16px rgba(122,35,255,.45);
+    }
+
+    /* Hero */
     .hero {
-      background:#121212; border:1px solid rgba(255,255,255,.08); border-radius:14px;
+      background:linear-gradient(180deg, rgba(18,18,18,.85) 0%, rgba(16,16,16,.85) 100%);
+      border:1px solid rgba(255,255,255,.08); border-radius:16px;
       padding:2rem; box-shadow:0 0 20px rgba(255,0,51,.18);
+      position:relative; overflow:hidden;
+    }
+    .hero::after {
+      content:""; position:absolute; right:-80px; top:-80px; width:240px; height:240px; border-radius:50%;
+      background:radial-gradient(circle, rgba(122,35,255,.25), transparent 60%);
+      filter:blur(14px);
     }
     .hero-title {
-      font-size:2.4rem; font-weight:900; margin-bottom:.75rem;
-      background:linear-gradient(90deg,var(--primary),var(--secondary),var(--primary));
+      font-size:2.6rem; font-weight:900; margin-bottom:.85rem;
+      background:linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
       background-size:200% 200%; animation:flow 8s linear infinite;
       -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-shadow:0 0 22px rgba(255,0,51,.25);
     }
     @keyframes flow { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-    .hero-sub { color:#cfcfcf; opacity:.9; line-height:1.6; }
-    .hero-list { margin-top:1rem; color:#ddd; }
-    .hero-cta { margin-top:1.25rem; }
+    .hero-sub { color:#dcdcdc; opacity:.95; line-height:1.7; }
+    .hero-cta { margin-top:1.2rem; display:flex; gap:.8rem; flex-wrap:wrap; }
+
+    /* CTA banner: highlight 2.0 */
+    .cta-banner {
+      margin-top:1rem; display:flex; align-items:center; gap:.8rem;
+      background:linear-gradient(90deg, rgba(255,0,51,.18), rgba(122,35,255,.18));
+      border:1px solid rgba(255,0,51,.35); padding:1rem; border-radius:14px;
+      box-shadow:0 0 18px rgba(255,0,51,.22);
+    }
+    .cta-title { font-weight:900; letter-spacing:.3px; }
+
     footer { margin-top:2rem; padding:1rem; text-align:center; opacity:.6; font-size:.9rem; }
   </style>
 </head>
 <body>
 
-  <!-- Левое меню категорий -->
+  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="brand">RavixOS</div>
     <button class="nav-btn active" data-target="home">Главный экран</button>
@@ -105,31 +175,38 @@
     <button class="nav-btn" data-target="news">Новости</button>
   </aside>
 
-  <!-- Главная область -->
+  <!-- Main -->
   <main class="main">
-    <!-- Главный экран (без сборок) -->
+    <!-- Home -->
     <section id="home" class="screen active">
       <div class="hero">
         <div class="hero-title">RavixOS — Центр сборок</div>
         <p class="hero-sub">
-          RavixOS — это оптимизированные сборки Windows, созданные для скорости, стабильности и чистоты.
-          Мы убираем лишние компоненты, отключаем ненужные службы и настраиваем систему под максимальную
-          производительность и минимальное потребление ресурсов. Всё, чтобы система ощущалась лёгкой и быстрой.
+          RavixOS — оптимизированные сборки Windows: скорость, стабильность и чистота. Мы убираем лишние компоненты,
+          отключаем ненужные службы и настраиваем систему под максимальную производительность и минимальные фоновые процессы.
+          Всё, чтобы система ощущалась лёгкой, быстрой и надёжной.
         </p>
-        <ul class="hero-list list-disc list-inside space-y-2">
-          <li>🚀 Ускоренный запуск и отзывчивость системы</li>
-          <li>🧹 Удаление предустановленного мусора и ненужных сервисов</li>
-          <li>🔒 Приватность и безопасность с продуманными настройками</li>
-          <li>🎨 Чистый минималистичный интерфейс без перегруза</li>
-          <li>⚡ Оптимизация под игры, работу и стриминг</li>
+        <ul class="list-disc list-inside space-y-2 mt-3 text-gray-200">
+          <li>Ускоренный запуск и отзывчивость</li>
+          <li>Удаление предустановленного мусора и сервисов</li>
+          <li>Приватность и продуманные настройки</li>
+          <li>Чистый минималистичный интерфейс</li>
+          <li>Оптимизация под игры, работу и стриминг</li>
         </ul>
+
         <div class="hero-cta">
-          <button class="btn" id="open10">Смотреть сборку RavixOS 10</button>
+          <button class="btn" id="open10">Смотреть RavixOS 10</button>
+          <button class="btn" id="open1020">🔥 Новинка: RavixOS 10 2.0</button>
+        </div>
+
+        <div class="cta-banner">
+          <div class="cta-title">RavixOS 10 2.0 — усиленная оптимизация и новая фирменная визуализация.</div>
+          <button class="btn" id="download1020">Скачать 2.0</button>
         </div>
       </div>
     </section>
 
-    <!-- Категория 7 -->
+    <!-- Win7 -->
     <section id="win7" class="screen">
       <div class="section-title">RavixOS 7</div>
       <div class="grid">
@@ -144,7 +221,7 @@
       </div>
     </section>
 
-    <!-- Категория 8 -->
+    <!-- Win8 -->
     <section id="win8" class="screen">
       <div class="section-title">RavixOS 8</div>
       <div class="grid">
@@ -159,7 +236,7 @@
       </div>
     </section>
 
-    <!-- Категория 8.1 -->
+    <!-- Win8.1 -->
     <section id="win81" class="screen">
       <div class="section-title">RavixOS 8.1</div>
       <div class="grid">
@@ -174,27 +251,38 @@
       </div>
     </section>
 
-    <!-- Категория 10 -->
+    <!-- Win10 -->
     <section id="win10" class="screen">
       <div class="section-title">RavixOS 10</div>
       <div class="grid">
+        <!-- Existing build -->
         <div class="card">
-          <img src="https://miro.medium.com/v2/resize:fit:2000/1*ZHlAyBps9qQRERH4E0LEhg.jpeg" alt="Win10">
+          <img src="https://miro.medium.com/v2/resize:fit:2000/1*ZHlAyBps9qQRERH4E0LEhg.jpeg" alt="Win10 LTSC">
           <div class="card-body">
             <h3>RavixOS 10 LTSC 22H2</h3>
             <a href="https://drive.google.com/file/d/1bX77vClUliQ2zjmOvbXWBRcMSxQoeVxf/view?usp=drive_link" target="_blank" class="btn">Скачать</a>
           </div>
         </div>
+
+        <!-- New build 2.0 -->
+        <div class="card">
+          <span class="badge">NEW</span>
+          <img src="https://4kwallpapers.com/images/wallpapers/windows-10-microsoft-windows-colorful-black-background-2560x1440-1552.jpg" alt="Win10 2.0">
+          <div class="card-body">
+            <h3>RavixOS 10 2.0</h3>
+            <a href="https://drive.google.com/file/d/1UarUG4JE1Kg-fTj8XIncta_AVJTp6P3V/view?usp=drive_link" target="_blank" class="btn">Скачать</a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Категория 11 -->
+    <!-- Win11 -->
     <section id="win11" class="screen">
       <div class="section-title">RavixOS 11</div>
       <p class="text-gray-400">Пока нет сборок.</p>
     </section>
 
-    <!-- Новости -->
+    <!-- News -->
     <section id="news" class="screen">
       <div class="section-title">Новости</div>
       <p class="text-gray-400">Пока новостей нет.</p>
@@ -204,7 +292,7 @@
   </main>
 
   <script>
-    // Переключение экранов по клику в левом меню
+    // Navigation
     const buttons = document.querySelectorAll('.nav-btn');
     const screens = document.querySelectorAll('.screen');
 
@@ -221,13 +309,28 @@
       });
     });
 
-    // CTA на главном: открыть RavixOS 10
+    // CTA: open RavixOS 10
     document.getElementById('open10')?.addEventListener('click', () => {
       showScreen('win10');
       history.replaceState(null, '', '#win10');
     });
 
-    // Открыть экран из хэша URL при загрузке
+    // CTA: open RavixOS 10 2.0 within win10 section and auto-scroll to second card
+    document.getElementById('open1020')?.addEventListener('click', () => {
+      showScreen('win10');
+      history.replaceState(null, '', '#win10');
+      setTimeout(() => {
+        const cards = document.querySelectorAll('#win10 .card');
+        cards[1]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 80);
+    });
+
+    // Direct download 2.0 from home banner
+    document.getElementById('download1020')?.addEventListener('click', () => {
+      window.open('https://drive.google.com/file/d/1UarUG4JE1Kg-fTj8XIncta_AVJTp6P3V/view?usp=drive_link', '_blank');
+    });
+
+    // Load from hash
     window.addEventListener('DOMContentLoaded', () => {
       const initial = location.hash?.slice(1) || 'home';
       showScreen(initial);
